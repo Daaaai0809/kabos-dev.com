@@ -9,8 +9,6 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-var LoginRequest = entity.LoginRequest{}
-
 const (
 	LOGIN_SUCCESS_MESSAGE         = "Login Success"
 	BAD_REQUEST_MESSAGE           = "Bad Request"
@@ -30,6 +28,7 @@ func NewAuthHandler(group *echo.Group, authInteractor usecase.IAuthInteractor) {
 }
 
 func (h *AuthHandler) Login(c echo.Context) error {
+	var LoginRequest = entity.LoginRequest{}
 	err := c.Bind(&LoginRequest)
 	if err != nil {
 		return c.String(http.StatusBadRequest, BAD_REQUEST_MESSAGE)
