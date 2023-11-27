@@ -32,7 +32,7 @@ func (g *AuthGateway) Authorize(next echo.HandlerFunc) echo.HandlerFunc {
 		token := cookie.Value
 
 		if err := g.authInteractor.CheckAccessToken(c.Request().Context(), token); err != nil {
-			return c.String(http.StatusUnauthorized, UNAUTHORIZED_MESSAGE)
+			return c.JSON(http.StatusUnauthorized, UNAUTHORIZED_MESSAGE)
 		}
 
 		return next(c)

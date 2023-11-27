@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/Daaaai0809/kabos-dev.com/config"
-	"github.com/Daaaai0809/kabos-dev.com/domain/entity"
+	"github.com/Daaaai0809/kabos-dev.com/adapter/request"
 	"github.com/Daaaai0809/kabos-dev.com/usecase"
 	"github.com/labstack/echo/v4"
 )
@@ -28,7 +28,7 @@ func NewAuthHandler(group *echo.Group, authInteractor usecase.IAuthInteractor) {
 }
 
 func (h *AuthHandler) Login(c echo.Context) error {
-	var LoginRequest = entity.LoginRequest{}
+	var LoginRequest = request.LoginRequest{}
 	err := c.Bind(&LoginRequest)
 	if err != nil {
 		return c.String(http.StatusBadRequest, BAD_REQUEST_MESSAGE)
