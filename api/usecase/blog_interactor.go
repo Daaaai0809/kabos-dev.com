@@ -5,6 +5,7 @@ import (
 
 	"github.com/Daaaai0809/kabos-dev.com/domain/entity"
 	"github.com/Daaaai0809/kabos-dev.com/domain/repository"
+	"github.com/Daaaai0809/kabos-dev.com/models"
 )
 
 type IBlogInteractor interface {
@@ -66,13 +67,46 @@ func (i *BlogInteractor) GetByID(ctx context.Context, id int) (*entity.Blog, err
 }
 
 func (i *BlogInteractor) Create(ctx context.Context, blog *entity.Blog) error {
+	userModel := models.Blog{
+		Title:     blog.Title,
+		Thumbnail: blog.Thumbnail,
+		URL:       blog.URL,
+		Content:   blog.Content,
+	}
+
+	if err := i.blogRepository.Create(ctx, &userModel); err != nil {
+		return err
+	}
+
+	// TODO: blog_tagsにTagとのリレーションを作成する
+
 	return nil
 }
 
 func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) error {
+	userModel := models.Blog{
+		ID:        blog.ID,
+		Title:     blog.Title,
+		Thumbnail: blog.Thumbnail,
+		URL:       blog.URL,
+		Content:   blog.Content,
+	}
+
+	if err := i.blogRepository.Update(ctx, &userModel); err != nil {
+		return err
+	}
+
+	// TODO: リレーションの変更を反映する
+
 	return nil
 }
 
 func (i *BlogInteractor) Delete(ctx context.Context, id int) error {
+	if err := i.blogRepository.Delete(ctx, id); err != nil {
+		return err
+	}
+
+	// TODO: blog_tagsで該当するblog_idを持つレコードを削除する
+
 	return nil
 }

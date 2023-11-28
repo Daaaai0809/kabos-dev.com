@@ -49,6 +49,10 @@ func (h *BlogHandler) Create(c echo.Context) error {
 		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
 	}
 
+	if err := h.blogInteractor.Create(c.Request().Context(), CreateBlogRequest.ToEntity()); err != nil {
+		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
+	}
+
 	return nil
 }
 
