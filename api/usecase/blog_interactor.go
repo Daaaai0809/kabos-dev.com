@@ -19,10 +19,14 @@ type IBlogInteractor interface {
 
 type BlogInteractor struct {
 	blogRepository repository.IBlogRepository
+	blogTagsRepository repository.IBlogTagsRepository
 }
 
-func NewBlogInteractor(blogRepository repository.IBlogRepository) IBlogInteractor {
-	return &BlogInteractor{blogRepository: blogRepository}
+func NewBlogInteractor(blogRepository repository.IBlogRepository, blogTagsRepository repository.IBlogTagsRepository) IBlogInteractor {
+	return &BlogInteractor{
+		blogRepository: blogRepository,
+		blogTagsRepository: blogTagsRepository,
+	}
 }
 
 func (i *BlogInteractor) GetAll(ctx context.Context) ([]*entity.Blog, error) {
@@ -33,7 +37,7 @@ func (i *BlogInteractor) GetAll(ctx context.Context) ([]*entity.Blog, error) {
 
 	var entityBlogs []*entity.Blog
 	for _, blog := range blogs {
-		entityBlog := blog.ToUserEntity()
+		entityBlog := blog.ToBlogEntity()
 		entityBlogs = append(entityBlogs, entityBlog)
 	}
 
@@ -48,7 +52,7 @@ func (i *BlogInteractor) GetSearchedBlog(ctx context.Context, searchWord string)
 
 	var entityBlogs []*entity.Blog
 	for _, blog := range blogs {
-		entityBlog := blog.ToUserEntity()
+		entityBlog := blog.ToBlogEntity()
 		entityBlogs = append(entityBlogs, entityBlog)
 	}
 
@@ -61,7 +65,7 @@ func (i *BlogInteractor) GetByID(ctx context.Context, id int) (*entity.Blog, err
 		return nil, err
 	}
 
-	entityBlog := blog.ToUserEntity()
+	entityBlog := blog.ToBlogEntity()
 
 	return entityBlog, nil
 }
@@ -78,7 +82,18 @@ func (i *BlogInteractor) Create(ctx context.Context, blog *entity.Blog) error {
 		return err
 	}
 
-	// TODO: blog_tagsにTagとのリレーションを作成する
+	blogTagsModels := []*models.BlogTags{}
+	for _, tag := range blog.Tags {
+		blogTagsModel := &models.BlogTags{
+			BlogID: userModel.ID,
+			TagID:  tag.ID,
+		}
+		blogTagsModels = append(blogTagsModels, blogTagsModel)
+	}
+
+	if err := i.blogTagsRepository.Create(ctx, blogTagsModels); err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -96,7 +111,22 @@ func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) error {
 		return err
 	}
 
-	// TODO: リレーションの変更を反映する
+	blogTagsModels := []*models.BlogTags{}
+	for _, tag := range blog.Tags {
+		blogTagsModel := &models.BlogTags{
+			BlogID: userModel.ID,
+			TagID:  tag.ID,
+		}
+		blogTagsModels = append(blogTagsModels, blogTagsModel)
+	}
+
+	if err := i.blogTagsRepository.DeleteByBlogID(ctx, userModel.ID); err != nil {
+		return err
+	}
+
+	if err := i.blogTagsRepository.Create(ctx, blogTagsModels); err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -106,7 +136,9 @@ func (i *BlogInteractor) Delete(ctx context.Context, id int) error {
 		return err
 	}
 
-	// TODO: blog_tagsで該当するblog_idを持つレコードを削除する
+	if err := i.blogTagsRepository.DeleteByBlogID(ctx, id); err != nil {
+		return err
+	}
 
 	return nil
 }

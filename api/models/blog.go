@@ -17,6 +17,11 @@ type Blog struct {
 	UpdatedAt time.Time `json:"updated_at" bun:"updated_at,default:current_timestamp"`
 }
 
-func (b *Blog) ToUserEntity() *entity.Blog {
-	return entity.NewBlogEntity(b.ID, b.Title, b.Content, b.Thumbnail, b.URL, b.CreatedAt, b.UpdatedAt)
+func (b *Blog) ToBlogEntity() *entity.Blog {
+	var entityTags []*entity.Tag
+	for _, tag := range b.Tags {
+		entityTag := tag.ToTagEntity()
+		entityTags = append(entityTags, entityTag)
+	}
+	return entity.NewBlogEntity(b.ID, b.Title, b.Content, b.Thumbnail, b.URL, entityTags, b.CreatedAt, b.UpdatedAt)
 }

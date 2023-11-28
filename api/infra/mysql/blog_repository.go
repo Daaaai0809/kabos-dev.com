@@ -23,7 +23,7 @@ func NewBlogRepository(db *bun.DB) repository.IBlogRepository {
 func (r *blogRepository) GetAll(ctx context.Context) ([]*models.Blog, error) {
 	var blogs []*models.Blog
 
-	if err := r.db.NewSelect().Model(&blogs).Scan(ctx); err != nil {
+	if err := r.db.NewSelect().Model(&blogs).Relation("Tags").Scan(ctx); err != nil {
 		return nil, err
 	}
 
@@ -33,7 +33,7 @@ func (r *blogRepository) GetAll(ctx context.Context) ([]*models.Blog, error) {
 func (r *blogRepository) GetSearchedBlog(ctx context.Context, searchWord string) ([]*models.Blog, error) {
 	var blogs []*models.Blog
 
-	if err := r.db.NewSelect().Model(&blogs).Where("title LIKE ?", "%"+searchWord+"%").Scan(ctx); err != nil {
+	if err := r.db.NewSelect().Model(&blogs).Where("title LIKE ?", "%"+searchWord+"%").Relation("Tags").Scan(ctx); err != nil {
 		return nil, err
 	}
 
@@ -43,7 +43,7 @@ func (r *blogRepository) GetSearchedBlog(ctx context.Context, searchWord string)
 func (r *blogRepository) GetByID(ctx context.Context, id int) (*models.Blog, error) {
 	var blog models.Blog
 
-	if err := r.db.NewSelect().Model(&blog).Where("id = ?", id).Scan(ctx); err != nil {
+	if err := r.db.NewSelect().Model(&blog).Where("id = ?", id).Relation("Tags").Scan(ctx); err != nil {
 		return nil, err
 	}
 

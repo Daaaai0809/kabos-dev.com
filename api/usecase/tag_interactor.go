@@ -19,10 +19,14 @@ type ITagInteractor interface {
 
 type TagInteractor struct {
 	tagRepository repository.ITagRepository
+	blogTagsRepository repository.IBlogTagsRepository
 }
 
-func NewTagInteractor(tagRepository repository.ITagRepository) ITagInteractor {
-	return &TagInteractor{tagRepository: tagRepository}
+func NewTagInteractor(tagRepository repository.ITagRepository, blogTagsRepository repository.IBlogTagsRepository) ITagInteractor {
+	return &TagInteractor{
+		tagRepository: tagRepository,
+		blogTagsRepository: blogTagsRepository,
+	}
 }
 
 func (i *TagInteractor) GetAll(ctx context.Context) ([]*entity.Tag, error) {
@@ -96,7 +100,9 @@ func (i *TagInteractor) Delete(ctx context.Context, id int) error {
 		return err
 	}
 
-	// TODO: blog_tagsで該当するtag_idを持つレコードを削除する
+	if err := i.blogTagsRepository.DeleteByTagID(ctx, id); err != nil {
+		return err
+	}
 
 	return nil
 }
