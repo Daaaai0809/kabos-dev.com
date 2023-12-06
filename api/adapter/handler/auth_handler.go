@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/Daaaai0809/kabos-dev.com/config"
-	"github.com/Daaaai0809/kabos-dev.com/constant"
-	"github.com/Daaaai0809/kabos-dev.com/request/auth"
+	"github.com/Daaaai0809/kabos-dev.com/constants"
+	"github.com/Daaaai0809/kabos-dev.com/adapter/request/auth"
 	"github.com/Daaaai0809/kabos-dev.com/usecase"
 	"github.com/labstack/echo/v4"
 )

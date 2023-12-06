@@ -3,8 +3,9 @@ package handler
 import (
 	"net/http"
 
-	"github.com/Daaaai0809/kabos-dev.com/constant"
-	"github.com/Daaaai0809/kabos-dev.com/request/blog"
+	"github.com/Daaaai0809/kabos-dev.com/adapter/request/blog"
+	"github.com/Daaaai0809/kabos-dev.com/constants"
+	"github.com/Daaaai0809/kabos-dev.com/domain/entity"
 	"github.com/Daaaai0809/kabos-dev.com/usecase"
 	"github.com/labstack/echo/v4"
 )
@@ -49,7 +50,14 @@ func (h *BlogHandler) Create(c echo.Context) error {
 		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
 	}
 
-	if err := h.blogInteractor.Create(c.Request().Context(), CreateBlogRequest.ToEntity()); err != nil {
+	blog := &entity.Blog{
+		Title:     CreateBlogRequest.Title,
+		Content:   CreateBlogRequest.Content,
+		Thumbnail: CreateBlogRequest.Thumbnail,
+		URL:       CreateBlogRequest.URL,
+	}
+
+	if err := h.blogInteractor.Create(c.Request().Context(), blog); err != nil {
 		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
 	}
 
