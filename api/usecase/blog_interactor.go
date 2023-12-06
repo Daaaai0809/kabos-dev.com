@@ -10,9 +10,9 @@ import (
 )
 
 type IBlogInteractor interface {
-	GetAll(ctx context.Context) (*presenter.GetAllResponse, error)
+	GetAll(ctx context.Context) (*presenter.GetAllBlogResponse, error)
 	GetSearchedBlog(ctx context.Context, searchWord string) (*presenter.GetSearchedBlogResponse, error)
-	GetByID(ctx context.Context, id int) (*presenter.GetByIDResponse, error)
+	GetByID(ctx context.Context, id int) (*presenter.GetBlogByIDResponse, error)
 	Create(ctx context.Context, blog *entity.Blog) (*presenter.CreateBlogResponse, error)
 	Update(ctx context.Context, blog *entity.Blog) (*presenter.UpdateBlogResponse, error)
 	Delete(ctx context.Context, id int) error
@@ -35,7 +35,7 @@ func NewBlogInteractor(blogRepository repository.IBlogRepository, blogTagsReposi
 func (i *BlogInteractor) GetAll(ctx context.Context) (*presenter.GetAllBlogResponse, error) {
 	blogs, err := i.blogRepository.GetAll(ctx)
 	if err != nil {
-		return nil, err
+		return &presenter.GetAllBlogResponse{}, err
 	}
 
 	var entityBlogs []*entity.Blog
@@ -50,7 +50,7 @@ func (i *BlogInteractor) GetAll(ctx context.Context) (*presenter.GetAllBlogRespo
 func (i *BlogInteractor) GetSearchedBlog(ctx context.Context, searchWord string) (*presenter.GetSearchedBlogResponse, error) {
 	blogs, err := i.blogRepository.GetSearchedBlog(ctx, searchWord)
 	if err != nil {
-		return nil, err
+		return &presenter.GetSearchedBlogResponse{}, err
 	}
 
 	var entityBlogs []*entity.Blog
@@ -65,7 +65,7 @@ func (i *BlogInteractor) GetSearchedBlog(ctx context.Context, searchWord string)
 func (i *BlogInteractor) GetByID(ctx context.Context, id int) (*presenter.GetBlogByIDResponse, error) {
 	blog, err := i.blogRepository.GetByID(ctx, id)
 	if err != nil {
-		return nil, err
+		return &presenter.GetBlogByIDResponse{}, err
 	}
 
 	entityBlog := blog.ToBlogEntity()
@@ -82,7 +82,7 @@ func (i *BlogInteractor) Create(ctx context.Context, blog *entity.Blog) (*presen
 	}
 
 	if err := i.blogRepository.Create(ctx, &blogModel); err != nil {
-		return nil, err
+		return &presenter.CreateBlogResponse{}, err
 	}
 
 	blogTagsModels := []*models.BlogTags{}
@@ -95,13 +95,13 @@ func (i *BlogInteractor) Create(ctx context.Context, blog *entity.Blog) (*presen
 	}
 
 	if err := i.blogTagsRepository.Create(ctx, blogTagsModels); err != nil {
-		return nil, err
+		return &presenter.CreateBlogResponse{}, err
 	}
 
 	return i.blogPresenter.GenerateCreateResponse(entityBlog), nil
 }
 
-func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) error {
+func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) (*presenter.UpdateBlogResponse, error) {
 	blogModel := models.Blog{
 		ID:        blog.ID,
 		Title:     blog.Title,
@@ -111,7 +111,7 @@ func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) error {
 	}
 
 	if err := i.blogRepository.Update(ctx, &blogModel); err != nil {
-		return err
+		return &presenter.UpdateBlogResponse{}, err
 	}
 
 	blogTagsModels := []*models.BlogTags{}
@@ -124,14 +124,19 @@ func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) error {
 	}
 
 	if err := i.blogTagsRepository.DeleteByBlogID(ctx, blogModel.ID); err != nil {
-		return err
+		return &presenter.UpdateBlogResponse{}, err
 	}
 
 	if err := i.blogTagsRepository.Create(ctx, blogTagsModels); err != nil {
-		return err
+		return &presenter.UpdateBlogResponse{}, err
 	}
 
-	return nil
+	updatedBlog, err := i.blogRepository.GetByID(ctx, blogModel.ID)
+	if err != nil {
+		return &presenter.UpdateBlogResponse{}, err
+	}
+
+	return i.blogPresenter.GenerateUpdateResponse(updatedBlog.ToBlogEntity()), nil
 }
 
 func (i *BlogInteractor) Delete(ctx context.Context, id int) error {
