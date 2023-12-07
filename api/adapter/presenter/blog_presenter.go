@@ -12,15 +12,17 @@ func NewBlogPresenter() presenter.IBlogPresenter {
 }
 
 func (p *BlogPresenter) GenerateGetAllResponse(blogs []*entity.Blog) *presenter.GetAllBlogResponse {
-	var tags []presenter.TagResponse
+	tags := make([]presenter.TagResponse, 0)
 
 	var blogsResponse presenter.GetAllBlogResponse
 	for _, blog := range blogs {
-		for _, tag := range blog.Tags {
-			tags = append(tags, presenter.TagResponse{
-				ID:   tag.ID,
-				Name: tag.Name,
-			})
+		if len(blog.Tags) > 0 {
+			for _, tag := range blog.Tags {
+				tags = append(tags, presenter.TagResponse{
+					ID:   tag.ID,
+					Name: tag.Name,
+				})
+			}
 		}
 
 		blogsResponse.Blogs = append(blogsResponse.Blogs, presenter.BlogResponse{
@@ -38,15 +40,17 @@ func (p *BlogPresenter) GenerateGetAllResponse(blogs []*entity.Blog) *presenter.
 }
 	
 func (p *BlogPresenter) GenerateGetSearchedBlogResponse(blogs []*entity.Blog) *presenter.GetSearchedBlogResponse {
-	var tags []presenter.TagResponse
+	tags := make([]presenter.TagResponse, 0)
 	
 	var blogsResponse presenter.GetSearchedBlogResponse
 	for _, blog := range blogs {
-		for _, tag := range blog.Tags {
-			tags = append(tags, presenter.TagResponse{
-				ID:   tag.ID,
-				Name: tag.Name,
-			})
+		if len(blog.Tags) > 0 {
+			for _, tag := range blog.Tags {
+				tags = append(tags, presenter.TagResponse{
+					ID:   tag.ID,
+					Name: tag.Name,
+				})
+			}
 		}
 
 		blogsResponse.Blogs = append(blogsResponse.Blogs, presenter.BlogResponse{
@@ -64,13 +68,15 @@ func (p *BlogPresenter) GenerateGetSearchedBlogResponse(blogs []*entity.Blog) *p
 }
 
 func (p *BlogPresenter) GenerateGetByIDResponse(blog *entity.Blog) *presenter.GetBlogByIDResponse {
-	var tags []presenter.TagResponse
-
-	for _, tag := range blog.Tags {
-		tags = append(tags, presenter.TagResponse{
-			ID:   tag.ID,
-			Name: tag.Name,
-		})
+	tags := make([]presenter.TagResponse, 0)
+	
+	if len(blog.Tags) > 0 {
+		for _, tag := range blog.Tags {
+			tags = append(tags, presenter.TagResponse{
+				ID:   tag.ID,
+				Name: tag.Name,
+			})
+		}
 	}
 
 	var blogResponse presenter.GetBlogByIDResponse
@@ -88,13 +94,15 @@ func (p *BlogPresenter) GenerateGetByIDResponse(blog *entity.Blog) *presenter.Ge
 }
 
 func (p *BlogPresenter) GenerateCreateResponse(blog *entity.Blog) *presenter.CreateBlogResponse {
-	var tags []presenter.TagResponse
+	tags := make([]presenter.TagResponse, 0)
 
-	for _, tag := range blog.Tags {
-		tags = append(tags, presenter.TagResponse{
-			ID:   tag.ID,
-			Name: tag.Name,
-		})
+	if len(blog.Tags) > 0 {
+		for _, tag := range blog.Tags {
+			tags = append(tags, presenter.TagResponse{
+				ID:   tag.ID,
+				Name: tag.Name,
+			})
+		}
 	}
 
 	var blogResponse presenter.CreateBlogResponse
@@ -112,13 +120,15 @@ func (p *BlogPresenter) GenerateCreateResponse(blog *entity.Blog) *presenter.Cre
 }
 
 func (p *BlogPresenter) GenerateUpdateResponse(blog *entity.Blog) *presenter.UpdateBlogResponse {
-	var tags []presenter.TagResponse
+	tags := make([]presenter.TagResponse, 0)
 
-	for _, tag := range blog.Tags {
-		tags = append(tags, presenter.TagResponse{
-			ID:   tag.ID,
-			Name: tag.Name,
-		})
+	if len(blog.Tags) > 0 {
+		for _, tag := range blog.Tags {
+			tags = append(tags, presenter.TagResponse{
+				ID:   tag.ID,
+				Name: tag.Name,
+			})
+		}
 	}
 
 	var blogResponse presenter.UpdateBlogResponse

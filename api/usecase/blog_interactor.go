@@ -86,25 +86,29 @@ func (i *BlogInteractor) Create(ctx context.Context, blog *entity.Blog) (*presen
 		return &presenter.CreateBlogResponse{}, err
 	}
 
-	// blogTagsModels := []*models.BlogTags{}
-	// for _, tag := range blog.Tags {
-	// 	blogTagsModel := &models.BlogTags{
-	// 		BlogID: blogModel.ID,
-	// 		TagID:  tag.ID,
-	// 	}
-	// 	blogTagsModels = append(blogTagsModels, blogTagsModel)
-	// }
-
-	// if err := i.blogTagsRepository.Create(ctx, blogTagsModels); err != nil {
-	// 	return &presenter.CreateBlogResponse{}, err
-	// }
-
 	createdBlog, err := i.blogRepository.GetByID(ctx, id)
 	if err != nil {
 		return &presenter.CreateBlogResponse{}, err
 	}
 
 	entityBlog := createdBlog.ToBlogEntity()
+
+	if len(blog.TagIDs) == 0 {
+		return i.blogPresenter.GenerateCreateResponse(entityBlog), nil
+	}
+
+	blogTagsModels := []*models.BlogTags{}
+	for _, tagID := range blog.TagIDs {
+		blogTagsModel := &models.BlogTags{
+			BlogID: blogModel.ID,
+			TagID:  tagID,
+		}
+		blogTagsModels = append(blogTagsModels, blogTagsModel)
+	}
+
+	if err := i.blogTagsRepository.Create(ctx, blogTagsModels); err != nil {
+		return &presenter.CreateBlogResponse{}, err
+	}
 
 	return i.blogPresenter.GenerateCreateResponse(entityBlog), nil
 }
@@ -122,29 +126,35 @@ func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) (*presen
 		return &presenter.UpdateBlogResponse{}, err
 	}
 
-	// blogTagsModels := []*models.BlogTags{}
-	// for _, tag := range blog.Tags {
-	// 	blogTagsModel := &models.BlogTags{
-	// 		BlogID: blogModel.ID,
-	// 		TagID:  tag.ID,
-	// 	}
-	// 	blogTagsModels = append(blogTagsModels, blogTagsModel)
-	// }
-
-	// if err := i.blogTagsRepository.DeleteByBlogID(ctx, blogModel.ID); err != nil {
-	// 	return &presenter.UpdateBlogResponse{}, err
-	// }
-
-	// if err := i.blogTagsRepository.Create(ctx, blogTagsModels); err != nil {
-	// 	return &presenter.UpdateBlogResponse{}, err
-	// }
-
 	updatedBlog, err := i.blogRepository.GetByID(ctx, blogModel.ID)
 	if err != nil {
 		return &presenter.UpdateBlogResponse{}, err
 	}
 
-	return i.blogPresenter.GenerateUpdateResponse(updatedBlog.ToBlogEntity()), nil
+	entityBlog := updatedBlog.ToBlogEntity()
+
+	if len(blog.TagIDs) == 0 {
+		return i.blogPresenter.GenerateUpdateResponse(entityBlog), nil
+	}
+
+	blogTagsModels := []*models.BlogTags{}
+	for _, tagID := range blog.TagIDs {
+		blogTagsModel := &models.BlogTags{
+			BlogID: blogModel.ID,
+			TagID:  tagID,
+		}
+		blogTagsModels = append(blogTagsModels, blogTagsModel)
+	}
+
+	if err := i.blogTagsRepository.DeleteByBlogID(ctx, blogModel.ID); err != nil {
+		return &presenter.UpdateBlogResponse{}, err
+	}
+
+	if err := i.blogTagsRepository.Create(ctx, blogTagsModels); err != nil {
+		return &presenter.UpdateBlogResponse{}, err
+	}
+
+	return i.blogPresenter.GenerateUpdateResponse(entityBlog), nil
 }
 
 func (i *BlogInteractor) Delete(ctx context.Context, id int) error {

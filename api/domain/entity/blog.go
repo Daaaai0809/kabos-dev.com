@@ -10,7 +10,8 @@ type Blog struct {
 	Content   string    `json:"content"`
 	Thumbnail string    `json:"thumbnail"`
 	URL	   	  string    `json:"url"`
-	Tags 	  []*Tag    `json:"tags"`
+	TagIDs	  []int     `json:"tag_ids"`
+	Tags      []*Tag    `json:"tags"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }

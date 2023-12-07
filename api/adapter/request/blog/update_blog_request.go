@@ -6,4 +6,5 @@ type UpdateBlogRequest struct {
 	Content   string `json:"content"`
 	Thumbnail string `json:"thumbnail"`
 	URL       string `json:"url"`
+	TagIDs    []int  `json:"tag_ids"`
 }

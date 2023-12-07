@@ -38,7 +38,7 @@ func (h *BlogHandler) GetAll(c echo.Context) error {
 }
 
 func (h *BlogHandler) GetSearchedBlog(c echo.Context) error {
-	searchWord := c.QueryParam("searchWord")
+	searchWord := c.QueryParam("search_word")
 
 	res, err := h.blogInteractor.GetSearchedBlog(c.Request().Context(), searchWord)
 	if err != nil {
@@ -75,6 +75,7 @@ func (h *BlogHandler) Create(c echo.Context) error {
 		Content:   CreateBlogRequest.Content,
 		Thumbnail: CreateBlogRequest.Thumbnail,
 		URL:       CreateBlogRequest.URL,
+		TagIDs:    CreateBlogRequest.TagIDs,
 	}
 
 	res, err := h.blogInteractor.Create(c.Request().Context(), blog)
@@ -104,6 +105,7 @@ func (h *BlogHandler) Update(c echo.Context) error {
 		Content:   UpdateBlogRequest.Content,
 		Thumbnail: UpdateBlogRequest.Thumbnail,
 		URL:       UpdateBlogRequest.URL,
+		TagIDs:    UpdateBlogRequest.TagIDs,
 	}
 
 	res, err := h.blogInteractor.Update(c.Request().Context(), blog)
