@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/Daaaai0809/kabos-dev.com/adapter/request/blog"
 	"github.com/Daaaai0809/kabos-dev.com/constants"
@@ -14,17 +15,17 @@ type BlogHandler struct {
 	blogInteractor usecase.IBlogInteractor
 }
 
-func NewBlogHandler(group *echo.Group, blogInteractor usecase.IBlogInteractor) {
+func NewBlogHandler(group *echo.Group, adminGroup *echo.Group, blogInteractor usecase.IBlogInteractor) {
 	handler := &BlogHandler{
 		blogInteractor: blogInteractor,
 	}
 
-	group.GET("/blogs", handler.GetAll)
-	group.GET("/blogs/search", handler.GetSearchedBlog)
-	group.GET("/blogs/:id", handler.GetByID)
-	group.POST("/blogs", handler.Create)
-	group.PUT("/blogs/:id", handler.Update)
-	group.DELETE("/blogs/:id", handler.Delete)
+	group.GET("/", handler.GetAll)
+	group.GET("/search", handler.GetSearchedBlog)
+	group.GET("/:id", handler.GetByID)
+	adminGroup.POST("/", handler.Create)
+	adminGroup.PUT("/:id", handler.Update)
+	adminGroup.DELETE("/:id", handler.Delete)
 }
 
 func (h *BlogHandler) GetAll(c echo.Context) error {
@@ -37,11 +38,30 @@ func (h *BlogHandler) GetAll(c echo.Context) error {
 }
 
 func (h *BlogHandler) GetSearchedBlog(c echo.Context) error {
-	return nil
+	searchWord := c.QueryParam("searchWord")
+
+	res, err := h.blogInteractor.GetSearchedBlog(c.Request().Context(), searchWord)
+	if err != nil {
+		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
+	}
+
+	return c.JSON(http.StatusOK, res)
 }
 
 func (h *BlogHandler) GetByID(c echo.Context) error {
-	return nil
+	id := c.Param("id")
+
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
+	}
+
+	res, err := h.blogInteractor.GetByID(c.Request().Context(), intID)
+	if err != nil {
+		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
+	}
+
+	return c.JSON(http.StatusOK, res)
 }
 
 func (h *BlogHandler) Create(c echo.Context) error {
@@ -57,17 +77,54 @@ func (h *BlogHandler) Create(c echo.Context) error {
 		URL:       CreateBlogRequest.URL,
 	}
 
-	if err := h.blogInteractor.Create(c.Request().Context(), blog); err != nil {
+	res, err := h.blogInteractor.Create(c.Request().Context(), blog)
+	if err != nil {
 		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
 	}
 
-	return nil
+	return c.JSON(http.StatusCreated, res)
 }
 
 func (h *BlogHandler) Update(c echo.Context) error {
-	return nil
+	id := c.Param("id")
+	
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
+	}
+
+	var UpdateBlogRequest = blog.UpdateBlogRequest{}
+	if err := c.Bind(&UpdateBlogRequest); err != nil {
+		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
+	}
+
+	blog := &entity.Blog{
+		ID:        intID,
+		Title:     UpdateBlogRequest.Title,
+		Content:   UpdateBlogRequest.Content,
+		Thumbnail: UpdateBlogRequest.Thumbnail,
+		URL:       UpdateBlogRequest.URL,
+	}
+
+	res, err := h.blogInteractor.Update(c.Request().Context(), blog)
+	if err != nil {
+		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
+	}
+
+	return c.JSON(http.StatusOK, res)
 }
 
 func (h *BlogHandler) Delete(c echo.Context) error {
-	return nil
+	id := c.Param("id")
+
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
+	}
+
+	if err := h.blogInteractor.Delete(c.Request().Context(), intID); err != nil {
+		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
+	}
+
+	return c.JSON(http.StatusOK, constant.SUCCESS_MESSAGE)
 }

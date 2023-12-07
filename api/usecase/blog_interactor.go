@@ -81,22 +81,30 @@ func (i *BlogInteractor) Create(ctx context.Context, blog *entity.Blog) (*presen
 		Content:   blog.Content,
 	}
 
-	if err := i.blogRepository.Create(ctx, &blogModel); err != nil {
+	id, err := i.blogRepository.Create(ctx, &blogModel)
+	if err != nil {
 		return &presenter.CreateBlogResponse{}, err
 	}
 
-	blogTagsModels := []*models.BlogTags{}
-	for _, tag := range blog.Tags {
-		blogTagsModel := &models.BlogTags{
-			BlogID: blogModel.ID,
-			TagID:  tag.ID,
-		}
-		blogTagsModels = append(blogTagsModels, blogTagsModel)
-	}
+	// blogTagsModels := []*models.BlogTags{}
+	// for _, tag := range blog.Tags {
+	// 	blogTagsModel := &models.BlogTags{
+	// 		BlogID: blogModel.ID,
+	// 		TagID:  tag.ID,
+	// 	}
+	// 	blogTagsModels = append(blogTagsModels, blogTagsModel)
+	// }
 
-	if err := i.blogTagsRepository.Create(ctx, blogTagsModels); err != nil {
+	// if err := i.blogTagsRepository.Create(ctx, blogTagsModels); err != nil {
+	// 	return &presenter.CreateBlogResponse{}, err
+	// }
+
+	createdBlog, err := i.blogRepository.GetByID(ctx, id)
+	if err != nil {
 		return &presenter.CreateBlogResponse{}, err
 	}
+
+	entityBlog := createdBlog.ToBlogEntity()
 
 	return i.blogPresenter.GenerateCreateResponse(entityBlog), nil
 }
@@ -114,22 +122,22 @@ func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) (*presen
 		return &presenter.UpdateBlogResponse{}, err
 	}
 
-	blogTagsModels := []*models.BlogTags{}
-	for _, tag := range blog.Tags {
-		blogTagsModel := &models.BlogTags{
-			BlogID: blogModel.ID,
-			TagID:  tag.ID,
-		}
-		blogTagsModels = append(blogTagsModels, blogTagsModel)
-	}
+	// blogTagsModels := []*models.BlogTags{}
+	// for _, tag := range blog.Tags {
+	// 	blogTagsModel := &models.BlogTags{
+	// 		BlogID: blogModel.ID,
+	// 		TagID:  tag.ID,
+	// 	}
+	// 	blogTagsModels = append(blogTagsModels, blogTagsModel)
+	// }
 
-	if err := i.blogTagsRepository.DeleteByBlogID(ctx, blogModel.ID); err != nil {
-		return &presenter.UpdateBlogResponse{}, err
-	}
+	// if err := i.blogTagsRepository.DeleteByBlogID(ctx, blogModel.ID); err != nil {
+	// 	return &presenter.UpdateBlogResponse{}, err
+	// }
 
-	if err := i.blogTagsRepository.Create(ctx, blogTagsModels); err != nil {
-		return &presenter.UpdateBlogResponse{}, err
-	}
+	// if err := i.blogTagsRepository.Create(ctx, blogTagsModels); err != nil {
+	// 	return &presenter.UpdateBlogResponse{}, err
+	// }
 
 	updatedBlog, err := i.blogRepository.GetByID(ctx, blogModel.ID)
 	if err != nil {

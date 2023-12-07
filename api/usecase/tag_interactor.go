@@ -6,6 +6,7 @@ import (
 	"github.com/Daaaai0809/kabos-dev.com/domain/entity"
 	"github.com/Daaaai0809/kabos-dev.com/domain/repository"
 	"github.com/Daaaai0809/kabos-dev.com/models"
+	"github.com/Daaaai0809/kabos-dev.com/usecase/presenter"
 )
 
 type ITagInteractor interface {
@@ -20,12 +21,14 @@ type ITagInteractor interface {
 type TagInteractor struct {
 	tagRepository repository.ITagRepository
 	blogTagsRepository repository.IBlogTagsRepository
+	tagPresenter presenter.ITagPresenter
 }
 
-func NewTagInteractor(tagRepository repository.ITagRepository, blogTagsRepository repository.IBlogTagsRepository) ITagInteractor {
+func NewTagInteractor(tagRepository repository.ITagRepository, blogTagsRepository repository.IBlogTagsRepository, tagPresenter presenter.ITagPresenter) ITagInteractor {
 	return &TagInteractor{
 		tagRepository: tagRepository,
 		blogTagsRepository: blogTagsRepository,
+		tagPresenter: tagPresenter,
 	}
 }
 

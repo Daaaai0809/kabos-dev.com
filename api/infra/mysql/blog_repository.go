@@ -50,15 +50,21 @@ func (r *blogRepository) GetByID(ctx context.Context, id int) (*models.Blog, err
 	return &blog, nil
 }
 
-func (r *blogRepository) Create(ctx context.Context, blog *models.Blog) error {
+func (r *blogRepository) Create(ctx context.Context, blog *models.Blog) (int, error) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	if _, err := r.db.NewInsert().Model(blog).Exec(ctx); err != nil {
-		return err
+	result, err := r.db.NewInsert().Model(blog).Exec(ctx) 
+	if err != nil {
+		return 0, err
 	}
 
-	return nil
+	createdID, err := result.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(createdID), nil
 }
 
 func (r *blogRepository) Update(ctx context.Context, blog *models.Blog) error {
