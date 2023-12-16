@@ -10,11 +10,11 @@ import (
 )
 
 type ITagInteractor interface {
-	GetAll(ctx context.Context) ([]*entity.Tag, error)
-	GetByID(ctx context.Context, id int) (*entity.Tag, error)
-	GetByName(ctx context.Context, name string) ([]*entity.Tag, error)
-	Create(ctx context.Context, tag *entity.Tag) error
-	Update(ctx context.Context, tag *entity.Tag) error
+	GetAll(ctx context.Context) (*presenter.GetAllTagResponse, error)
+	GetByID(ctx context.Context, id int) (*presenter.GetTagByIDResponse, error)
+	GetByName(ctx context.Context, name string) (*presenter.GetTagByNameResponse, error)
+	Create(ctx context.Context, tag *entity.Tag) (error)
+	Update(ctx context.Context, tag *entity.Tag) (error)
 	Delete(ctx context.Context, id int) error
 }
 
@@ -32,10 +32,10 @@ func NewTagInteractor(tagRepository repository.ITagRepository, blogTagsRepositor
 	}
 }
 
-func (i *TagInteractor) GetAll(ctx context.Context) ([]*entity.Tag, error) {
+func (i *TagInteractor) GetAll(ctx context.Context) (*presenter.GetAllTagResponse, error) {
 	tags, err := i.tagRepository.GetAll(ctx)
 	if err != nil {
-		return nil, err
+		return &presenter.GetAllTagResponse{}, err
 	}
 
 	var entityTags []*entity.Tag
@@ -44,24 +44,24 @@ func (i *TagInteractor) GetAll(ctx context.Context) ([]*entity.Tag, error) {
 		entityTags = append(entityTags, entityTag)
 	}
 
-	return entityTags, nil
+	return i.tagPresenter.GenerateGetAllResponse(entityTags), nil
 }
 
-func (i *TagInteractor) GetByID(ctx context.Context, id int) (*entity.Tag, error) {
+func (i *TagInteractor) GetByID(ctx context.Context, id int) (*presenter.GetTagByIDResponse, error) {
 	tag, err := i.tagRepository.GetByID(ctx, id)
 	if err != nil {
-		return nil, err
+		return &presenter.GetTagByIDResponse{}, err
 	}
 
 	entityTag := tag.ToTagEntity()
 
-	return entityTag, nil
+	return i.tagPresenter.GenerateGetByIDResponse(entityTag), nil
 }
 
-func (i *TagInteractor) GetByName(ctx context.Context, name string) ([]*entity.Tag, error) {
+func (i *TagInteractor) GetByName(ctx context.Context, name string) (*presenter.GetTagByNameResponse, error) {
 	tags, err := i.tagRepository.GetByName(ctx, name)
 	if err != nil {
-		return nil, err
+		return &presenter.GetTagByNameResponse{}, err
 	}
 
 	var entityTags []*entity.Tag
@@ -70,7 +70,7 @@ func (i *TagInteractor) GetByName(ctx context.Context, name string) ([]*entity.T
 		entityTags = append(entityTags, entityTag)
 	}
 
-	return entityTags, nil
+	return i.tagPresenter.GenerateGetByNameResponse(entityTags), nil
 }
 
 func (i *TagInteractor) Create(ctx context.Context, tag *entity.Tag) error {

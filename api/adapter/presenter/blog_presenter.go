@@ -12,10 +12,10 @@ func NewBlogPresenter() presenter.IBlogPresenter {
 }
 
 func (p *BlogPresenter) GenerateGetAllResponse(blogs []*entity.Blog) *presenter.GetAllBlogResponse {
-	tags := make([]presenter.TagResponse, 0)
-
 	var blogsResponse presenter.GetAllBlogResponse
 	for _, blog := range blogs {
+		tags := make([]presenter.TagResponse, 0)
+		
 		if len(blog.Tags) > 0 {
 			for _, tag := range blog.Tags {
 				tags = append(tags, presenter.TagResponse{

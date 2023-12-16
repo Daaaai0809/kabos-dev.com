@@ -33,12 +33,12 @@ func main() {
 	authInteractor := usecase.NewAuthInteractor()
 	authGateway := auth.NewAuthGateway(authInteractor)
 	blogRepository := mysql.NewBlogRepository(bunDB)
-	// tagRepository := mysql.NewTagRepository(bunDB)
+	tagRepository := mysql.NewTagRepository(bunDB)
 	blogTagsRepository := mysql.NewBlogTagsRepository(bunDB)
 	blogPresenter := presenter.NewBlogPresenter()
-	// tagPresenter := presenter.NewTagPresenter()
+	tagPresenter := presenter.NewTagPresenter()
 	blogInteractor := usecase.NewBlogInteractor(blogRepository, blogTagsRepository, blogPresenter)
-	// tagInteractor := usecase.NewTagInteractor(tagRepository, blogTagsRepository, tagPresenter)
+	tagInteractor := usecase.NewTagInteractor(tagRepository, blogTagsRepository, tagPresenter)
 
 
 	apiGroup := e.Group("/api")
@@ -52,6 +52,10 @@ func main() {
 	blogGroup := apiGroup.Group("/blog")
 	adminBlogGroup := adminGroup.Group("/blog")
 	handler.NewBlogHandler(blogGroup, adminBlogGroup, blogInteractor)
+
+	tagGroup := apiGroup.Group("/tag")
+	adminTagGroup := adminGroup.Group("/tag")
+	handler.NewTagHandler(tagGroup, adminTagGroup, tagInteractor)
 
 	e.Start(":8000")
 }

@@ -22,19 +22,19 @@ func NewTagHandler(group *echo.Group, adminGroup *echo.Group, tagInteractor usec
 
 	group.GET("/", handler.GetAll)
 	group.GET("/search", handler.GetSearchedTag)
-	group.GET("/:id", handler.GetByID)
+	adminGroup.GET("/:id", handler.GetByID)
 	adminGroup.POST("/", handler.Create)
 	adminGroup.PUT("/:id", handler.Update)
 	adminGroup.DELETE("/:id", handler.Delete)
 }
 
 func (h *TagHandler) GetAll(c echo.Context) error {
-	tags, err := h.tagInteractor.GetAll(c.Request().Context())
+	res, err := h.tagInteractor.GetAll(c.Request().Context())
 	if err != nil {
 		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
 	}
 
-	return c.JSON(http.StatusOK, tags)
+	return c.JSON(http.StatusOK, res)
 }
 
 func (h *TagHandler) GetSearchedTag(c echo.Context) error {
