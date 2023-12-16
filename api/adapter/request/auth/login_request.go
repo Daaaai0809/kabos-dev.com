@@ -1,4 +1,4 @@
-package request
+package auth
 
 type LoginRequest struct {
 	Password string `json:"password"`
