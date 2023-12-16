@@ -1,6 +1,8 @@
 package presenter
 
 import (
+	"time"
+
 	"github.com/Daaaai0809/kabos-dev.com/domain/entity"
 )
 
@@ -18,7 +20,7 @@ type ProductResponse struct {
 	Thumbnail   string `json:"thumbnail"`
 	Content     string `json:"content"`
 	URL         string `json:"url"`
-	ReleaseDate string `json:"release_date"`
+	ReleasedAt 	time.Time `json:"released_at"`
 }
 
 type GetAllProductResponse struct {
