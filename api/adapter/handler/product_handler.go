@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"database/sql"
 	"net/http"
 	"strconv"
 
@@ -60,6 +61,10 @@ func (h *ProductHandler) GetByID(c echo.Context) error {
 
 	res, err := h.productInteractor.GetByID(c.Request().Context(), intID)
 	if err != nil {
+		if err == sql.ErrNoRows {
+			return c.String(http.StatusNotFound, constant.NOT_FOUND_MESSAGE)
+		}
+
 		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
 	}
 
