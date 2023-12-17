@@ -7,6 +7,7 @@ import (
 	"github.com/labstack/echo/v4"
 
 	"github.com/Daaaai0809/kabos-dev.com/adapter/request/product"
+	"github.com/Daaaai0809/kabos-dev.com/config"
 	"github.com/Daaaai0809/kabos-dev.com/constants"
 	"github.com/Daaaai0809/kabos-dev.com/domain/entity"
 	"github.com/Daaaai0809/kabos-dev.com/usecase"
@@ -71,12 +72,17 @@ func (h *ProductHandler) Create(c echo.Context) error {
 		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
 	}
 
+	formatedDate, err := config.FormatDateFromString(req.ReleasedAt)
+	if err != nil {
+		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
+	}
+
 	product := &entity.Product{
 		Name:        req.Name,
 		Thumbnail:   req.Thumbnail,
 		Content:     req.Content,
 		URL:         req.URL,
-		ReleasedAt: req.ReleasedAt,
+		ReleasedAt:  formatedDate,
 	}
 
 	res, err := h.productInteractor.Create(c.Request().Context(), product)
@@ -100,13 +106,18 @@ func (h *ProductHandler) Update(c echo.Context) error {
 		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
 	}
 
+	formatedDate, err := config.FormatDateFromString(req.ReleasedAt)
+	if err != nil {
+		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
+	}
+
 	product := &entity.Product{
 		ID:          intID,
 		Name:        req.Name,
 		Thumbnail:   req.Thumbnail,
 		Content:     req.Content,
 		URL:         req.URL,
-		ReleasedAt: req.ReleasedAt,
+		ReleasedAt:  formatedDate,
 	}
 
 	res, err := h.productInteractor.Update(c.Request().Context(), product)
