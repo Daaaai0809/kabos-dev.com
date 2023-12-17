@@ -34,11 +34,14 @@ func main() {
 	authGateway := auth.NewAuthGateway(authInteractor)
 	blogRepository := mysql.NewBlogRepository(bunDB)
 	tagRepository := mysql.NewTagRepository(bunDB)
+	productRepository := mysql.NewProductRepository(bunDB)
 	blogTagsRepository := mysql.NewBlogTagsRepository(bunDB)
 	blogPresenter := presenter.NewBlogPresenter()
 	tagPresenter := presenter.NewTagPresenter()
+	productPresenter := presenter.NewProductPresenter()
 	blogInteractor := usecase.NewBlogInteractor(blogRepository, blogTagsRepository, blogPresenter)
 	tagInteractor := usecase.NewTagInteractor(tagRepository, blogTagsRepository, tagPresenter)
+	productInteractor := usecase.NewProductInteractor(productRepository, productPresenter)
 
 
 	apiGroup := e.Group("/api")
@@ -56,6 +59,10 @@ func main() {
 	tagGroup := apiGroup.Group("/tag")
 	adminTagGroup := adminGroup.Group("/tag")
 	handler.NewTagHandler(tagGroup, adminTagGroup, tagInteractor)
+
+	productGroup := apiGroup.Group("/product")
+	adminProductGroup := adminGroup.Group("/product")
+	handler.NewProductHandler(productGroup, adminProductGroup, productInteractor)
 
 	e.Start(":8000")
 }
