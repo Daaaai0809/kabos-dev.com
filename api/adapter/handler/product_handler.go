@@ -10,7 +10,6 @@ import (
 	"github.com/Daaaai0809/kabos-dev.com/adapter/request/product"
 	"github.com/Daaaai0809/kabos-dev.com/config"
 	"github.com/Daaaai0809/kabos-dev.com/constants"
-	"github.com/Daaaai0809/kabos-dev.com/domain/entity"
 	"github.com/Daaaai0809/kabos-dev.com/usecase"
 )
 
@@ -82,13 +81,7 @@ func (h *ProductHandler) Create(c echo.Context) error {
 		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
 	}
 
-	product := &entity.Product{
-		Name:        req.Name,
-		Thumbnail:   req.Thumbnail,
-		Content:     req.Content,
-		URL:         req.URL,
-		ReleasedAt:  formatedDate,
-	}
+	product := h.productInteractor.GenerateProductEntity(c.Request().Context(), 0, req.Name, req.Thumbnail, req.Content, req.URL, formatedDate)
 
 	res, err := h.productInteractor.Create(c.Request().Context(), product)
 	if err != nil {
@@ -116,14 +109,14 @@ func (h *ProductHandler) Update(c echo.Context) error {
 		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
 	}
 
-	product := &entity.Product{
-		ID:          intID,
-		Name:        req.Name,
-		Thumbnail:   req.Thumbnail,
-		Content:     req.Content,
-		URL:         req.URL,
-		ReleasedAt:  formatedDate,
+	updateProduct := h.productInteractor.GenerateProductEntity(c.Request().Context(), intID, req.Name, req.Thumbnail, req.Content, req.URL, formatedDate)
+
+	originProduct, err := h.productInteractor.GetOriginProduct(c.Request().Context(), intID)
+	if err != nil {
+		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
 	}
+
+	product := h.productInteractor.FillInUpdateProduct(c.Request().Context(), originProduct, updateProduct)
 
 	res, err := h.productInteractor.Update(c.Request().Context(), product)
 	if err != nil {

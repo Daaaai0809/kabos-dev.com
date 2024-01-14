@@ -16,6 +16,9 @@ type IBlogInteractor interface {
 	Create(ctx context.Context, blog *entity.Blog) (*presenter.CreateBlogResponse, error)
 	Update(ctx context.Context, blog *entity.Blog) (*presenter.UpdateBlogResponse, error)
 	Delete(ctx context.Context, id int) error
+	GetOriginBlog(ctx context.Context, id int) (*entity.Blog, error)
+	FillInUpdateBlog(ctx context.Context, originBlog *entity.Blog, updateBlog *entity.Blog) *entity.Blog
+	GenerateBlogEntity(ctx context.Context, id int, title string, thumbnail string, url string, tagIDs []int) *entity.Blog
 }
 
 type BlogInteractor struct {
@@ -74,14 +77,9 @@ func (i *BlogInteractor) GetByID(ctx context.Context, id int) (*presenter.GetBlo
 }
 
 func (i *BlogInteractor) Create(ctx context.Context, blog *entity.Blog) (*presenter.CreateBlogResponse, error) {
-	blogModel := models.Blog{
-		Title:     blog.Title,
-		Thumbnail: blog.Thumbnail,
-		URL:       blog.URL,
-		Content:   blog.Content,
-	}
+	blogModel := models.NewCreateBlogModel(blog.Title, blog.Thumbnail, blog.URL)
 
-	id, err := i.blogRepository.Create(ctx, &blogModel)
+	id, err := i.blogRepository.Create(ctx, blogModel)
 	if err != nil {
 		return &presenter.CreateBlogResponse{}, err
 	}
@@ -114,15 +112,16 @@ func (i *BlogInteractor) Create(ctx context.Context, blog *entity.Blog) (*presen
 }
 
 func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) (*presenter.UpdateBlogResponse, error) {
-	blogModel := models.Blog{
-		ID:        blog.ID,
-		Title:     blog.Title,
-		Thumbnail: blog.Thumbnail,
-		URL:       blog.URL,
-		Content:   blog.Content,
-	}
+	blogModel := models.NewBlogModel(
+		blog.ID,
+		blog.Title,
+		blog.Thumbnail,
+		blog.URL,
+		blog.CreatedAt,
+		blog.UpdatedAt,
+	)
 
-	if err := i.blogRepository.Update(ctx, &blogModel); err != nil {
+	if err := i.blogRepository.Update(ctx, blogModel); err != nil {
 		return &presenter.UpdateBlogResponse{}, err
 	}
 
@@ -167,4 +166,50 @@ func (i *BlogInteractor) Delete(ctx context.Context, id int) error {
 	}
 
 	return nil
+}
+
+func (i *BlogInteractor) GetOriginBlog(ctx context.Context, id int) (*entity.Blog, error) {
+	blog, err := i.blogRepository.GetByID(ctx, id)
+	if err != nil {
+		return &entity.Blog{}, err
+	}
+
+	entityBlog := blog.ToBlogEntity()
+
+	return entityBlog, nil
+}
+
+func (i *BlogInteractor) FillInUpdateBlog(ctx context.Context, originBlog *entity.Blog, updateBlog *entity.Blog) *entity.Blog {
+	if updateBlog.Title == "" {
+		updateBlog.Title = originBlog.Title
+	}
+
+	if updateBlog.Thumbnail == "" {
+		updateBlog.Thumbnail = originBlog.Thumbnail
+	}
+
+	if updateBlog.URL == "" {
+		updateBlog.URL = originBlog.URL
+	}
+
+	if len(updateBlog.TagIDs) == 0 {
+		updateBlog.TagIDs = originBlog.TagIDs
+	}
+
+	updateBlog.CreatedAt = originBlog.CreatedAt
+	updateBlog.UpdatedAt = originBlog.UpdatedAt
+
+	return updateBlog
+}
+
+func (i *BlogInteractor) GenerateBlogEntity(ctx context.Context, id int, title string, thumbnail string, url string, tagIDs []int) *entity.Blog {
+	blog := &entity.Blog{
+		ID:        id,
+		Title:     title,
+		Thumbnail: thumbnail,
+		URL:       url,
+		TagIDs:    tagIDs,
+	}
+
+	return blog
 }

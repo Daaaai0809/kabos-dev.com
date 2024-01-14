@@ -16,6 +16,7 @@ import (
 	"github.com/Daaaai0809/kabos-dev.com/config"
 	infra "github.com/Daaaai0809/kabos-dev.com/infra/mysql"
 	"github.com/Daaaai0809/kabos-dev.com/migrations"
+	"github.com/Daaaai0809/kabos-dev.com/models"
 )
 
 const (
@@ -36,6 +37,7 @@ func main() {
 		panic(err)
 	}
 	bunDB := bun.NewDB(db, mysqldialect.New())
+	bunDB.RegisterModel((*models.BlogTags)(nil), (*models.Blog)(nil), (*models.Tag)(nil), (*models.Product)(nil))
 	bunDB.AddQueryHook(bundebug.NewQueryHook(
 		bundebug.WithEnabled(false),
 		bundebug.FromEnv(""),
