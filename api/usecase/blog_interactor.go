@@ -78,7 +78,6 @@ func (i *BlogInteractor) Create(ctx context.Context, blog *entity.Blog) (*presen
 		Title:     blog.Title,
 		Thumbnail: blog.Thumbnail,
 		URL:       blog.URL,
-		Content:   blog.Content,
 	}
 
 	id, err := i.blogRepository.Create(ctx, &blogModel)
@@ -119,7 +118,6 @@ func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) (*presen
 		Title:     blog.Title,
 		Thumbnail: blog.Thumbnail,
 		URL:       blog.URL,
-		Content:   blog.Content,
 	}
 
 	if err := i.blogRepository.Update(ctx, &blogModel); err != nil {

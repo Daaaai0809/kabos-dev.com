@@ -72,7 +72,6 @@ func (h *BlogHandler) Create(c echo.Context) error {
 
 	blog := &entity.Blog{
 		Title:     CreateBlogRequest.Title,
-		Content:   CreateBlogRequest.Content,
 		Thumbnail: CreateBlogRequest.Thumbnail,
 		URL:       CreateBlogRequest.URL,
 		TagIDs:    CreateBlogRequest.TagIDs,
@@ -102,7 +101,6 @@ func (h *BlogHandler) Update(c echo.Context) error {
 	blog := &entity.Blog{
 		ID:        intID,
 		Title:     UpdateBlogRequest.Title,
-		Content:   UpdateBlogRequest.Content,
 		Thumbnail: UpdateBlogRequest.Thumbnail,
 		URL:       UpdateBlogRequest.URL,
 		TagIDs:    UpdateBlogRequest.TagIDs,
