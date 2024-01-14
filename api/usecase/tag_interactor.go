@@ -129,6 +129,9 @@ func (i *TagInteractor) FillInUpdateTag(ctx context.Context, originTag *entity.T
 		updateTag.Name = originTag.Name
 	}
 
+	updateTag.CreatedAt = originTag.CreatedAt
+	updateTag.UpdatedAt = originTag.UpdatedAt
+
 	return updateTag
 }
 

@@ -176,5 +176,8 @@ func (i *ProductInteractor) FillInUpdateProduct(ctx context.Context, originProdu
 		updateProduct.ReleasedAt = originProduct.ReleasedAt
 	}
 
+	updateProduct.CreatedAt = originProduct.CreatedAt
+	updateProduct.UpdatedAt = originProduct.UpdatedAt
+
 	return updateProduct
 }

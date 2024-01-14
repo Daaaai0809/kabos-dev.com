@@ -196,6 +196,9 @@ func (i *BlogInteractor) FillInUpdateBlog(ctx context.Context, originBlog *entit
 		updateBlog.TagIDs = originBlog.TagIDs
 	}
 
+	updateBlog.CreatedAt = originBlog.CreatedAt
+	updateBlog.UpdatedAt = originBlog.UpdatedAt
+
 	return updateBlog
 }
 

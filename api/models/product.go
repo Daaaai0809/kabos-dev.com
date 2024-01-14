@@ -13,8 +13,8 @@ type Product struct {
 	Content     string    `bun:"content,notnull,type:text"`
 	URL         string    `bun:"url"`
 	ReleaseDate time.Time `bun:"release_date"`
-	CreatedAt   time.Time `bun:"created_at,default:current_timestamp"`
-	UpdatedAt   time.Time `bun:"updated_at,default:current_timestamp"`
+	CreatedAt   time.Time `bun:"created_at,nullzero,notnull,default:current_timestamp"`
+	UpdatedAt   time.Time `bun:"updated_at,nullzero,notnull,default:current_timestamp"`
 }
 
 func (p *Product) ToProductEntity() *entity.Product {
