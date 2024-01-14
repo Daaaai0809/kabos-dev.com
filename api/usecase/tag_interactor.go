@@ -16,6 +16,9 @@ type ITagInteractor interface {
 	Create(ctx context.Context, tag *entity.Tag) (error)
 	Update(ctx context.Context, tag *entity.Tag) (error)
 	Delete(ctx context.Context, id int) error
+	GetOriginTag(ctx context.Context, id int) (*entity.Tag, error)
+	FillInUpdateTag(ctx context.Context, originTag *entity.Tag, updateTag *entity.Tag) *entity.Tag
+	GenerateTagEntity(ctx context.Context, id int, name string) *entity.Tag
 }
 
 type TagInteractor struct {
@@ -108,4 +111,30 @@ func (i *TagInteractor) Delete(ctx context.Context, id int) error {
 	}
 
 	return nil
+}
+
+func (i *TagInteractor) GetOriginTag(ctx context.Context, id int) (*entity.Tag, error) {
+	tag, err := i.tagRepository.GetByID(ctx, id)
+	if err != nil {
+		return &entity.Tag{}, err
+	}
+
+	entityTag := tag.ToTagEntity()
+
+	return entityTag, nil
+}
+
+func (i *TagInteractor) FillInUpdateTag(ctx context.Context, originTag *entity.Tag, updateTag *entity.Tag) *entity.Tag {
+	if updateTag.Name == "" {
+		updateTag.Name = originTag.Name
+	}
+
+	return updateTag
+}
+
+func (i *TagInteractor) GenerateTagEntity(ctx context.Context, id int, name string) *entity.Tag {
+	return &entity.Tag{
+		ID: id,
+		Name: name,
+	}
 }

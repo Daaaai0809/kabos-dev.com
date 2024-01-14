@@ -14,3 +14,10 @@ type BlogTags struct {
 func (bt *BlogTags) ToBlogTagsEntity() *entity.BlogTags {
 	return entity.NewBlogTagsEntity(bt.BlogID, bt.TagID)
 }
+
+func NewBlogTagsModel(blogID, tagID int) *BlogTags {
+	return &BlogTags{
+		BlogID: blogID,
+		TagID:  tagID,
+	}
+}

@@ -24,3 +24,22 @@ func (b *Blog) ToBlogEntity() *entity.Blog {
 	}
 	return entity.NewBlogEntity(b.ID, b.Title, b.Thumbnail, b.URL, entityTags, b.CreatedAt, b.UpdatedAt)
 }
+
+func NewBlogModel(id int, title, thumbnail, url string, createdAt, updatedAt time.Time) *Blog {
+	return &Blog{
+		ID:        id,
+		Title:     title,
+		Thumbnail: thumbnail,
+		URL:       url,
+		CreatedAt: createdAt,
+		UpdatedAt: updatedAt,
+	}
+}
+
+func NewCreateBlogModel(title, thumbnail, url string) *Blog {
+	return &Blog{
+		Title:     title,
+		Thumbnail: thumbnail,
+		URL:       url,
+	}
+}

@@ -6,7 +6,6 @@ import (
 
 	"github.com/Daaaai0809/kabos-dev.com/adapter/request/blog"
 	"github.com/Daaaai0809/kabos-dev.com/constants"
-	"github.com/Daaaai0809/kabos-dev.com/domain/entity"
 	"github.com/Daaaai0809/kabos-dev.com/usecase"
 	"github.com/labstack/echo/v4"
 )
@@ -70,12 +69,7 @@ func (h *BlogHandler) Create(c echo.Context) error {
 		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
 	}
 
-	blog := &entity.Blog{
-		Title:     CreateBlogRequest.Title,
-		Thumbnail: CreateBlogRequest.Thumbnail,
-		URL:       CreateBlogRequest.URL,
-		TagIDs:    CreateBlogRequest.TagIDs,
-	}
+	blog := h.blogInteractor.GenerateBlogEntity(c.Request().Context(), 0, CreateBlogRequest.Title, CreateBlogRequest.Thumbnail, CreateBlogRequest.URL, CreateBlogRequest.TagIDs)
 
 	res, err := h.blogInteractor.Create(c.Request().Context(), blog)
 	if err != nil {
@@ -93,18 +87,20 @@ func (h *BlogHandler) Update(c echo.Context) error {
 		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
 	}
 
-	var UpdateBlogRequest = blog.UpdateBlogRequest{}
-	if err := c.Bind(&UpdateBlogRequest); err != nil {
+	var updateBlogRequest = blog.UpdateBlogRequest{}
+	if err := c.Bind(&updateBlogRequest); err != nil {
 		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
 	}
 
-	blog := &entity.Blog{
-		ID:        intID,
-		Title:     UpdateBlogRequest.Title,
-		Thumbnail: UpdateBlogRequest.Thumbnail,
-		URL:       UpdateBlogRequest.URL,
-		TagIDs:    UpdateBlogRequest.TagIDs,
+	updateBlog := h.blogInteractor.GenerateBlogEntity(c.Request().Context(), intID, updateBlogRequest.Title, updateBlogRequest.Thumbnail, updateBlogRequest.URL, updateBlogRequest.TagIDs)
+
+	originBlog, err := h.blogInteractor.GetOriginBlog(c.Request().Context(), intID)
+	if err != nil {
+		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
 	}
+	
+	blog := h.blogInteractor.FillInUpdateBlog(c.Request().Context(), originBlog, updateBlog)
+		
 
 	res, err := h.blogInteractor.Update(c.Request().Context(), blog)
 	if err != nil {

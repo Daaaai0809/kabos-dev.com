@@ -17,3 +17,18 @@ type Tag struct {
 func (t *Tag) ToTagEntity() *entity.Tag {
 	return entity.NewTagEntity(t.ID, t.Name, t.CreatedAt, t.UpdatedAt)
 }
+
+func NewTagModel(id int, name string, createdAt, updatedAt time.Time) *Tag {
+	return &Tag{
+		ID:        id,
+		Name:      name,
+		CreatedAt: createdAt,
+		UpdatedAt: updatedAt,
+	}
+}
+
+func NewCreateTagModel(name string) *Tag {
+	return &Tag{
+		Name: name,
+	}
+}

@@ -6,7 +6,6 @@ import (
 
 	"github.com/Daaaai0809/kabos-dev.com/adapter/request/tag"
 	"github.com/Daaaai0809/kabos-dev.com/constants"
-	"github.com/Daaaai0809/kabos-dev.com/domain/entity"
 	"github.com/Daaaai0809/kabos-dev.com/usecase"
 	"github.com/labstack/echo/v4"
 )
@@ -70,9 +69,7 @@ func (h *TagHandler) Create(c echo.Context) error {
 		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
 	}
 
-	tag := &entity.Tag{
-		Name: tagRequest.Name,
-	}
+	tag := h.tagInteractor.GenerateTagEntity(c.Request().Context(), 0, tagRequest.Name)
 
 	if err := h.tagInteractor.Create(c.Request().Context(), tag); err != nil {
 		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
@@ -94,10 +91,14 @@ func (h *TagHandler) Update(c echo.Context) error {
 		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
 	}
 
-	tag := &entity.Tag{
-		ID: intID,
-		Name: tagRequest.Name,
+	updateTag := h.tagInteractor.GenerateTagEntity(c.Request().Context(), intID, tagRequest.Name)
+
+	originTag, err := h.tagInteractor.GetOriginTag(c.Request().Context(), intID)
+	if err != nil {
+		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
 	}
+
+	tag := h.tagInteractor.FillInUpdateTag(c.Request().Context(), originTag, updateTag)
 
 	if err := h.tagInteractor.Update(c.Request().Context(), tag); err != nil {
 		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)

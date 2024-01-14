@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"time"
 
 	"github.com/Daaaai0809/kabos-dev.com/domain/entity"
 	"github.com/Daaaai0809/kabos-dev.com/domain/repository"
@@ -16,6 +17,9 @@ type IProductInteractor interface {
 	Create(ctx context.Context, product *entity.Product) (*presenter.CreateProductResponse, error)
 	Update(ctx context.Context, product *entity.Product) (*presenter.UpdateProductResponse, error)
 	Delete(ctx context.Context, id int) error
+	GetOriginProduct(ctx context.Context, id int) (*entity.Product, error)
+	FillInUpdateProduct(ctx context.Context, originProduct *entity.Product, updateProduct *entity.Product) *entity.Product
+	GenerateProductEntity(ctx context.Context, id int, name, thumbnail, content, url string, releasedAt time.Time) *entity.Product
 }
 
 type ProductInteractor struct {
@@ -127,4 +131,50 @@ func (i *ProductInteractor) Delete(ctx context.Context, id int) error {
 	}
 
 	return nil
+}
+
+func (i *ProductInteractor) GetOriginProduct(ctx context.Context, id int) (*entity.Product, error) {
+	product, err := i.productRepository.FindByID(ctx, id)
+	if err != nil {
+		return &entity.Product{}, err
+	}
+
+	entityProduct := product.ToProductEntity()
+
+	return entityProduct, nil
+}
+
+func (i *ProductInteractor) GenerateProductEntity(ctx context.Context, id int, name, thumbnail, content, url string, releasedAt time.Time) *entity.Product {
+	return &entity.Product{
+		ID:          id,
+		Name:        name,
+		Thumbnail:   thumbnail,
+		Content:     content,
+		URL:         url,
+		ReleasedAt:  releasedAt,
+	}
+}
+
+func (i *ProductInteractor) FillInUpdateProduct(ctx context.Context, originProduct *entity.Product, updateProduct *entity.Product) *entity.Product {
+	if updateProduct.Name == "" {
+		updateProduct.Name = originProduct.Name
+	}
+
+	if updateProduct.Thumbnail == "" {
+		updateProduct.Thumbnail = originProduct.Thumbnail
+	}
+
+	if updateProduct.Content == "" {
+		updateProduct.Content = originProduct.Content
+	}
+
+	if updateProduct.URL == "" {
+		updateProduct.URL = originProduct.URL
+	}
+
+	if updateProduct.ReleasedAt.IsZero() {
+		updateProduct.ReleasedAt = originProduct.ReleasedAt
+	}
+
+	return updateProduct
 }
