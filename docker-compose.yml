@@ -61,10 +61,10 @@ services:
 
   client:
     build:
-      context: ./front
+      context: ./client
       target: dev
     volumes:
-      - ./front:/app
+      - ./client:/app
       - /app/node_modules
     depends_on:
       - server

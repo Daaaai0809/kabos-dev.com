@@ -1,0 +1,41 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@mdx-js/loader": "^3.0.0",
+    "@mdx-js/react": "^3.0.0",
+    "@next/mdx": "^14.1.0",
+    "@types/mdx": "^2.0.10",
+    "@types/unist": "^3.0.2",
+    "@vanilla-extract/css": "^1.14.0",
+    "next": "14.0.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "rehype-highlight": "^7.0.0",
+    "rehype-mathjax": "^5.0.0",
+    "rehype-parse": "^9.0.0",
+    "rehype-react": "^8.0.0",
+    "rehype-stringify": "^10.0.0",
+    "remark-math": "^6.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.0.0",
+    "unified": "^11.0.4",
+    "unist-util-visit": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@vanilla-extract/next-plugin": "^2.3.2",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.3",
+    "typescript": "^5"
+  }
+}
