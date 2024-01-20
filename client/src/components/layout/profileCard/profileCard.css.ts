@@ -11,7 +11,7 @@ export const profileCardStyle = {
         width: '100%',
     }),
     image: style({
-        position: 'relative',
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: '50%',

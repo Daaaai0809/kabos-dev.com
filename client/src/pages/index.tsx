@@ -7,9 +7,13 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <div className={indexStyle.profile}>
-      <ProfileCard />
-      <Profile.default className={indexStyle.profileText} />
-    </div>
+    <>
+      <div className={indexStyle.profile}>
+        <ProfileCard />
+        <div className={indexStyle.profileText}>
+          <Profile.default />
+        </div>
+      </div>
+    </>
   );
 }
