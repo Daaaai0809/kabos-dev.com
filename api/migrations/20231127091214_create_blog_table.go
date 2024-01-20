@@ -10,13 +10,20 @@ import (
 
 func init() {
 	Migrations.MustRegister(func(ctx context.Context, db *bun.DB) error {
-		fmt.Printf(" [up migration] %s\n", "20231127091214_create_blog_table.go")
-		db.RegisterModel((*models.BlogTags)(nil))
-		db.NewCreateTable().Model((*models.Blog)(nil)).IfNotExists().Exec(ctx)
+		fmt.Printf(" [up migration] %s ", "20231127091214_create_blog_table.go")
+		if _, err := db.NewCreateTable().Model((*models.Blog)(nil)).IfNotExists().Exec(ctx); err != nil {
+			fmt.Print("[error] \n")
+			return err
+		}
+		fmt.Print(" [done] \n")
 		return nil
 	}, func(ctx context.Context, db *bun.DB) error {
-		fmt.Printf(" [down migration] %s\n", "20231127091214_create_blog_table.go")
-		db.NewDropTable().Model((*models.Blog)(nil)).IfExists().Exec(ctx)
+		fmt.Printf(" [down migration] %s ", "20231127091214_create_blog_table.go")
+		if _, err := db.NewDropTable().Model((*models.Blog)(nil)).IfExists().Exec(ctx); err != nil {
+			fmt.Print("[error] \n")
+			return err
+		}
+		fmt.Print(" [done] \n")
 		return nil
 	})
 }

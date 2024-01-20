@@ -12,7 +12,10 @@ func NewBlogPresenter() presenter.IBlogPresenter {
 }
 
 func (p *BlogPresenter) GenerateGetAllResponse(blogs []*entity.Blog) *presenter.GetAllBlogResponse {
-	var blogsResponse presenter.GetAllBlogResponse
+	blogsResponse := &presenter.GetAllBlogResponse{
+		Blogs: make([]presenter.BlogResponse, 0),
+	}
+	
 	for _, blog := range blogs {
 		tags := make([]presenter.TagResponse, 0)
 		
@@ -28,7 +31,6 @@ func (p *BlogPresenter) GenerateGetAllResponse(blogs []*entity.Blog) *presenter.
 		blogsResponse.Blogs = append(blogsResponse.Blogs, presenter.BlogResponse{
 			ID:        blog.ID,
 			Title:     blog.Title,
-			Content:   blog.Content,
 			Thumbnail: blog.Thumbnail,
 			URL:       blog.URL,
 			Tags:      tags,
@@ -36,13 +38,16 @@ func (p *BlogPresenter) GenerateGetAllResponse(blogs []*entity.Blog) *presenter.
 		})
 	}
 
-	return &blogsResponse
+	return blogsResponse
 }
 	
 func (p *BlogPresenter) GenerateGetSearchedBlogResponse(blogs []*entity.Blog) *presenter.GetSearchedBlogResponse {
 	tags := make([]presenter.TagResponse, 0)
 	
-	var blogsResponse presenter.GetSearchedBlogResponse
+	blogsResponse := &presenter.GetSearchedBlogResponse{
+		Blogs: make([]presenter.BlogResponse, 0),
+	}
+
 	for _, blog := range blogs {
 		if len(blog.Tags) > 0 {
 			for _, tag := range blog.Tags {
@@ -56,7 +61,6 @@ func (p *BlogPresenter) GenerateGetSearchedBlogResponse(blogs []*entity.Blog) *p
 		blogsResponse.Blogs = append(blogsResponse.Blogs, presenter.BlogResponse{
 			ID:        blog.ID,
 			Title:     blog.Title,
-			Content:   blog.Content,
 			Thumbnail: blog.Thumbnail,
 			URL:       blog.URL,
 			Tags:      tags,
@@ -64,7 +68,7 @@ func (p *BlogPresenter) GenerateGetSearchedBlogResponse(blogs []*entity.Blog) *p
 		})
 	}
 
-	return &blogsResponse
+	return blogsResponse
 }
 
 func (p *BlogPresenter) GenerateGetByIDResponse(blog *entity.Blog) *presenter.GetBlogByIDResponse {
@@ -83,7 +87,6 @@ func (p *BlogPresenter) GenerateGetByIDResponse(blog *entity.Blog) *presenter.Ge
 	blogResponse.Blog = presenter.BlogResponse{
 		ID:        blog.ID,
 		Title:     blog.Title,
-		Content:   blog.Content,
 		Thumbnail: blog.Thumbnail,
 		URL:       blog.URL,
 		Tags:      tags,
@@ -109,7 +112,6 @@ func (p *BlogPresenter) GenerateCreateResponse(blog *entity.Blog) *presenter.Cre
 	blogResponse.Blog = presenter.BlogResponse{
 		ID:        blog.ID,
 		Title:     blog.Title,
-		Content:   blog.Content,
 		Thumbnail: blog.Thumbnail,
 		URL:       blog.URL,
 		Tags:      tags,
@@ -135,7 +137,6 @@ func (p *BlogPresenter) GenerateUpdateResponse(blog *entity.Blog) *presenter.Upd
 	blogResponse.Blog = presenter.BlogResponse{
 		ID:        blog.ID,
 		Title:     blog.Title,
-		Content:   blog.Content,
 		Thumbnail: blog.Thumbnail,
 		URL:       blog.URL,
 		Tags:      tags,

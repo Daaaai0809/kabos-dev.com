@@ -7,7 +7,6 @@ import (
 type Blog struct {
 	ID        int       `json:"id"`
 	Title     string    `json:"title"`
-	Content   string    `json:"content"`
 	Thumbnail string    `json:"thumbnail"`
 	URL	   	  string    `json:"url"`
 	TagIDs	  []int     `json:"tag_ids"`
@@ -16,11 +15,10 @@ type Blog struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-func NewBlogEntity(id int, title, content, thumbnail, url string, tags []*Tag, createdAt, updatedAt time.Time) *Blog {
+func NewBlogEntity(id int, title, thumbnail, url string, tags []*Tag, createdAt, updatedAt time.Time) *Blog {
 	return &Blog{
 		ID:        id,
 		Title:     title,
-		Content:   content,
 		Thumbnail: thumbnail,
 		URL:       url,
 		Tags:      tags,
