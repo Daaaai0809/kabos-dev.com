@@ -122,10 +122,25 @@ const spacingVars = createGlobalTheme(':root', {
     },
 });
 
+const radiusVars = createGlobalTheme(':root', {
+    0: '0',
+    1: '0.125rem',
+    2: '0.25rem',
+    3: '0.5rem',
+    4: '1rem',
+    5: '1.25rem',
+    6: '1.5rem',
+    8: '2rem',
+    10: '2.5rem',
+});
+
 export const vars = {
     color: colorVars,
     font: fontVars,
     spacing: spacingVars,
+    border: {
+        radius: radiusVars,
+    },
     zIndex: {
         normal: 0,
         forward: 1,
