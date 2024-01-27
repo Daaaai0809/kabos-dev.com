@@ -3,12 +3,13 @@ import { style } from '@vanilla-extract/css';
 
 export const profileCardStyle = {
     link: style({
-        position: 'relative',
-        color: vars.color.gray[900],
-        alignContent: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
         justifyContent: 'center',
+        color: vars.color.gray[900],
         padding: vars.spacing.relative[10],
-        width: '100%',
+        width: '85%',
     }),
     image: style({
         display: 'flex',
@@ -28,6 +29,7 @@ export const profileCardStyle = {
         justifyContent: 'center',
         textDecoration: 'none',
         padding: vars.spacing.relative[2],
+        marginRight: vars.spacing.relative[1],
         cursor: 'pointer',
         transition: 'all 0.2s ease-in-out',
         borderRadius: vars.border.radius[4],

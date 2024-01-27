@@ -3,8 +3,8 @@ import { lineStyle } from './line.css';
 
 export const Line = () => {
     return (
-        <div>
-            <hr className={lineStyle.link}/>
+        <div className={lineStyle.link}>
+            <hr className={lineStyle.hr}/>
         </div>
     )
 }

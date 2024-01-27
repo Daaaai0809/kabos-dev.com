@@ -3,12 +3,12 @@ import { colorVars } from './contract.css';
 
 globalStyle("body", {
     backgroundColor: colorVars.gray[50],
-    fontFamily:
-      'X, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
     margin: 0,
     padding: 0,
     color: colorVars.gray[900],
-  
+    
+    fontFamily:
+      '"Noto Sans JP", sans-serif',
     minHeight: "100dvh",
     height: "100%",
 });
