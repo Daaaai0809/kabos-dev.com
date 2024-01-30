@@ -1,5 +1,5 @@
 import { vars } from '@/styles/theme.css';
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 export const hamburgerStyle = {
     link: style({
@@ -69,6 +69,8 @@ export const hamburgerStyle = {
             ":hover": {
                 opacity: 0.8,
                 backgroundColor: vars.color.gray[300],
+                textDecoration: 'none',
+                color: vars.color.gray[900],
             },
         }),
         list: style({
@@ -86,6 +88,8 @@ export const hamburgerStyle = {
             ":hover": {
                 opacity: 0.8,
                 backgroundColor: vars.color.gray[300],
+                textDecoration: 'none',
+                color: vars.color.gray[900],
             },
         }),
     },

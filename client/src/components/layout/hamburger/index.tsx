@@ -3,6 +3,7 @@ import { hamburgerStyle } from './hamburger.css';
 import { Button } from '@/components/ui/button/button';
 import { Icon } from '@/components/ui/icon/icon';
 import { ICONS } from '@/constants/icons';
+import Link from 'next/link';
 
 export const Hamburger = () => {
     const [isOpened, setIsOpened] = useState(false);
@@ -20,25 +21,25 @@ export const Hamburger = () => {
                 <div className={hamburgerStyle.hamburger}>
                     <div className={hamburgerStyle.hamburgerOuter}>
                         <div className={hamburgerStyle.hamburgerInner}>
-                            <a href="/" className={hamburgerStyle.hamburgerAnchor.list}>About</a>
+                            <Link href="/" className={hamburgerStyle.hamburgerAnchor.list}>About</Link>
                         </div>
                         <div className={hamburgerStyle.hamburgerInner}>
-                            <a href="#" className={hamburgerStyle.hamburgerAnchor.list}>Blogs</a>
+                            <Link href="#" className={hamburgerStyle.hamburgerAnchor.list}>Blogs</Link>
                         </div>
                         <div className={hamburgerStyle.hamburgerInner}>
-                            <a href="#" className={hamburgerStyle.hamburgerAnchor.list}>Projects</a>
+                            <Link href="#" className={hamburgerStyle.hamburgerAnchor.list}>Projects</Link>
                         </div>
                         <div className={hamburgerStyle.hamburgerInner}>
-                            <a href="#" className={hamburgerStyle.hamburgerAnchor.list}>Contact</a>
+                            <Link href="#" className={hamburgerStyle.hamburgerAnchor.list}>Contact</Link>
                         </div>
                     </div>
                     <span className={hamburgerStyle.hamburgerSpan}>
-                        <a href="https://github.com/Daaaai0809" className={hamburgerStyle.hamburgerAnchor.anchor}>
+                        <Link href="https://github.com/Daaaai0809" className={hamburgerStyle.hamburgerAnchor.anchor}>
                             <Icon icon={ICONS.light_github} />
-                        </a>
-                        <a href="https://x.com/daradara_kabos" className={hamburgerStyle.hamburgerAnchor.anchor}>
+                        </Link>
+                        <Link href="https://x.com/daradara_kabos" className={hamburgerStyle.hamburgerAnchor.anchor}>
                             <Icon icon={ICONS.light_x} />
-                        </a>
+                        </Link>
                     </span>
                 </div>
             )}
