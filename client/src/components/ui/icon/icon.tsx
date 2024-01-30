@@ -6,6 +6,6 @@ export const Icon = (props: IconProps) => {
     const { icon } = props;
 
     return (
-        <Image src={icon} className={iconStyle.link} alt='icon' />
+        <Image src={icon} className={iconStyle.link} alt='icon' width={32} height={32} />
     )
 }
