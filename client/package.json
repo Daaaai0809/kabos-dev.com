@@ -19,6 +19,7 @@
     "@types/mdx": "^2.0.10",
     "@types/unist": "^3.0.2",
     "@vanilla-extract/css": "^1.14.0",
+    "cheerio": "1.0.0-rc.12",
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18",

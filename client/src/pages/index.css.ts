@@ -16,6 +16,7 @@ export const indexStyle = {
         flexDirection: 'column',
         alignItems: 'left',
         width: '50%',
+        minWidth: '20rem',
         color: vars.color.gray[900],
     }),
 };

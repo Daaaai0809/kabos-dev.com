@@ -1,30 +1,39 @@
 import { IOgp } from './type';
 
 export const fetchOGP = async (url: string): Promise<IOgp> => {
-    const res = await fetch(url);
+    const res = await fetch(`/api/proxy?url=${encodeURIComponent(url)}`);
     const html = await res.text();
 
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
+    const dom = new DOMParser().parseFromString(html, 'text/html');
 
-    const ogp = {
-        title: doc.querySelector('meta[property="og:title"]')?.getAttribute('content') || '',
-        description: doc.querySelector('meta[property="og:description"]')?.getAttribute('content') || '',
-        image: doc.querySelector('meta[property="og:image"]')?.getAttribute('content') || '',
-        url: doc.querySelector('meta[property="og:url"]')?.getAttribute('content') || '',
-        icon: doc.querySelector('link[rel="icon"]')?.getAttribute('href') || 
-            doc.querySelector('link[rel="shortcut icon"]')?.getAttribute('href') ||
-            doc.querySelector('link[rel="apple-touch-icon"]')?.getAttribute('href') ||
+    const ogp: IOgp = {
+        title: dom.querySelector('meta[property="og:title"]')?.getAttribute('content') || '',
+        description: dom.querySelector('meta[property="og:description"]')?.getAttribute('content') || '',
+        image: dom.querySelector('meta[property="og:image"]')?.getAttribute('content') || '',
+        url: dom.querySelector('meta[property="og:url"]')?.getAttribute('content') || '',
+        icon: dom.querySelector('link[rel="icon"]')?.getAttribute('href') ||
+            dom.querySelector('link[rel="shortcut icon"]')?.getAttribute('href') ||
+            dom.querySelector('link[rel="apple-touch-icon"]')?.getAttribute('href') ||
             '',
     };
 
-    // iconの各パターンに対応する
+    const origin = new URL(url).origin;
+
+    if (ogp.image.startsWith('/')) {
+        ogp.image = origin + ogp.image;
+    } else if (!ogp.image.startsWith('http')) {
+        ogp.image = origin + '/' + ogp.image;
+    }
+
     if (ogp.icon.startsWith('/')) {
-        ogp.icon = `${ogp.url}${ogp.icon}`;
-    } else if (ogp.icon.startsWith('//')) {
-        ogp.icon = `https:${ogp.icon}`;
+        ogp.icon = origin + ogp.icon;
     } else if (!ogp.icon.startsWith('http')) {
-        ogp.icon = `${ogp.url}/${ogp.icon}`;
+        ogp.icon = origin + '/' + ogp.icon;
+    }
+
+    // descriptionが長い場合は省略する
+    if (ogp.description.length > 50) {
+        ogp.description = ogp.description.slice(0, 50) + '...';
     }
 
     return ogp;
