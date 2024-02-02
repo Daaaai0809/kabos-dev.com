@@ -16,6 +16,7 @@ export const lineStyle = {
         alignItems: 'center',
         borderTop: '2.5px solid',
         color: vars.color.green[500],
-        width: '100%',
+        width: '65%',
+        minWidth: '20rem',
     }),
 };
