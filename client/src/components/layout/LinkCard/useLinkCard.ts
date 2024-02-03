@@ -9,7 +9,7 @@ export const useLinkCard = (url: string) => {
         fetchOGP(url).then((res) => {
             setOgp(res);
         });
-    }, []);
+    }, [url]);
 
     return ogp;
 };
