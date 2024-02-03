@@ -19,6 +19,11 @@ export const linkCard = {
             backgroundColor: vars.color.gray[100],
             borderColor: vars.color.gray[400],
         },
+        '@media': {
+            'screen and (max-width: 768px)': {
+                width: '90%',
+            },
+        }
     }),
     image: style({
         width: '30%',
