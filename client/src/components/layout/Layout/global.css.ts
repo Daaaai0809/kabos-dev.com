@@ -1,5 +1,5 @@
 import { globalStyle } from '@vanilla-extract/css';
-import { colorVars } from './contract.css';
+import { colorVars } from '../../../styles/contract.css';
 
 globalStyle("body", {
     backgroundColor: colorVars.gray[50],
