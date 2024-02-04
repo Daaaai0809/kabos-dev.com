@@ -15,10 +15,12 @@ export const LinkCard = ({ url }: Props) => {
 
     return (
         <Link href={ogp.url || url} className={linkCard.link}>
-            <img src={ogp.image} alt={ogp.title} className={linkCard.image} />
-            <div className={linkCard.div}>
-                <h3 className={linkCard.h3}>{ogp.title}</h3>
-                <p className={linkCard.p}>{ogp.description}</p>
+            <div className={linkCard.outerDiv}>
+                <img src={ogp.image} alt={ogp.title} className={linkCard.image} />
+                <div className={linkCard.div}>
+                    <h3 className={linkCard.h3}>{ogp.title}</h3>
+                    <p className={linkCard.p}>{ogp.description}</p>
+                </div>
             </div>
         </Link>
     );

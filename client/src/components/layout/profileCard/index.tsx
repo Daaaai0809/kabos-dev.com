@@ -7,7 +7,7 @@ import { profileCardStyle } from './profileCard.css';
 
 export const ProfileCard = () => {
     return (
-        <div className={profileCardStyle.link}>
+        <div className={profileCardStyle.div}>
             <Image src='/me.svg' alt='me' className={profileCardStyle.image} width={120} height={120} />
             <h2 className={profileCardStyle.h2}>
                 Daaaai0809 / Kabos

@@ -1,5 +1,16 @@
 import { vars } from '@/styles/theme.css';
-import { globalStyle, style } from '@vanilla-extract/css';
+import { globalStyle, keyframes, style } from '@vanilla-extract/css';
+
+const profileAnimation = keyframes({
+    '0%': {
+        opacity: 0,
+        transform: 'translateY(-10px)',
+    },
+    '100%': {
+        opacity: 1,
+        transform: 'translateY(0)',
+    },
+  });
 
 export const indexStyle = {
     profile: style({
@@ -10,14 +21,17 @@ export const indexStyle = {
         objectFit: 'cover',
         padding: vars.spacing.relative[10],
         marginBottom: vars.spacing.relative[16],
+        animationName: profileAnimation,
+        animationDuration: '0.8s',
     }),
     profileText: style({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'left',
-        width: '50%',
+        width: '55%',
         minWidth: '20rem',
         color: vars.color.gray[900],
+        lineHeight: '2',
     }),
 };
 
