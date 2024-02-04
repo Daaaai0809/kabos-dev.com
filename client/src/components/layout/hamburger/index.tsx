@@ -15,7 +15,7 @@ export const Hamburger = () => {
     return (
         <div className={hamburgerStyle.link}>
             <Button onClick={onClick} className={hamburgerStyle.hamburgerButton}>
-                <Icon icon={isOpened ? ICONS.cross : ICONS.hamburger} />
+                <Icon icon={isOpened ? ICONS.cross : ICONS.hamburger}/>
             </Button>
             {isOpened && (
                 <div className={hamburgerStyle.hamburger}>

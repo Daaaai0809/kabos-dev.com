@@ -2,8 +2,10 @@ import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document() {
   return (
-    <Html lang="ja" title="Kabos's Portfolio">
-      <Head />
+    <Html lang="ja" >
+      <Head>
+        <title>Kabos's Portfolio</title>
+      </Head>
       <body>
         <Main />
         <NextScript />

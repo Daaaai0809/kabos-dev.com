@@ -1,34 +1,55 @@
 import { vars } from '@/styles/theme.css';
-import { globalStyle, style } from '@vanilla-extract/css';
+import { globalStyle, keyframes, style } from '@vanilla-extract/css';
+
+const hamburgerAnimation = keyframes({
+    '0%': {
+        opacity: 0,
+        transform: 'translateY(-10px)',
+    },
+    '100%': {
+        opacity: 1,
+        transform: 'translateY(0)',
+    },
+});
 
 export const hamburgerStyle = {
     link: style({
-        position: 'fixed',
-        top: vars.spacing.relative[5],
-        right: vars.spacing.relative[16],
+        display: 'flex',
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        width: '55%',
+        maxWidth: '811px',
+        marginTop: vars.spacing.relative[4],
         zIndex: vars.zIndex.windowFloat,
+        '@media': {
+            'screen and (max-width: 768px)': {
+                width: '55%',
+                minWidth: '21.5rem',
+            },
+        },
     }),
     hamburger: style({
-        position: 'fixed',
+        display: 'flex',
+        position: 'absolute',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: vars.spacing.relative[5],
-        top: vars.spacing.relative[10],
-        right: vars.spacing.relative[5],
         zIndex: vars.zIndex.windowFloat,
-        width: '14%',
-        minWidth: '12rem',
-        height: '54%',
-        minHeight: '25rem',
+        width: '182px',
+        height: '400px',
+        top: vars.spacing.relative[6],
         borderRadius: vars.border.radius[5],
         background: vars.color.gray[50],
         boxShadow: vars.shadow.window,
     }),
     hamburgerButton: style({
-        position: 'fixed',
-        top: vars.spacing.relative[5],
-        right: vars.spacing.relative[5],
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        position: 'absolute',
         zIndex: vars.zIndex.windowFloat,
+        animationName: hamburgerAnimation,
+        animationDuration: '0.5s',
     }),
     hamburgerOuter: style({
         display: 'flex',

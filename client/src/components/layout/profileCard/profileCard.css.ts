@@ -2,7 +2,7 @@ import { vars } from '@/styles/theme.css';
 import { style } from '@vanilla-extract/css';
 
 export const profileCardStyle = {
-    link: style({
+    div: style({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -10,6 +10,12 @@ export const profileCardStyle = {
         color: vars.color.gray[900],
         padding: vars.spacing.relative[10],
         width: '85%',
+        '@media': {
+            'screen and (max-width: 480px)': {
+                width: '110%',
+                padding: vars.spacing.relative[4],
+            },
+        },
     }),
     image: style({
         display: 'flex',
@@ -17,6 +23,7 @@ export const profileCardStyle = {
         justifyContent: 'center',
         borderRadius: '50%',
         objectFit: 'cover',
+        marginBottom: vars.spacing.relative[4],
     }),
     span: style({
         display: 'flex',
