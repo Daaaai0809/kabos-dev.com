@@ -1,4 +1,4 @@
-import { ProfileCard } from '@/components/layout/profileCard';
+import { ProfileCard } from '@/components/layout/ProfileCard';
 import * as Profile from '@/contents/profile.mdx';
 import { indexStyle } from './index.css';
 

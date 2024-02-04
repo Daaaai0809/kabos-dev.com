@@ -1,4 +1,4 @@
-import { BlogListResponse } from "./type";
+import { BlogListResponse, BlogResponse } from "./type";
 
 export const fetchBlogs = async () => {
     const res = await fetch('/api/blog');
@@ -16,7 +16,7 @@ export const searchBlogs = async (keyword: string) => {
 
 export const fetchBlog = async (id: number) => {
     const res = await fetch(`/api/blog/${id}`);
-    const blog = await res.json();
+    const blog = await res.json() as BlogResponse;
 
     return blog;
 }

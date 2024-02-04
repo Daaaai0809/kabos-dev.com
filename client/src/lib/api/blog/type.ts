@@ -1,13 +1,4 @@
-import { Tag } from '../tag/type';
-
-export type Blog = {
-    id: number;
-    title: string;
-    thumbnail: string;
-    url: string;
-    created_at: string;
-    tags: Tag[];
-}
+import { Blog } from '@/types/domain/blog';
 
 export type BlogListResponse = {
     blogs: Blog[];

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Hamburger } from '../hamburger';
+import { Hamburger } from '../Hamburger';
 import { indexStyle } from './index.css';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
