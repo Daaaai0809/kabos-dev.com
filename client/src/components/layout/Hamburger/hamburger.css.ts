@@ -19,8 +19,8 @@ export const hamburgerStyle = {
         alignItems: 'center',
         justifyContent: 'flex-end',
         width: '55%',
+        height: '48px',
         maxWidth: '811px',
-        marginTop: vars.spacing.relative[4],
         zIndex: vars.zIndex.windowFloat,
         '@media': {
             'screen and (max-width: 768px)': {
@@ -33,11 +33,11 @@ export const hamburgerStyle = {
         display: 'flex',
         position: 'absolute',
         flexDirection: 'column',
-        alignItems: 'center',
         justifyContent: 'center',
         zIndex: vars.zIndex.windowFloat,
         width: '182px',
         height: '400px',
+        marginTop: vars.spacing.relative[6],
         top: vars.spacing.relative[6],
         borderRadius: vars.border.radius[5],
         background: vars.color.gray[50],
