@@ -42,6 +42,8 @@ export const hamburgerStyle = {
         borderRadius: vars.border.radius[5],
         background: vars.color.gray[50],
         boxShadow: vars.shadow.window,
+        animationName: hamburgerAnimation,
+        animationDuration: '0.5s',
     }),
     hamburgerButton: style({
         alignItems: 'center',

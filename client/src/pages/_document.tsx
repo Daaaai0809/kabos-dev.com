@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="ja" >
       <Head>
-        <title>Kabos's Portfolio</title>
+        <title>{"Kabos's Portfolio"}</title>
       </Head>
       <body>
         <Main />
