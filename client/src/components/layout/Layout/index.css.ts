@@ -22,7 +22,7 @@ export const indexStyle = {
     width: "100%",
     height: "3rem",
     maxWidth: "1440px",
-    marginTop: vars.spacing.relative[6],
+    marginTop: vars.spacing.relative[3],
   }),
 }
 
