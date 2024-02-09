@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { hamburgerStyle } from './hamburger.css';
-import { Button } from '@/components/ui/button/button';
-import { Icon } from '@/components/ui/icon/icon';
+import { Button } from '@/components/ui/button';
+import { Icon } from '@/components/ui/icon';
 import { ICONS } from '@/constants/icons';
 import Link from 'next/link';
 
