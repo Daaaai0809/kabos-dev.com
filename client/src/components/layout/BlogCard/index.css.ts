@@ -59,6 +59,10 @@ export const blogCardStyles = {
         color: vars.color.gray[900],
         paddingLeft: vars.spacing.relative[3],
         marginTop: vars.spacing.relative[2],
+        overflow: 'hidden',
+        maxWidth: '15rem',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
     }),
     p: style({
         color: vars.color.gray[700],

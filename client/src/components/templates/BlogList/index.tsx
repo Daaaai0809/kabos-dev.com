@@ -7,7 +7,7 @@ export const BlogList: React.FC<BlogListProps> = ({ blogs }) => {
         <>
             <div className={blogListStyle.div}>
                 <div className={blogListStyle.outerDiv}>
-                    {blogs.map((blog) => (
+                    {blogs?.map((blog) => (
                         <div className={blogListStyle.innerDiv} key={blog.id}>
                             <BlogCard key={blog.id} blog={blog} />
                         </div>
