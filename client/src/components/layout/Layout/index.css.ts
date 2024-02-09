@@ -35,6 +35,7 @@ globalStyle('body', {
       '"Noto Sans JP", apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     minHeight: "100dvh",
     height: "100%",
+    marginBottom: '10rem',
 });
 
 globalStyle('html', {

@@ -6,11 +6,14 @@ export const blogListStyle = {
         width: '100%',
         maxWidth: '1280px',
         display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
         justifyContent: 'center',
     }),
     outerDiv: style({
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'space-between',
         flexWrap: 'wrap',
         gap: vars.spacing.relative[10],
         width: '100%',
@@ -27,7 +30,6 @@ export const blogListStyle = {
         },
     }),
     innerDiv: style({
-        justifyContent: 'flex-start',
         width: '100%',
         maxWidth: '320px',
         '@media': {
