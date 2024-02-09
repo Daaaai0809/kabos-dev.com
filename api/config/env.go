@@ -7,27 +7,29 @@ import (
 
 // REQUIRED ENV
 const (
-	_MYSQL_ROOT_PASSWORD = "MYSQL_ROOT_PASSWORD"
-	_MYSQL_DATABASE      = "MYSQL_DATABASE"
-	_MYSQL_USER          = "MYSQL_USER"
-	_MYSQL_PASSWORD      = "MYSQL_PASSWORD"
-	_ENV                 = "ENV"
-	_JWT_SECRET          = "JWT_SECRET"
-	_PASSWORD            = "PASSWORD"
-	_HASH_COST           = "HASH_COST"
-	_ISS				 = "ISS"
+	_MYSQL_ROOT_PASSWORD         = "MYSQL_ROOT_PASSWORD"
+	_MYSQL_DATABASE              = "MYSQL_DATABASE"
+	_MYSQL_USER                  = "MYSQL_USER"
+	_MYSQL_PASSWORD              = "MYSQL_PASSWORD"
+	_ENV                         = "ENV"
+	_JWT_SECRET                  = "JWT_SECRET"
+	_PASSWORD                    = "PASSWORD"
+	_HASH_COST                   = "HASH_COST"
+	_ISS                         = "ISS"
+	_ACCESS_CONTROL_ALLOW_ORIGIN = "ACCESS_CONTROL_ALLOW_ORIGIN"
 )
 
 var (
-	MYSQL_ROOT_PASSWORD = os.Getenv(_MYSQL_ROOT_PASSWORD)
-	MYSQL_DATABASE      = os.Getenv(_MYSQL_DATABASE)
-	MYSQL_USER          = os.Getenv(_MYSQL_USER)
-	MYSQL_PASSWORD      = os.Getenv(_MYSQL_PASSWORD)
-	ENV                 = os.Getenv(_ENV)
-	JWT_SECRET          = os.Getenv(_JWT_SECRET)
-	PASSWORD            = os.Getenv(_PASSWORD)
-	HASH_COST           = os.Getenv(_HASH_COST)
-	ISS					= os.Getenv(_ISS)
+	MYSQL_ROOT_PASSWORD         = os.Getenv(_MYSQL_ROOT_PASSWORD)
+	MYSQL_DATABASE              = os.Getenv(_MYSQL_DATABASE)
+	MYSQL_USER                  = os.Getenv(_MYSQL_USER)
+	MYSQL_PASSWORD              = os.Getenv(_MYSQL_PASSWORD)
+	ENV                         = os.Getenv(_ENV)
+	JWT_SECRET                  = os.Getenv(_JWT_SECRET)
+	PASSWORD                    = os.Getenv(_PASSWORD)
+	HASH_COST                   = os.Getenv(_HASH_COST)
+	ISS                         = os.Getenv(_ISS)
+	ACCESS_CONTROL_ALLOW_ORIGIN = os.Getenv(_ACCESS_CONTROL_ALLOW_ORIGIN)
 
 	IsDev = ENV == "development"
 
@@ -47,6 +49,7 @@ var (
 		_PASSWORD,
 		_HASH_COST,
 		_ISS,
+		_ACCESS_CONTROL_ALLOW_ORIGIN,
 	}
 )
 

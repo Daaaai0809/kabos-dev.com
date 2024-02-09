@@ -58,10 +58,11 @@ export const blogCardStyles = {
     h2: style({
         color: vars.color.gray[900],
         paddingLeft: vars.spacing.relative[3],
+        marginTop: vars.spacing.relative[2],
     }),
     p: style({
         color: vars.color.gray[700],
         paddingLeft: vars.spacing.relative[5],
-        marginTop: vars.spacing.relative[2],
+        marginTop: vars.spacing.relative[1],
     }),
 };
