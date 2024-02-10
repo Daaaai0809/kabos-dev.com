@@ -2,7 +2,6 @@ import { BlogList } from '@/components/templates/BlogList';
 import { Line } from '@/components/ui/line';
 import { blogIndexStyles } from './index.css';
 import { useBlogIndex } from './useBlogIndex';
-import { Input } from '@/components/ui/input';
 
 export const BlogIndex = () => {
     const {
