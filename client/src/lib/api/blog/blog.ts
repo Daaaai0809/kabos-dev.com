@@ -9,7 +9,7 @@ export const fetchBlogs = async () => {
 }
 
 export const searchBlogs = async (keyword: string) => {
-    const res = await fetch(apiRoute + apiRouters.blogs.search + `?keyword=${keyword}`);
+    const res = await fetch(apiRoute + apiRouters.blogs.search + `?search_word=${keyword}`);
     const blogs = await res.json() as BlogListResponse;
 
     return blogs;

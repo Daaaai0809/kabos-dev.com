@@ -12,11 +12,11 @@ export const BlogCard = (props: BlogCardProps) => {
             <Link href={url} className={blogCardStyles.link}>
                 <img src={thumbnail||'noimage.svg'} alt={title} className={blogCardStyles.thumbnail} />
                 <div className={blogCardStyles.contextDiv}>
-                    <h2 className={blogCardStyles.h2}>
+                    <h3 className={blogCardStyles.h3}>
                         {title}
-                    </h2>
+                    </h3>
                     <p className={blogCardStyles.p}>
-                        {created_at}
+                        {new Date(created_at).toLocaleDateString()}
                     </p>
                 </div> 
             </Link>

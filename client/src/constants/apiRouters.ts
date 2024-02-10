@@ -5,4 +5,4 @@ export const apiRouters = {
     },
 } as const;
 
-export const apiRoute = 'http://localhost/api';
+export const apiRoute = process.env.NEXT_PUBLIC_API_PATH;

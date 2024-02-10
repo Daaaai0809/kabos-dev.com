@@ -29,7 +29,7 @@ export const blogIndexStyles = {
         justifyContent: 'center',
         width: '85%',
         maxWidth: '1440px',
-        padding: vars.spacing.relative[10],
+        marginTop: vars.spacing.relative[8],
         animationName: headerAnimation,
         animationDuration: '0.8s',
     }),
@@ -40,5 +40,6 @@ export const blogIndexStyles = {
         justifyContent: 'center',
         width: '100%',
         maxWidth: '1280px',
+        marginTop: vars.spacing.relative[8],
     }),
 }

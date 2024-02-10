@@ -1,11 +1,12 @@
-import { fetchBlogs } from '@/lib/api/blog/blog';
+import { fetchBlogs, searchBlogs } from '@/lib/api/blog/blog';
 import { fetchOGP } from '@/lib/ogp/ogp';
 import { Blog } from '@/types/domain/blog';
 import { useEffect, useState } from 'react';
 
 export const useBlogIndex = () => {
     const [fetchedBlogs, setFetchedBlogs] = useState<Blog[]>([]);
-    
+    const [keyowrd, setKeyword] = useState<string>('');
+
     useEffect(() => {
         fetchBlogs().then(async (res) => {
             const blogs = res.blogs.map(async (blog) => {
@@ -23,7 +24,17 @@ export const useBlogIndex = () => {
         });
     }, []);
 
+    const refetchBlogs = async () => {
+        const res = await searchBlogs(keyowrd);
+        setFetchedBlogs(res.blogs);
+    }
+
     return {
         blogs: fetchedBlogs,
+        
+        keyowrd,
+        setKeyword,
+
+        refetchBlogs,
     };
 };

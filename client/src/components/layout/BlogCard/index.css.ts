@@ -55,12 +55,12 @@ export const blogCardStyles = {
         maxWidth: '20rem',
         maxHeight: '7rem',
     }),
-    h2: style({
+    h3: style({
         color: vars.color.gray[900],
-        paddingLeft: vars.spacing.relative[3],
+        paddingLeft: vars.spacing.relative[4],
         marginTop: vars.spacing.relative[2],
         overflow: 'hidden',
-        maxWidth: '15rem',
+        maxWidth: '16rem',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
     }),
