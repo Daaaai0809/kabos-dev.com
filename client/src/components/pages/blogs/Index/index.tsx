@@ -7,9 +7,6 @@ import { Input } from '@/components/ui/input';
 export const BlogIndex = () => {
     const {
         blogs,
-        keyowrd,
-        setKeyword,
-        refetchBlogs,
     } = useBlogIndex();
 
     return (
@@ -19,7 +16,6 @@ export const BlogIndex = () => {
                     <h1>Blogs</h1>
                     <Line />
                 </div>
-                <Input type="text" value={keyowrd} onChange={(e) => setKeyword(e.target.value)} placeholder="Blog Title" onSubmit={refetchBlogs} />
                 <div className={blogIndexStyles.blogListDiv}>
                     <BlogList blogs={blogs} />
                 </div>

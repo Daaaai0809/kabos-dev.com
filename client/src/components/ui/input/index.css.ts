@@ -13,7 +13,7 @@ export const inputStyles = {
         transition: 'border 0.2s',
         ':focus': {
             // 外側にblurをかけて太さを変える
-            border: '1.5px solid ' + vars.color.green[300],
+            border: '1px solid ' + vars.color.green[300],
             outline: 'none',
         },
     }),
