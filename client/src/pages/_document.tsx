@@ -5,6 +5,9 @@ export default function Document() {
     <Html lang="ja" >
       <Head>
         <title>{"Kabos's Portfolio"}</title>
+        {/* faviconの設定 */}
+        <meta name="description" content="Kabos's Portfolio" />
+        <link rel="icon" href="/favicon.svg" />
       </Head>
       <body>
         <Main />

@@ -7,6 +7,4 @@ ENV_FILE="${PROJECT_DIR}/.env"
 
 cd ${PROJECT_DIR}
 
-docker compose -f docker-compose.dev.yml down
-
-docker compose -f docker-compose.dev.yml up -d --build
+docker compose -f docker-compose.dev.yml ps

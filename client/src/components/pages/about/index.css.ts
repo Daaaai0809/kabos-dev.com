@@ -20,7 +20,6 @@ export const indexStyle = {
         justifyContent: 'center',
         objectFit: 'cover',
         padding: vars.spacing.relative[10],
-        marginBottom: vars.spacing.relative[16],
         animationName: profileAnimation,
         animationDuration: '0.8s',
     }),

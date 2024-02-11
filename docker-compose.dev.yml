@@ -6,7 +6,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./etc/nginx/conf.d:/etc/nginx/conf.d
+      - ./etc/nginx/dev/conf.d:/etc/nginx/conf.d
       - ./api/public:/var/www/public
     depends_on:
       - server
@@ -50,11 +50,14 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_PORT=${MYSQL_PORT}
       - PASSWORD=${PASSWORD}
       - HASH_COST=${HASH_COST}
       - ENV=${ENV}
       - ISS=${ISS}
       - JWT_SECRET=${JWT_SECRET}
+      - ACCESS_CONTROL_ALLOW_ORIGIN=${ACCESS_CONTROL_ALLOW_ORIGIN}
     depends_on:
       database:
         condition: service_healthy
@@ -62,12 +65,11 @@ services:
   client:
     build:
       context: ./client
-      target: dev
+      dockerfile: Dockerfile
     volumes:
       - ./client:/app
-      - /app/node_modules
     depends_on:
-      - server
+      - server  
 
 volumes:
   data:

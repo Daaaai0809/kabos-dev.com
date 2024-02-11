@@ -20,20 +20,22 @@ export const indexStyle = {
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
+    height: "3rem",
     maxWidth: "1440px",
-    marginTop: vars.spacing.relative[6],
+    marginTop: vars.spacing.relative[3],
   }),
 }
 
 globalStyle('body', {
     backgroundColor: colorVars.gray[50],
-    margin: 0,
+    margin: 'auto',
     padding: 0,
     color: colorVars.gray[900],
     fontFamily:
-      '"sans-serif"',
+      '"Noto Sans JP", apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     minHeight: "100dvh",
     height: "100%",
+    marginBottom: '10rem',
 });
 
 globalStyle('html', {

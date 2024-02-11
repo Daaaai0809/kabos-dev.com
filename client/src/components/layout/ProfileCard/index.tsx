@@ -1,6 +1,6 @@
 import React from 'react';
-import { Icon } from '@/components/ui/icon/icon';
-import { Line } from '@/components/ui/line/line';
+import { Icon } from '@/components/ui/icon';
+import { Line } from '@/components/ui/line';
 import { ICONS } from '@/constants/icons';
 import Image from 'next/image';
 import { profileCardStyle } from './profileCard.css';

@@ -17,6 +17,7 @@ export const lineStyle = {
         borderTop: '2.5px solid',
         color: vars.color.green[500],
         width: '70%',
+        maxWidth: '810px',
         '@media': {
             'screen and (max-width: 768px)': {
                 width: '70%',

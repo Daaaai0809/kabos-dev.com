@@ -9,18 +9,17 @@ import (
 	"github.com/Daaaai0809/kabos-dev.com/adapter/auth"
 	"github.com/Daaaai0809/kabos-dev.com/adapter/handler"
 	"github.com/Daaaai0809/kabos-dev.com/adapter/presenter"
+	"github.com/Daaaai0809/kabos-dev.com/config"
 	"github.com/Daaaai0809/kabos-dev.com/infra/mysql"
 	"github.com/Daaaai0809/kabos-dev.com/models"
 	"github.com/Daaaai0809/kabos-dev.com/usecase"
 	"github.com/labstack/echo/v4"
 )
 
-const DB_HOST = "database"
-
 func main() {
 	e := echo.New()
 
-	db, err := mysql.ConnectDB(DB_HOST)
+	db, err := mysql.ConnectDB()
 	if err != nil {
 		panic(err)
 	}
@@ -29,6 +28,19 @@ func main() {
 	bunDB.RegisterModel((*models.BlogTags)(nil))
 
 	defer bunDB.Close()
+
+	// CORS setting
+	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			c.Response().Header().Set("Access-Control-Allow-Origin", config.ACCESS_CONTROL_ALLOW_ORIGIN)
+			c.Response().Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+			c.Response().Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+			if config.IsDev {
+				c.Response().Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+			}
+			return next(c)
+		}
+	})
 
 	authInteractor := usecase.NewAuthInteractor()
 	authGateway := auth.NewAuthGateway(authInteractor)

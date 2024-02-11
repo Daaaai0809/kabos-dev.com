@@ -8,7 +8,7 @@ export const profileCardStyle = {
         alignItems: 'center',
         justifyContent: 'center',
         color: vars.color.gray[900],
-        padding: vars.spacing.relative[10],
+        padding: vars.spacing.relative[8],
         width: '85%',
         '@media': {
             'screen and (max-width: 480px)': {
