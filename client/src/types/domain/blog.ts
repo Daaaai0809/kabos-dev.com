@@ -5,6 +5,7 @@ export type Blog = {
     title: string;
     thumbnail?: string;
     url: string;
+    posted_at?: string;
     created_at: string;
     tags?: Tag[];
 }
