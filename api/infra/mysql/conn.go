@@ -10,16 +10,15 @@ import (
 
 const (
 	DRIVER = "mysql"
-	PORT   = "3306"
 	NET    = "tcp"
 )
 
-func ConnectDB(host string) (*sql.DB, error) {
+func ConnectDB() (*sql.DB, error) {
 	c := mysql.Config{
 		User:                 config.MYSQL_USER,
 		Passwd:               config.MYSQL_PASSWORD,
 		Net:                  NET,
-		Addr:                 fmt.Sprintf("%s:%s", host, PORT),
+		Addr:                 fmt.Sprintf("%s:%s", config.MYSQL_HOST, config.MYSQL_PORT),
 		DBName:               config.MYSQL_DATABASE,
 		AllowNativePasswords: true,
 		ParseTime:            true,
