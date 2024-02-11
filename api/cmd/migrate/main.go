@@ -23,7 +23,6 @@ const (
 	DRIVER          = "mysql"
 	PORT            = "3306"
 	NET             = "tcp"
-	HOST            = "localhost"
 	MIGRATION_TABLE = "bun_migrations"
 )
 
@@ -32,7 +31,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	db, err := infra.ConnectDB(HOST)
+	
+	db, err := infra.ConnectDB()
 	if err != nil {
 		panic(err)
 	}

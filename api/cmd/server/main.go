@@ -16,12 +16,10 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-const DB_HOST = "database"
-
 func main() {
 	e := echo.New()
 
-	db, err := mysql.ConnectDB(DB_HOST)
+	db, err := mysql.ConnectDB()
 	if err != nil {
 		panic(err)
 	}

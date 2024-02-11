@@ -3,3 +3,5 @@
 
 /etc/mysql/data
 /etc/mysql/conf.d
+
+fly.toml
