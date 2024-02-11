@@ -19,7 +19,7 @@ import (
 func main() {
 	e := echo.New()
 
-	db, err := mysql.ConnectDB()
+	db, err := mysql.ConnectDB(nil)
 	if err != nil {
 		panic(err)
 	}

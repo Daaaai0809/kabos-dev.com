@@ -13,12 +13,19 @@ const (
 	NET    = "tcp"
 )
 
-func ConnectDB() (*sql.DB, error) {
+func ConnectDB(host interface{}) (*sql.DB, error) {
+	var dbHost string
+	if host == nil {
+		dbHost = config.MYSQL_HOST
+	} else {
+		dbHost = host.(string)
+	}
+
 	c := mysql.Config{
 		User:                 config.MYSQL_USER,
 		Passwd:               config.MYSQL_PASSWORD,
 		Net:                  NET,
-		Addr:                 fmt.Sprintf("%s:%s", config.MYSQL_HOST, config.MYSQL_PORT),
+		Addr:                 fmt.Sprintf("%s:%s", dbHost, config.MYSQL_PORT),
 		DBName:               config.MYSQL_DATABASE,
 		AllowNativePasswords: true,
 		ParseTime:            true,
