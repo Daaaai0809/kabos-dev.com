@@ -19,6 +19,8 @@ export const indexStyle = {
         alignItems: 'center',
         justifyContent: 'center',
         objectFit: 'cover',
+        width: '100%',
+        maxWidth: '1440px',
         padding: vars.spacing.relative[10],
         animationName: profileAnimation,
         animationDuration: '0.8s',

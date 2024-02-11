@@ -8,10 +8,8 @@ type Props = {
 
 export const LinkCard = ({ url }: Props) => {
     const ogp = useLinkCard(url);
-    // ogpに値が入るまで表示しない
+    
     if (!ogp) return null;
-
-    console.log(ogp);
 
     return (
         <Link href={ogp.url || url} className={linkCard.link}>
