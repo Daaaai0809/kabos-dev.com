@@ -9,11 +9,11 @@ export const profileCardStyle = {
         justifyContent: 'center',
         color: vars.color.gray[900],
         marginTop: vars.spacing.relative[4],
-        width: '85%',
+        width: '100%',
+        maxWidth: '1440px',
         '@media': {
             'screen and (max-width: 480px)': {
-                width: '110%',
-                padding: vars.spacing.relative[4],
+                width: '100%',
             },
         },
     }),
