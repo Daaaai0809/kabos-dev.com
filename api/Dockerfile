@@ -30,6 +30,7 @@ ENV MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD \
 
 RUN CGO_ENABLED=0 go build -o main cmd/server/main.go
 RUN CGO_ENABLED=0 go build -o migrate cmd/migrate/main.go
+RUN CGO_ENABLED=0 go build -o seeder cmd/seeder/main.go
 
 FROM alpine AS prod
 
