@@ -7,6 +7,8 @@ export const BlogCard = (props: BlogCardProps) => {
 
     const { title, url, thumbnail, posted_at, created_at } = props.blog;
 
+    const dt = posted_at || created_at;
+
     return (
         <>
             <Link href={url} className={blogCardStyles.link}>
@@ -16,7 +18,7 @@ export const BlogCard = (props: BlogCardProps) => {
                         {title}
                     </h3>
                     <p className={blogCardStyles.p}>
-                        {new Date(posted_at||created_at).toLocaleDateString()}
+                        {new Date(dt.replace(/-/g, '/')).toLocaleDateString()}
                     </p>
                 </div> 
             </Link>
