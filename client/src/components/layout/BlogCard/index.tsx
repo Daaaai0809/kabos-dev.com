@@ -5,7 +5,7 @@ import { blogCardStyles } from './index.css';
 export const BlogCard = (props: BlogCardProps) => {
     if (!props.blog) return null;
 
-    const { title, url, thumbnail, created_at } = props.blog;
+    const { title, url, thumbnail, posted_at, created_at } = props.blog;
 
     return (
         <>
@@ -16,7 +16,7 @@ export const BlogCard = (props: BlogCardProps) => {
                         {title}
                     </h3>
                     <p className={blogCardStyles.p}>
-                        {new Date(created_at).toLocaleDateString()}
+                        {new Date(posted_at||created_at).toLocaleDateString()}
                     </p>
                 </div> 
             </Link>

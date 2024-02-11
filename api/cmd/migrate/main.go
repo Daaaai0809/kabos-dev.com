@@ -32,7 +32,13 @@ func main() {
 		panic(err)
 	}
 	
-	db, err := infra.ConnectDB()
+	var host string = config.MYSQL_HOST
+
+	if config.IsDev {
+		host = "localhost"
+	}
+
+	db, err := infra.ConnectDB(host)
 	if err != nil {
 		panic(err)
 	}

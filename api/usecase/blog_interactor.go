@@ -77,7 +77,7 @@ func (i *BlogInteractor) GetByID(ctx context.Context, id int) (*presenter.GetBlo
 }
 
 func (i *BlogInteractor) Create(ctx context.Context, blog *entity.Blog) (*presenter.CreateBlogResponse, error) {
-	blogModel := models.NewCreateBlogModel(blog.Title, blog.Thumbnail, blog.URL)
+	blogModel := models.NewCreateBlogModel(blog.Title, blog.Thumbnail, blog.URL, blog.PostedAt)
 
 	id, err := i.blogRepository.Create(ctx, blogModel)
 	if err != nil {
@@ -117,6 +117,7 @@ func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) (*presen
 		blog.Title,
 		blog.Thumbnail,
 		blog.URL,
+		blog.PostedAt,
 		blog.CreatedAt,
 		blog.UpdatedAt,
 	)
