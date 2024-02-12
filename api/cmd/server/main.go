@@ -32,7 +32,6 @@ func main() {
 	// CORS setting
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			c.Response().Header().Set("Access-Control-Allow-Origin", config.ACCESS_CONTROL_ALLOW_ORIGIN)
 			c.Response().Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
 			c.Response().Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 			if config.IsDev {
