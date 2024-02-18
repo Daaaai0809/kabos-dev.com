@@ -6,7 +6,6 @@ const ProductDetail = ({ id }: { id: number }) => {
     );
 }
 
-// [slug]を受け取る
 export const getServerSideProps = async (context: any) => {
     const id = context.params.slug;
 

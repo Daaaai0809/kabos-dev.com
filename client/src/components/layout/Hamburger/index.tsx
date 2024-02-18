@@ -27,7 +27,7 @@ export const Hamburger = () => {
                             <Link href="/blogs" className={hamburgerStyle.hamburgerAnchor.list}>Blogs</Link>
                         </div>
                         <div className={hamburgerStyle.hamburgerInner}>
-                            <Link href="#" className={hamburgerStyle.hamburgerAnchor.list}>Products</Link>
+                            <Link href="/products" className={hamburgerStyle.hamburgerAnchor.list}>Products</Link>
                         </div>
                         <div className={hamburgerStyle.hamburgerInner}>
                             <Link href="#" className={hamburgerStyle.hamburgerAnchor.list}>Contact</Link>

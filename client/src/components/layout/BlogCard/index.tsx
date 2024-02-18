@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { BlogCardProps } from './type';
 import { blogCardStyles } from './index.css';
+import { NO_IMAGE_URL } from '@/constants/images';
 
 export const BlogCard = (props: BlogCardProps) => {
     if (!props.blog) return null;
@@ -12,7 +13,7 @@ export const BlogCard = (props: BlogCardProps) => {
     return (
         <>
             <Link href={url} className={blogCardStyles.link}>
-                <img src={thumbnail||'noimage.svg'} alt={title} className={blogCardStyles.thumbnail} />
+                <img src={thumbnail||NO_IMAGE_URL} alt={title} className={blogCardStyles.thumbnail} />
                 <div className={blogCardStyles.contextDiv}>
                     <h3 className={blogCardStyles.h3}>
                         {title}

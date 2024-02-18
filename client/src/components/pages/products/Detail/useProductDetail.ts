@@ -11,6 +11,8 @@ export const useProductDetail = (id: number) => {
         }).catch((err) => {
             if (err.status === 404) {
                 setProduct(null);
+            } else {
+                console.error(err);
             }
         });
     }, [id]);
