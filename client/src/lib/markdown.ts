@@ -7,30 +7,39 @@ import rehypeStringify from 'rehype-stringify';
 import remarkMath from 'remark-math';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
-// import { Node } from 'unist';
-// import { visit } from 'unist-util-visit';
-import { /* Plugin,*/ unified } from 'unified';
+import { Node } from 'unist';
+import { visit } from 'unist-util-visit';
+import { Plugin, unified } from 'unified';
 import Image from 'next/image';
+import { LinkCard } from '@/components/layout/LinkCard';
 
-// const rehypeLinkCard: Plugin = () => {
-//     return async (tree: Node) => {
-//         visit(tree, 'element', (node: Node & { tagName: string; properties: { [key: string]: string } }) => {
-//             const { tagName, properties } = node;
-//             if (tagName === 'img' && properties) {
-//                 node.properties.className = 'link-card';
-//                 node.properties['data-src'] = node.properties.src;
-//                 node.properties.src = '/api/link-card?url=' + encodeURIComponent(node.properties.src);
-//             }
-//         });
-//     };
-// }
+const rehypeLinkCard: Plugin = () => {
+    return async (tree: Node) => {
+        const promises: Promise<void>[] = [];
+
+        visit(tree, 'element', (node: Node & { tagName: string; properties: { [key: string]: string } }) => {
+            const { tagName, properties } = node;
+            if (tagName === 'img' && properties) {
+                node.properties.src = encodeURIComponent(node.properties.src);
+                node.properties.alt = properties.alt || '';
+            }
+
+            if (tagName === 'a' && properties) {
+                const href = properties.href;
+                if (typeof href === 'string') {
+                    node.properties.url = href;
+                }
+            }
+        });
+    };
+}
 
 export const markdownToHtml = async (markdown: string) => {
     const processor = unified()
         .use(remarkParse)
         .use(remarkRehype)
         .use(remarkMath)
-        // .use(rehypeLinkCard)
+        .use(rehypeLinkCard)
         .use(rehypeParse, { fragment: true })
         .use(rehypeMathjax)
         .use(rehypeHighlight)
@@ -49,6 +58,7 @@ export const parseHtmlToReactJSX = (html: string) => {
             createElement: React.createElement,
             components: {
                 img: Image,
+                a: LinkCard,
             }
         });
     
