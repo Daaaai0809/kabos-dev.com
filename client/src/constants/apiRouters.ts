@@ -4,9 +4,9 @@ export const apiRouters = {
         search: '/blog/search',
     },
     products: {
-        index: '/products/',
-        detail: '/products/',
-        search: '/products/search',
+        index: '/product/',
+        detail: '/product/',
+        search: '/product/search',
     },
 } as const;
 

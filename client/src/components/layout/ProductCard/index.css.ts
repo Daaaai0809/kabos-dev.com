@@ -135,13 +135,24 @@ export const productCardStyles = {
         color: vars.color.gray[900],
         overflow: 'hidden',
         width: '100%',
-        maxWidth: '15rem',
+        maxWidth: '13rem',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
+        '@media': {
+            'screen and (max-width: 768px)': {
+                width: '100%',
+                maxWidth: '12rem',
+            },
+        },
     }),
     date: style({
         color: vars.color.gray[500],
-        marginTop: vars.spacing.relative[1],
+        marginTop: vars.spacing.relative[2],
+        '@media': {
+            'screen and (max-width: 768px)': {
+                marginLeft: vars.spacing.relative[2],
+            },
+        },
     }),
     discriptionDiv: style({
         display: 'flex',

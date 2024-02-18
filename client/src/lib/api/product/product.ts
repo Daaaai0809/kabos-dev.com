@@ -8,7 +8,7 @@ export const fetchProducts = async () => {
 }
 
 export const fetchProduct = async (id: number) => {
-    const res = await fetch(`${apiRoute}${apiRouters.products.detail}/${id}`);
+    const res = await fetch(`${apiRoute}${apiRouters.products.detail}${id}`);
     const data: ProductResponse = await res.json();
     return data.product;
 }

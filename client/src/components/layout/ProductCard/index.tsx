@@ -8,7 +8,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
     const { id, name, url, content, thumbnail, released_at } = product;
 
-    const dt = released_at || '';
+    const dt = released_at ? new Date(released_at).toISOString().split('T')[0] : ''
 
     return (
         <>
@@ -21,7 +21,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                                 {name}
                             </h2>
                             <p className={productCardStyles.date}>
-                                {new Date(dt.replace(/-/g, '/')).toLocaleDateString()}
+                                {dt}
                             </p>
                         </div>
                         <div className={productCardStyles.discriptionDiv}>

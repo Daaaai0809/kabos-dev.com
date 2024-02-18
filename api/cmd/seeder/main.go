@@ -49,5 +49,9 @@ func seed(ctx context.Context, db *bun.DB) error {
 		return err
 	}
 
+	if err := seeds.ProductSeeds(ctx, db); err != nil {
+		return err
+	}
+
 	return nil
 }
