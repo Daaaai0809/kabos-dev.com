@@ -10,8 +10,8 @@ export const mdBlockStyles = {
 
 globalStyle('h2', {
     fontSize: vars.font.size['2xl'],
+    marginTop: vars.spacing.relative[2],
     marginBottom: vars.spacing.relative[2],
-    backgroundColor: vars.color.green[200],
 });
 
 globalStyle('a', {
@@ -22,4 +22,9 @@ globalStyle('a', {
 globalStyle('a:hover', {
     textDecoration: 'underline',
     color: vars.color.gray[800],
+});
+
+globalStyle('p', {
+    color: vars.color.gray[900],
+    marginBottom: vars.spacing.relative[2],
 });

@@ -14,7 +14,7 @@ export const useMDBlock = (markdown: string) => {
 
     useEffect(() => {
         if (html) {
-            const reactJSX = parseHtmlToReactJSX(html);
+            const reactJSX = parseHtmlToReactJSX(html)
             setReactJSX(reactJSX);
         }
     }, [html]);

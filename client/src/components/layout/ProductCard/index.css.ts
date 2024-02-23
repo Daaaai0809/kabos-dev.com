@@ -173,7 +173,7 @@ export const productCardStyles = {
         overflow: 'hidden',
         width: '100%',
         textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
+        whiteSpace: 'wrap',
     }),
     introductionDiv: style({
         display: 'flex',
