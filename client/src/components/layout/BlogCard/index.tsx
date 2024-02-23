@@ -10,7 +10,7 @@ export const BlogCard = (props: BlogCardProps) => {
 
     const date = posted_at || created_at;
 
-    const dt = new Date(date).toISOString().split('T')[0];
+    const dt = new Date(date).toISOString().split('T')[0] || '';
 
     return (
         <>
