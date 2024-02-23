@@ -7,53 +7,68 @@ import rehypeStringify from 'rehype-stringify';
 import remarkMath from 'remark-math';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
-// import { Node } from 'unist';
-// import { visit } from 'unist-util-visit';
-import { /* Plugin,*/ unified } from 'unified';
+import { Node } from 'unist';
+import { visit } from 'unist-util-visit';
+import { Plugin, unified } from 'unified';
 import Image from 'next/image';
+import * as prod from 'react/jsx-runtime';
+import { LinkCard } from '@/components/layout/LinkCard';
 
-// const rehypeLinkCard: Plugin = () => {
-//     return async (tree: Node) => {
-//         visit(tree, 'element', (node: Node & { tagName: string; properties: { [key: string]: string } }) => {
-//             const { tagName, properties } = node;
-//             if (tagName === 'img' && properties) {
-//                 node.properties.className = 'link-card';
-//                 node.properties['data-src'] = node.properties.src;
-//                 node.properties.src = '/api/link-card?url=' + encodeURIComponent(node.properties.src);
-//             }
-//         });
-//     };
-// }
+const production = {
+    // @ts-expect-error
+    Fragment: prod.Fragment, 
+    // @ts-expect-error
+    jsx: prod.jsx, 
+    // @ts-expect-error
+    jsxs: prod.jsxs, 
+    createElement: React.createElement,
+    components: {
+        img: Image,
+        a: LinkCard,
+    },}
+
+const rehypeLinkCard: Plugin = () => {
+    return async (tree: Node) => {
+        visit(tree, 'element', (node: Node & { tagName: string; properties: { [key: string]: string } }) => {
+            const { tagName, properties } = node;
+            if (tagName === 'img' && properties) {
+                node.properties.src = encodeURIComponent(node.properties.src);
+                node.properties.alt = properties.alt || '';
+            }
+
+            if (tagName === 'a' && properties) {
+                const href = properties.href;
+                if (typeof href === 'string') {
+                    node.properties.url = href;
+                }
+            }
+        });
+    };
+}
 
 export const markdownToHtml = async (markdown: string) => {
     const processor = unified()
         .use(remarkParse)
         .use(remarkRehype)
         .use(remarkMath)
-        // .use(rehypeLinkCard)
-        .use(rehypeParse, { fragment: true })
+        .use(rehypeLinkCard)
         .use(rehypeMathjax)
         .use(rehypeHighlight)
         .use(rehypeStringify)
     
-    const res = await processor.processSync(markdown);
+    const res = await processor.process(markdown);
 
     return res.toString();
 }
 
 export const parseHtmlToReactJSX = (html: string) => {
-    const processor = unified()
-        .use(rehypeParse)
+    const reactProcessor = unified()
+        .use(rehypeParse, { fragment: true })
         // @ts-ignore
-        .use(rehypeReact, {
-            createElement: React.createElement,
-            components: {
-                img: Image,
-            }
-        });
-    
-    const reactJSX = processor.processSync(html).result;
+        .use(rehypeReact, production)
 
-    return reactJSX;
+    const res = reactProcessor.processSync(html);
+
+    return res.result;
 }
 

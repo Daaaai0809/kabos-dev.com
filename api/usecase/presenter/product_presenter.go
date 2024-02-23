@@ -19,6 +19,7 @@ type ProductResponse struct {
 	Name        string `json:"name"`
 	Thumbnail   string `json:"thumbnail"`
 	Content     string `json:"content"`
+	Description string `json:"description"`
 	URL         string `json:"url"`
 	ReleasedAt 	time.Time `json:"released_at"`
 }

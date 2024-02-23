@@ -76,5 +76,5 @@ func main() {
 	adminProductGroup := adminGroup.Group("/product")
 	handler.NewProductHandler(productGroup, adminProductGroup, productInteractor)
 
-	e.Start(":8000")
+	e.Start(":8080")
 }
