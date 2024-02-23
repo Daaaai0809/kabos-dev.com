@@ -8,7 +8,9 @@ export const BlogCard = (props: BlogCardProps) => {
 
     const { title, url, thumbnail, posted_at, created_at } = props.blog;
 
-    const dt = new Date(posted_at || created_at).toISOString().split('T')[0];
+    const date = posted_at || created_at;
+
+    const dt = new Date(date).toISOString().split('T')[0];
 
     return (
         <>
