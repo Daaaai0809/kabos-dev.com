@@ -19,8 +19,9 @@ func (p *ProductPresenter) GenerateGetAllResponse(products []*entity.Product) *p
 			Name:        product.Name,
 			Thumbnail:   product.Thumbnail,
 			Content:     product.Content,
+			Description: product.Description,
 			URL:         product.URL,
-			ReleasedAt: product.ReleasedAt,
+			ReleasedAt:  product.ReleasedAt,
 		}
 
 		responseProducts = append(responseProducts, resPonseProduct)
@@ -37,8 +38,9 @@ func (p *ProductPresenter) GenerateGetByIDResponse(product *entity.Product) *pre
 		Name:        product.Name,
 		Thumbnail:   product.Thumbnail,
 		Content:     product.Content,
+		Description: product.Description,
 		URL:         product.URL,
-		ReleasedAt: product.ReleasedAt,
+		ReleasedAt:  product.ReleasedAt,
 	}
 
 	return &presenter.GetProductByIDResponse{
@@ -54,8 +56,9 @@ func (p *ProductPresenter) GenerateGetByNameResponse(products []*entity.Product)
 			Name:        product.Name,
 			Thumbnail:   product.Thumbnail,
 			Content:     product.Content,
+			Description: product.Description,
 			URL:         product.URL,
-			ReleasedAt: product.ReleasedAt,
+			ReleasedAt:  product.ReleasedAt,
 		}
 
 		responseProducts = append(responseProducts, resPonseProduct)
@@ -72,8 +75,9 @@ func (p *ProductPresenter) GenerateCreateResponse(product *entity.Product) *pres
 		Name:        product.Name,
 		Thumbnail:   product.Thumbnail,
 		Content:     product.Content,
+		Description: product.Description,
 		URL:         product.URL,
-		ReleasedAt: product.ReleasedAt,
+		ReleasedAt:  product.ReleasedAt,
 	}
 
 	return &presenter.CreateProductResponse{
@@ -87,8 +91,9 @@ func (p *ProductPresenter) GenerateUpdateResponse(product *entity.Product) *pres
 		Name:        product.Name,
 		Thumbnail:   product.Thumbnail,
 		Content:     product.Content,
+		Description: product.Description,
 		URL:         product.URL,
-		ReleasedAt: product.ReleasedAt,
+		ReleasedAt:  product.ReleasedAt,
 	}
 
 	return &presenter.UpdateProductResponse{

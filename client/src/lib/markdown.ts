@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeMathjax from 'rehype-mathjax';
 import rehypeParse from 'rehype-parse';
@@ -53,7 +53,6 @@ export const markdownToHtml = async (markdown: string) => {
         .use(remarkMath)
         .use(rehypeLinkCard)
         .use(rehypeMathjax)
-        .use(rehypeLinkCard)
         .use(rehypeHighlight)
         .use(rehypeStringify)
     

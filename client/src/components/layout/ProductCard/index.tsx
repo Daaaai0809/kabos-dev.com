@@ -6,7 +6,7 @@ import { NO_IMAGE_URL } from '@/constants/images';
 export const ProductCard = ({ product }: ProductCardProps) => {
     if (!product) return null;
 
-    const { id, name, url, content, thumbnail, released_at } = product;
+    const { id, name, url, description, thumbnail, released_at } = product;
 
     const dt = released_at ? new Date(released_at).toISOString().split('T')[0] : ''
 
@@ -26,7 +26,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                         </div>
                         <div className={productCardStyles.discriptionDiv}>
                             <p className={productCardStyles.p}>
-                                {content}
+                                {description}
                             </p>
                         </div>
                     </div>
