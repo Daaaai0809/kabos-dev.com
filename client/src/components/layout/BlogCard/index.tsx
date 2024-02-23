@@ -21,7 +21,7 @@ export const BlogCard = (props: BlogCardProps) => {
                         {title}
                     </h3>
                     <p className={blogCardStyles.p}>
-                        {dt}
+                        {new Date(dt.replace(/-/g, '/')).toLocaleDateString()}
                     </p>
                 </div> 
             </Link>
