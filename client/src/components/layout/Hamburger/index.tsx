@@ -30,7 +30,7 @@ export const Hamburger = () => {
                             <Link href="/products" className={hamburgerStyle.hamburgerAnchor.list}>Products</Link>
                         </div>
                         <div className={hamburgerStyle.hamburgerInner}>
-                            <Link href="#" className={hamburgerStyle.hamburgerAnchor.list}>Contact</Link>
+                            <Link href="mailto:dai.tsuruga0809@gmail.com" className={hamburgerStyle.hamburgerAnchor.list}>Contact</Link>
                         </div>
                     </div>
                     <span className={hamburgerStyle.hamburgerSpan}>
