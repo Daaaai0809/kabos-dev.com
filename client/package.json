@@ -20,6 +20,7 @@
     "@types/mdx": "^2.0.10",
     "@types/unist": "^3.0.2",
     "@vanilla-extract/css": "^1.14.0",
+    "aws-sdk": "^2.1571.0",
     "cheerio": "1.0.0-rc.12",
     "next": "14.0.3",
     "react": "^18",
@@ -43,6 +44,7 @@
     "@vanilla-extract/next-plugin": "^2.3.2",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
+    "types": "link:/aws-sdk",
     "typescript": "^5"
   }
 }

@@ -12,6 +12,17 @@ globalStyle('h2', {
     fontSize: vars.font.size['2xl'],
     marginTop: vars.spacing.relative[2],
     marginBottom: vars.spacing.relative[2],
+    width: '100%',
+    maxWidth: '780px',
+    padding: `${vars.spacing.absolute[1]} 0 ${vars.spacing.absolute[1]} ${vars.spacing.absolute[1]}`,
+    borderBottom: `1px solid ${vars.color.gray[400]}`,    
+});
+
+globalStyle('h3', {
+    padding: `${vars.spacing.absolute[1]} ${vars.spacing.absolute[1]}`,
+    fontSize: vars.font.size['xl'],
+    marginTop: vars.spacing.relative[1],
+    marginBottom: vars.spacing.relative[1],
 });
 
 globalStyle('a', {
@@ -26,5 +37,7 @@ globalStyle('a:hover', {
 
 globalStyle('p', {
     color: vars.color.gray[900],
+    width: '100%',
     marginBottom: vars.spacing.relative[2],
+    padding: `0 0 0 ${vars.spacing.absolute[1]}`,
 });
