@@ -1,7 +1,7 @@
-import { LoginForm } from "@/components/templates/LoginForm";
+import { LoginPage } from '@/components/pages/login';
 
-export default function LoginPage() {
+export default function Login() {
     return (
-        <LoginForm />
+        <LoginPage />
     );
 };

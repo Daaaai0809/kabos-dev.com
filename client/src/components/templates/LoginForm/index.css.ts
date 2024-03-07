@@ -1,5 +1,16 @@
-import { style } from '@vanilla-extract/css';
+import { keyframes, style } from '@vanilla-extract/css';
 import { vars } from '@/styles/theme.css';
+
+const loginFormKeyFrames = keyframes({
+    from: {
+        opacity: 0,
+        transform: 'translateY(-1rem)',
+    },
+    to: {
+        opacity: 1,
+        transform: 'translateY(0)',
+    },
+});
 
 export const loginFormStyle = {
     div: style({
@@ -10,6 +21,8 @@ export const loginFormStyle = {
         width: '100%',
         maxWidth: '784px',
         margin: '0 auto',
+        animationName: loginFormKeyFrames,
+        animationDuration: '0.8s',
     }),
     form: style({
         display: 'flex',
