@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const isAdmin = router.pathname.startsWith('/admin');
-  const isLogin = router.pathname.startsWith('/login');
 
   if (isAdmin) {
     return (

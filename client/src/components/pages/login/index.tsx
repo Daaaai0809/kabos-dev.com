@@ -1,6 +1,5 @@
 import { LoginForm } from '@/components/templates/LoginForm';
 import { loginPageStyles } from './index.css';
-
 export const LoginPage = () => {
     return (
         <div className={loginPageStyles.mainDiv}>
