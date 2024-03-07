@@ -11,7 +11,7 @@ export const Input = ({
         <>
             <input
                 id="search"
-                className={inputStyles.input}
+                className={inputStyles.input + ' ' + props.className}
                 type={type}
                 value={props.value}
                 onChange={props.onChange}

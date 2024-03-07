@@ -13,9 +13,17 @@ export const login = async (req: LoginRequest) => {
 };
 
 export const logout = async () => {
-    const res = await fetch('/api/auth/logout', {
+    const res = await fetch('/api/admin/auth/logout', {
         method: 'POST',
     });
 
     return res;
 };
+
+export const checkAuth = async () => {
+    const res = await fetch('/api/admin/auth/check', {
+        method: 'GET',
+    });
+
+    return res;
+}

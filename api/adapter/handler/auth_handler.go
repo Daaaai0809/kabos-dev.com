@@ -21,7 +21,7 @@ func NewAuthHandler(group *echo.Group, adminGroup *echo.Group, authInteractor us
 
 	group.POST("/login", handler.Login)
 	adminGroup.POST("/logout", handler.Logout)
-	adminGroup.POST("/check", handler.Check)
+	adminGroup.GET("/check", handler.Check)
 }
 
 func (h *AuthHandler) Login(c echo.Context) error {
