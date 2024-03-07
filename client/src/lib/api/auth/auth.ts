@@ -19,11 +19,3 @@ export const logout = async () => {
 
     return res;
 };
-
-export const getMe = async () => {
-    const res = await fetch('/api/auth/me', {
-        method: 'GET',
-    });
-
-    return res;
-};

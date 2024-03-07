@@ -81,7 +81,7 @@ func (h *BlogHandler) Create(c echo.Context) error {
 
 func (h *BlogHandler) Update(c echo.Context) error {
 	id := c.Param("id")
-	
+
 	intID, err := strconv.Atoi(id)
 	if err != nil {
 		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
@@ -98,9 +98,8 @@ func (h *BlogHandler) Update(c echo.Context) error {
 	if err != nil {
 		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
 	}
-	
+
 	blog := h.blogInteractor.FillInUpdateBlog(c.Request().Context(), originBlog, updateBlog)
-		
 
 	res, err := h.blogInteractor.Update(c.Request().Context(), blog)
 	if err != nil {

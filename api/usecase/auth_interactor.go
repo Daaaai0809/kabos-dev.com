@@ -23,6 +23,7 @@ type IAuthInteractor interface {
 	CheckPassword(ctx context.Context, password string) error
 	GenrateAccessToken(ctx context.Context) (string, error)
 	SetTokenToCookie(ctx context.Context, token string, isDev bool) *http.Cookie
+	DeleteTokenFromCookie(ctx context.Context, isDev bool) *http.Cookie
 }
 
 type AuthInteractor struct {
@@ -100,6 +101,19 @@ func (i *AuthInteractor) SetTokenToCookie(c context.Context, token string, isDev
 	cookie.SameSite = http.SameSiteLaxMode
 	cookie.Secure = !isDev
 	cookie.Expires = time.Now().Add(COOKIE_EXPIRE)
+
+	return cookie
+}
+
+func (i *AuthInteractor) DeleteTokenFromCookie(c context.Context, isDev bool) *http.Cookie {
+	cookie := new(http.Cookie)
+	cookie.Name = "access_token"
+	cookie.Value = ""
+	cookie.Path = "/"
+	cookie.HttpOnly = true
+	cookie.SameSite = http.SameSiteLaxMode
+	cookie.Secure = !isDev
+	cookie.Expires = time.Now().Add(-1 * time.Hour)
 
 	return cookie
 }

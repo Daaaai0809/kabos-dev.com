@@ -3,12 +3,12 @@ package auth
 import (
 	"net/http"
 
+	constant "github.com/Daaaai0809/kabos-dev.com/constants"
 	"github.com/Daaaai0809/kabos-dev.com/usecase"
 	"github.com/labstack/echo/v4"
 )
 
 const (
-	COOKIE_NAME          = "access_token"
 	UNAUTHORIZED_MESSAGE = "Unauthorized"
 )
 
@@ -24,7 +24,7 @@ func NewAuthGateway(authInteractor usecase.IAuthInteractor) *AuthGateway {
 
 func (g *AuthGateway) Authorize(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		cookie, err := c.Request().Cookie(COOKIE_NAME)
+		cookie, err := c.Request().Cookie(constant.COOKIE_NAME)
 		if err != nil {
 			return c.JSON(http.StatusUnauthorized, UNAUTHORIZED_MESSAGE)
 		}
