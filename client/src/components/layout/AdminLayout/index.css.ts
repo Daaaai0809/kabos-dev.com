@@ -17,4 +17,24 @@ export const adminIndexStyle = {
         maxWidth: "1440px",
         marginTop: vars.spacing.relative[3],
     }),
+    ul: style({
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        listStyle: "none",
+        padding: 0,
+        margin: 0,
+    }),
+    li: style({
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: vars.spacing.relative[3],
+    }),
+    a: style({
+        textDecoration: "none",
+        color: vars.color.gray[900],
+    }),
 };

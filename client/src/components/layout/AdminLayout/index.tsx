@@ -16,12 +16,12 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <div className={adminIndexStyle.main}>
             <div className={adminIndexStyle.header}>
-                <ul>
-                    <li>
-                        <Link href="#">Blog</Link>
+                <ul className={adminIndexStyle.ul}>
+                    <li className={adminIndexStyle.li}>
+                        <Link href="#" className={adminIndexStyle.a}>Blog作成</Link>
                     </li>
-                    <li>
-                        <Link href="#">Product</Link>
+                    <li className={adminIndexStyle.li}>
+                        <Link href="#" className={adminIndexStyle.a}>Product作成</Link>
                     </li>
                 </ul>
             </div>
