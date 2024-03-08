@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '@/styles/theme.css';
 
-export const blogListStyles = {
+export const productListStyles = {
     mainDiv: style({
         display: 'flex',
         justifyContent: 'center',
@@ -14,4 +14,4 @@ export const blogListStyles = {
         padding: `${vars.spacing.relative[4]} ${vars.spacing.relative[6]}`,
         backgroundColor: vars.color.gray[300],
     }),
-}
+};
