@@ -31,11 +31,13 @@ export const useBlogDetail = (id: number) => {
     const handleUpdate = async () => {
         setIsLoading(true);
 
+        const formattedPostedAt = postedAt === '' ? new Date().toISOString().replace('T', ' ').split('.')[0] : new Date(postedAt).toISOString().replace('T', ' ').split('.')[0];
+
         try {
             await blogApi.updateBlog(id, {
                 title,
                 url,
-                posted_at: postedAt,
+                posted_at: formattedPostedAt,
             });
         } catch (error) {
             console.error(error);

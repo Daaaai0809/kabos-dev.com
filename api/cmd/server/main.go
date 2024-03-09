@@ -6,13 +6,15 @@ import (
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/mysqldialect"
 
-	"github.com/Daaaai0809/kabos-dev.com/adapter/middleware"
 	"github.com/Daaaai0809/kabos-dev.com/adapter/handler"
+	auth "github.com/Daaaai0809/kabos-dev.com/adapter/middleware"
 	"github.com/Daaaai0809/kabos-dev.com/adapter/presenter"
+	"github.com/Daaaai0809/kabos-dev.com/config"
 	"github.com/Daaaai0809/kabos-dev.com/infra/mysql"
 	"github.com/Daaaai0809/kabos-dev.com/models"
 	"github.com/Daaaai0809/kabos-dev.com/usecase"
 	"github.com/labstack/echo/v4"
+	middleware "github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
@@ -29,8 +31,7 @@ func main() {
 	defer bunDB.Close()
 
 	authInteractor := usecase.NewAuthInteractor()
-	authMiddleware := middleware.NewAuthMiddleware(authInteractor)
-	corsMiddleware := middleware.NewCorsMiddleware()
+	authMiddleware := auth.NewAuthMiddleware(authInteractor)
 	blogRepository := mysql.NewBlogRepository(bunDB)
 	tagRepository := mysql.NewTagRepository(bunDB)
 	productRepository := mysql.NewProductRepository(bunDB)
@@ -42,22 +43,14 @@ func main() {
 	tagInteractor := usecase.NewTagInteractor(tagRepository, blogTagsRepository, tagPresenter)
 	productInteractor := usecase.NewProductInteractor(productRepository, productPresenter)
 
-	e.Use(corsMiddleware.CorsSetting)
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{config.ACCESS_CONTROL_ALLOW_ORIGIN},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+		AllowCredentials: true,
+		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodHead, http.MethodOptions},
+	}))
 
 	apiGroup := e.Group("/api")
-	// CORS setting
-	apiGroup.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
-		return func(c echo.Context) error {
-			c.Response().Header().Set("Access-Control-Allow-Origin", config.ACCESS_CONTROL_ALLOW_ORIGIN)
-			c.Response().Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-			c.Response().Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-			c.Response().Header().Set("Access-Control-Allow-Credentials", "true")
-			if config.IsDev {
-				c.Response().Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
-			}
-			return next(c)
-		}
-	})
 	adminGroup := apiGroup.Group("/admin")
 	adminGroup.Use(authMiddleware.Authorize)
 	apiGroup.GET("/health", authMiddleware.Authorize(func(c echo.Context) error {

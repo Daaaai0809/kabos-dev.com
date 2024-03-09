@@ -32,7 +32,6 @@ export const createBlog = async (req: BlogCreateRequest) => {
     const ogp = await fetchOGP(req.url);
 
     const res = await fetch(apiRoute + apiRouters.blogs.admin.create, {
-        mode: 'cors',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -53,7 +52,6 @@ export const updateBlog = async (id: number, req: BlogUpdateRequest) => {
     const ogp = req.url ? await fetchOGP(req.url) : undefined;
 
     const res = await fetch(apiRoute + apiRouters.blogs.admin.update + `${id}`, {
-        mode: 'cors',
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -72,7 +70,6 @@ export const updateBlog = async (id: number, req: BlogUpdateRequest) => {
 
 export const deleteBlog = async (id: number) => {
     const res = await fetch(apiRoute + apiRouters.blogs.admin.delete + `${id}`, {
-        mode: 'cors',
         method: 'DELETE',
         credentials: 'include',
     });
