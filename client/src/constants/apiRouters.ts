@@ -1,4 +1,9 @@
 export const apiRouters = {
+    auth: {
+        login: '/auth/login',
+        logout: '/admin/auth/logout',
+        check: '/admin/auth/check',
+    },
     blogs: {
         index: '/blog/',
         search: '/blog/search',

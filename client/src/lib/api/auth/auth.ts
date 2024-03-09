@@ -1,7 +1,8 @@
+import { apiRoute, apiRouters } from "@/constants/apiRouters";
 import { LoginRequest } from "./type";
 
 export const login = async (req: LoginRequest) => {
-    const res = await fetch('/api/auth/login', {
+    const res = await fetch(apiRoute + apiRouters.auth.login, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -13,7 +14,7 @@ export const login = async (req: LoginRequest) => {
 };
 
 export const logout = async () => {
-    const res = await fetch('/api/admin/auth/logout', {
+    const res = await fetch(apiRoute + apiRouters.auth.logout, {
         method: 'POST',
     });
 
@@ -21,7 +22,7 @@ export const logout = async () => {
 };
 
 export const checkAuth = async () => {
-    const res = await fetch('/api/admin/auth/check', {
+    const res = await fetch(apiRoute + apiRouters.auth.check, {
         method: 'GET',
     });
 
