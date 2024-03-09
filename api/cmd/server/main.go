@@ -35,6 +35,7 @@ func main() {
 			c.Response().Header().Set("Access-Control-Allow-Origin", config.ACCESS_CONTROL_ALLOW_ORIGIN)
 			c.Response().Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
 			c.Response().Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+			c.Response().Header().Set("Access-Control-Allow-Credentials", "true")
 			if config.IsDev {
 				c.Response().Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 			}
