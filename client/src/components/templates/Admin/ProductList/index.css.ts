@@ -4,14 +4,14 @@ import { vars } from '@/styles/theme.css';
 export const productListStyles = {
     mainDiv: style({
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'start',
+        alignItems: 'start',
         flexDirection: 'column',
-        height: '100%',
-        maxHeight: '768px',
+        height: '768px',
         width: '100%',
-        maxWidth: '528px',
+        maxWidth: '552px',
         padding: `${vars.spacing.relative[4]} ${vars.spacing.relative[6]}`,
         backgroundColor: vars.color.gray[300],
+        overflowY: 'scroll',
     }),
 };

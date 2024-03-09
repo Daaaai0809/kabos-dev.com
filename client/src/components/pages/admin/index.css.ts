@@ -18,6 +18,12 @@ export const adminIndexStyles = {
         justifyContent: 'center',
         width: '100%',
         maxWidth: '1280px',
+        '@media': {
+            'screen and (max-width: 768px)': {
+                flexDirection: 'column',
+                alignItems: 'center',
+            },
+        }
     }),
     div: style({
         display: 'flex',

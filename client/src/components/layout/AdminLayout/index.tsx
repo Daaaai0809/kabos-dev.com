@@ -18,7 +18,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             <div className={adminIndexStyle.header}>
                 <ul className={adminIndexStyle.ul}>
                     <li className={adminIndexStyle.li}>
-                        <Link href="#" className={adminIndexStyle.a}>Blog作成</Link>
+                        <Link href="/admin/blog/create" className={adminIndexStyle.a}>Blog作成</Link>
                     </li>
                     <li className={adminIndexStyle.li}>
                         <Link href="#" className={adminIndexStyle.a}>Product作成</Link>

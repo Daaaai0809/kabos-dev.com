@@ -15,7 +15,7 @@ export const useBlogIndex = () => {
 
                 const ogp = await fetchOGP(blog.url);
 
-                _blog.thumbnail = ogp.image;
+                _blog.thumbnail = blog.thumbnail || ogp.image;
 
                 return _blog;
             });

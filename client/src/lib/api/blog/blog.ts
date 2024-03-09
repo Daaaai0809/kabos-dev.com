@@ -1,8 +1,14 @@
-import { apiRoute, apiRouters } from "@/constants/apiRouters";
-import { BlogCreateRequest, BlogListResponse, BlogResponse } from "./type";
+import { apiRoute, apiRouters } from '@/constants/apiRouters';
+import { BlogCreateRequest, BlogListResponse, BlogResponse } from './type';
+import { fetchOGP } from '@/lib/ogp/ogp';
 
 export const fetchBlogs = async () => {
-    const res = await fetch(apiRoute + apiRouters.blogs.index);
+    const res = await fetch(apiRoute + apiRouters.blogs.index, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
     const blogs = await res.json() as BlogListResponse;
 
     return blogs;
@@ -23,24 +29,36 @@ export const fetchById = async (id: string) => {
 }
 
 export const createBlog = async (req: BlogCreateRequest) => {
+    const ogp = await fetchOGP(req.url);
+
     const res = await fetch(apiRoute + apiRouters.blogs.admin.create, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(req),
+        body: JSON.stringify({
+            title: req.title,
+            url: req.url,
+            thumbnail: ogp?.image,
+        }),
     });
 
     return res;
 }
 
 export const updateBlog = async (id: string, req: BlogCreateRequest) => {
+    const ogp = await fetchOGP(req.url);
+
     const res = await fetch(apiRoute + apiRouters.blogs.admin.update + `/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(req),
+        body: JSON.stringify({
+            title: req.title,
+            url: req.url,
+            thumbnail: ogp?.image,
+        }),
     });
 
     return res;
