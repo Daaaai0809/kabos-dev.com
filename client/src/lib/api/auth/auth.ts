@@ -4,6 +4,7 @@ import { LoginRequest } from "./type";
 export const login = async (req: LoginRequest) => {
     const res = await fetch(apiRoute + apiRouters.auth.login, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
         },
