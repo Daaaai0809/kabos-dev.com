@@ -96,7 +96,11 @@ func (i *AuthInteractor) SetTokenToCookie(c context.Context, token string, isDev
 	cookie := new(http.Cookie)
 	cookie.Name = "access_token"
 	cookie.Value = token
-	cookie.Path = "/"
+	if isDev {
+		cookie.Path = "/"
+	} else {
+		cookie.Path = config.ACCESS_CONTROL_ALLOW_ORIGIN + "/admin/"
+	}
 	cookie.HttpOnly = true
 	cookie.SameSite = http.SameSiteLaxMode
 	cookie.Secure = !isDev
@@ -111,7 +115,7 @@ func (i *AuthInteractor) DeleteTokenFromCookie(c context.Context, isDev bool) *h
 	cookie.Value = ""
 	cookie.Path = "/"
 	cookie.HttpOnly = true
-	cookie.SameSite = http.SameSiteLaxMode
+	cookie.SameSite = http.SameSiteNoneMode
 	cookie.Secure = !isDev
 	cookie.Expires = time.Now().Add(-1 * time.Hour)
 

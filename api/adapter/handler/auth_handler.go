@@ -44,14 +44,14 @@ func (h *AuthHandler) Login(c echo.Context) error {
 
 	c.SetCookie(tokenCookie)
 
-	return c.JSON(http.StatusOK, constant.LOGIN_SUCCESS_MESSAGE)
+	return c.NoContent(http.StatusOK)
 }
 
 func (h *AuthHandler) Logout(c echo.Context) error {
 	tokenCookie := h.authInteractor.DeleteTokenFromCookie(c.Request().Context(), config.IsDev)
 	c.SetCookie(tokenCookie)
 
-	return c.JSON(http.StatusOK, constant.LOGOUT_SUCCESS_MESSAGE)
+	return c.NoContent(http.StatusOK)
 }
 
 func (h *AuthHandler) Check(c echo.Context) error {
@@ -64,5 +64,5 @@ func (h *AuthHandler) Check(c echo.Context) error {
 		return c.String(http.StatusUnauthorized, constant.UNAUTHORIZED_MESSAGE)
 	}
 
-	return c.JSON(http.StatusOK, constant.SUCCESS_MESSAGE)
+	return c.NoContent(http.StatusOK)
 }
