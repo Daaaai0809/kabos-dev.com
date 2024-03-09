@@ -12,7 +12,6 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ product }: Product
                     <img src={product.thumbnail||NO_IMAGE_URL} alt={product.name} className={productDetailStyle.thumbnail} />
                     <h1 className={productDetailStyle.h1}>{product.name}</h1>
                 </div>
-                <Line />
                 <div className={productDetailStyle.divContent}>
                     <MDBlock markdown={product.content} />
                 </div>

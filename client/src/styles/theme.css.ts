@@ -155,4 +155,4 @@ export const vars = {
         windowFloat: 100,
         modal: 1000,
     },
-}
+};

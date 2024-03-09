@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 
+	"github.com/Daaaai0809/kabos-dev.com/config"
 	"github.com/Daaaai0809/kabos-dev.com/domain/entity"
 	"github.com/Daaaai0809/kabos-dev.com/domain/repository"
 	"github.com/Daaaai0809/kabos-dev.com/models"
@@ -18,7 +19,7 @@ type IBlogInteractor interface {
 	Delete(ctx context.Context, id int) error
 	GetOriginBlog(ctx context.Context, id int) (*entity.Blog, error)
 	FillInUpdateBlog(ctx context.Context, originBlog *entity.Blog, updateBlog *entity.Blog) *entity.Blog
-	GenerateBlogEntity(ctx context.Context, id int, title string, thumbnail string, url string, tagIDs []int) *entity.Blog
+	GenerateBlogEntity(ctx context.Context, id int, title string, thumbnail string, url string, postedAt string, tagIDs []int) (*entity.Blog, error)
 }
 
 type BlogInteractor struct {
@@ -203,14 +204,20 @@ func (i *BlogInteractor) FillInUpdateBlog(ctx context.Context, originBlog *entit
 	return updateBlog
 }
 
-func (i *BlogInteractor) GenerateBlogEntity(ctx context.Context, id int, title string, thumbnail string, url string, tagIDs []int) *entity.Blog {
+func (i *BlogInteractor) GenerateBlogEntity(ctx context.Context, id int, title string, thumbnail string, url string, postedAt string, tagIDs []int) (*entity.Blog, error) {
+	formatedPostedAt, err := config.FormatDateTimeFromString(postedAt);
+	if err != nil {
+		return &entity.Blog{}, err
+	}
+
 	blog := &entity.Blog{
 		ID:        id,
 		Title:     title,
 		Thumbnail: thumbnail,
 		URL:       url,
+		PostedAt:  formatedPostedAt,
 		TagIDs:    tagIDs,
 	}
 
-	return blog
+	return blog, nil
 }

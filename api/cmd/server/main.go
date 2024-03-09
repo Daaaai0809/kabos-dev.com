@@ -23,7 +23,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	
+
 	bunDB := bun.NewDB(db, mysqldialect.New())
 	bunDB.RegisterModel((*models.BlogTags)(nil))
 
@@ -55,14 +55,15 @@ func main() {
 	tagInteractor := usecase.NewTagInteractor(tagRepository, blogTagsRepository, tagPresenter)
 	productInteractor := usecase.NewProductInteractor(productRepository, productPresenter)
 
-
 	apiGroup := e.Group("/api")
 	adminGroup := apiGroup.Group("/admin")
-	apiGroup.GET("/", authGateway.Authorize(func(c echo.Context) error {
+	adminGroup.Use(authGateway.Authorize)
+	apiGroup.GET("/health", authGateway.Authorize(func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	}))
 	authGroup := apiGroup.Group("/auth")
-	handler.NewAuthHandler(authGroup, authInteractor)
+	adminAuthGroup := adminGroup.Group("/auth")
+	handler.NewAuthHandler(authGroup, adminAuthGroup, authInteractor)
 
 	blogGroup := apiGroup.Group("/blog")
 	adminBlogGroup := adminGroup.Group("/blog")

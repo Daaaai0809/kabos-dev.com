@@ -1,4 +1,5 @@
-import { keyframes, style } from '@vanilla-extract/css';
+import { vars } from '@/styles/theme.css';
+import { globalStyle, keyframes, style } from '@vanilla-extract/css';
 
 const productDetailAnimation = keyframes({
     '0%': {

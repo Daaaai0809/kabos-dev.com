@@ -34,9 +34,9 @@ export const productDetailStyle = {
         maxWidth: '784px',
         height: '400px',
         maxHeight: '400px',
-        filter: 'blur(5px) brightness(1.05)',
         objectFit: 'cover',
         overflow: 'hidden',
+        filter: 'blur(3px)',
         '@media': {
             'screen and (max-width: 768px)': {
                 width: '100%',

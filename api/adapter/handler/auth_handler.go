@@ -3,9 +3,9 @@ package handler
 import (
 	"net/http"
 
+	"github.com/Daaaai0809/kabos-dev.com/adapter/request/auth"
 	"github.com/Daaaai0809/kabos-dev.com/config"
 	"github.com/Daaaai0809/kabos-dev.com/constants"
-	"github.com/Daaaai0809/kabos-dev.com/adapter/request/auth"
 	"github.com/Daaaai0809/kabos-dev.com/usecase"
 	"github.com/labstack/echo/v4"
 )
@@ -14,12 +14,14 @@ type AuthHandler struct {
 	authInteractor usecase.IAuthInteractor
 }
 
-func NewAuthHandler(group *echo.Group, authInteractor usecase.IAuthInteractor) {
+func NewAuthHandler(group *echo.Group, adminGroup *echo.Group, authInteractor usecase.IAuthInteractor) {
 	handler := &AuthHandler{
 		authInteractor: authInteractor,
 	}
 
 	group.POST("/login", handler.Login)
+	adminGroup.POST("/logout", handler.Logout)
+	adminGroup.GET("/check", handler.Check)
 }
 
 func (h *AuthHandler) Login(c echo.Context) error {
@@ -43,4 +45,24 @@ func (h *AuthHandler) Login(c echo.Context) error {
 	c.SetCookie(tokenCookie)
 
 	return c.JSON(http.StatusOK, constant.LOGIN_SUCCESS_MESSAGE)
+}
+
+func (h *AuthHandler) Logout(c echo.Context) error {
+	tokenCookie := h.authInteractor.DeleteTokenFromCookie(c.Request().Context(), config.IsDev)
+	c.SetCookie(tokenCookie)
+
+	return c.JSON(http.StatusOK, constant.LOGOUT_SUCCESS_MESSAGE)
+}
+
+func (h *AuthHandler) Check(c echo.Context) error {
+	tokenCookie, err := c.Cookie(constant.COOKIE_NAME)
+	if err != nil {
+		return c.String(http.StatusUnauthorized, constant.UNAUTHENTICATED_MESSAGE)
+	}
+
+	if err := h.authInteractor.CheckAccessToken(c.Request().Context(), tokenCookie.Value); err != nil {
+		return c.String(http.StatusUnauthorized, constant.UNAUTHORIZED_MESSAGE)
+	}
+
+	return c.JSON(http.StatusOK, constant.SUCCESS_MESSAGE)
 }

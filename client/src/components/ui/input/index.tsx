@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { inputStyles } from "./index.css";
 import { InputProps } from "./type";
 
@@ -8,15 +7,18 @@ export const Input = ({
     ...props
 }: InputProps) => {
     return (
-        <>
+        <div className={inputStyles.inputDiv}>
+            {props.label && (
+                <label htmlFor="search" className={inputStyles.label}>{props.label}</label>
+            )}
             <input
                 id="search"
-                className={inputStyles.input}
+                className={inputStyles.input + ' ' + props.className}
                 type={type}
                 value={props.value}
                 onChange={props.onChange}
                 placeholder={placeholder}
             />
-        </>
+        </div>
     );
 }

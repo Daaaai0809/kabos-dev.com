@@ -9,7 +9,7 @@ import (
 type Blog struct {
 	ID        int       `bun:"id,pk,autoincrement"`
 	Title     string    `bun:"title,notnull"`
-	Thumbnail string    `bun:"thumbnail"`
+	Thumbnail string    `bun:"thumbnail,type:text"`
 	URL       string    `bun:"url,notnull"`
 	Tags      []*Tag    `bun:"m2m:blog_tags,join:Blog=Tag"`
 	PostedAt  time.Time `bun:"posted_at"`
