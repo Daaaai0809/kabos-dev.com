@@ -96,11 +96,7 @@ func (i *AuthInteractor) SetTokenToCookie(c context.Context, token string, isDev
 	cookie := new(http.Cookie)
 	cookie.Name = "access_token"
 	cookie.Value = token
-	if isDev {
-		cookie.Path = "/"
-	} else {
-		cookie.Path = config.ACCESS_CONTROL_ALLOW_ORIGIN + "/admin/"
-	}
+	cookie.Path = "/"
 	cookie.HttpOnly = true
 	cookie.SameSite = http.SameSiteLaxMode
 	cookie.Secure = !isDev
