@@ -13,9 +13,10 @@ export const useBlogIndex = () => {
                 // blogのurlからOGPを取得
                 let _blog = blog;
 
-                const ogp = await fetchOGP(blog.url);
-
-                _blog.thumbnail = blog.thumbnail || ogp.image;
+                if (!blog.thumbnail) {
+                    const ogp = await fetchOGP(blog.url);
+                    _blog.thumbnail = ogp.image;
+                }
 
                 return _blog;
             });
