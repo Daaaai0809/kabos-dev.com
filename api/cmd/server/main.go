@@ -29,20 +29,6 @@ func main() {
 
 	defer bunDB.Close()
 
-	// CORS setting
-	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
-		return func(c echo.Context) error {
-			c.Response().Header().Set("Access-Control-Allow-Origin", config.ACCESS_CONTROL_ALLOW_ORIGIN)
-			c.Response().Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-			c.Response().Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-			c.Response().Header().Set("Access-Control-Allow-Credentials", "true")
-			if config.IsDev {
-				c.Response().Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
-			}
-			return next(c)
-		}
-	})
-
 	authInteractor := usecase.NewAuthInteractor()
 	authGateway := auth.NewAuthGateway(authInteractor)
 	blogRepository := mysql.NewBlogRepository(bunDB)
@@ -57,6 +43,19 @@ func main() {
 	productInteractor := usecase.NewProductInteractor(productRepository, productPresenter)
 
 	apiGroup := e.Group("/api")
+	// CORS setting
+	apiGroup.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			c.Response().Header().Set("Access-Control-Allow-Origin", config.ACCESS_CONTROL_ALLOW_ORIGIN)
+			c.Response().Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+			c.Response().Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+			c.Response().Header().Set("Access-Control-Allow-Credentials", "true")
+			if config.IsDev {
+				c.Response().Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+			}
+			return next(c)
+		}
+	})
 	adminGroup := apiGroup.Group("/admin")
 	adminGroup.Use(authGateway.Authorize)
 	apiGroup.GET("/health", authGateway.Authorize(func(c echo.Context) error {
