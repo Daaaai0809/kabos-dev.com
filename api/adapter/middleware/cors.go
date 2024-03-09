@@ -14,8 +14,8 @@ func NewCorsMiddleware() *CorsMiddleware {
 func (c *CorsMiddleware) CorsSetting(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		c.Response().Header().Set("Access-Control-Allow-Origin", config.ACCESS_CONTROL_ALLOW_ORIGIN)
-		c.Response().Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-		c.Response().Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		c.Response().Header().Set("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, HEAD, OPTIONS")
+		c.Response().Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Origin, X-Csrftoken, Content-Type, Accept")
 		c.Response().Header().Set("Access-Control-Allow-Credentials", "true")
 		if config.IsDev {
 			c.Response().Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
