@@ -6,10 +6,9 @@ import (
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/mysqldialect"
 
-	"github.com/Daaaai0809/kabos-dev.com/adapter/auth"
+	"github.com/Daaaai0809/kabos-dev.com/adapter/middleware"
 	"github.com/Daaaai0809/kabos-dev.com/adapter/handler"
 	"github.com/Daaaai0809/kabos-dev.com/adapter/presenter"
-	"github.com/Daaaai0809/kabos-dev.com/config"
 	"github.com/Daaaai0809/kabos-dev.com/infra/mysql"
 	"github.com/Daaaai0809/kabos-dev.com/models"
 	"github.com/Daaaai0809/kabos-dev.com/usecase"
@@ -29,22 +28,9 @@ func main() {
 
 	defer bunDB.Close()
 
-	// CORS setting
-	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
-		return func(c echo.Context) error {
-			c.Response().Header().Set("Access-Control-Allow-Origin", config.ACCESS_CONTROL_ALLOW_ORIGIN)
-			c.Response().Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-			c.Response().Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-			c.Response().Header().Set("Access-Control-Allow-Credentials", "true")
-			if config.IsDev {
-				c.Response().Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
-			}
-			return next(c)
-		}
-	})
-
 	authInteractor := usecase.NewAuthInteractor()
-	authGateway := auth.NewAuthGateway(authInteractor)
+	authMiddleware := middleware.NewAuthMiddleware(authInteractor)
+	corsMiddleware := middleware.NewCorsMiddleware()
 	blogRepository := mysql.NewBlogRepository(bunDB)
 	tagRepository := mysql.NewTagRepository(bunDB)
 	productRepository := mysql.NewProductRepository(bunDB)
@@ -56,10 +42,12 @@ func main() {
 	tagInteractor := usecase.NewTagInteractor(tagRepository, blogTagsRepository, tagPresenter)
 	productInteractor := usecase.NewProductInteractor(productRepository, productPresenter)
 
+	e.Use(corsMiddleware.CorsSetting)
+
 	apiGroup := e.Group("/api")
 	adminGroup := apiGroup.Group("/admin")
-	adminGroup.Use(authGateway.Authorize)
-	apiGroup.GET("/health", authGateway.Authorize(func(c echo.Context) error {
+	adminGroup.Use(authMiddleware.Authorize)
+	apiGroup.GET("/health", authMiddleware.Authorize(func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	}))
 	authGroup := apiGroup.Group("/auth")

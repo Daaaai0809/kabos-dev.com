@@ -98,7 +98,7 @@ func (i *AuthInteractor) SetTokenToCookie(c context.Context, token string, isDev
 	cookie.Value = token
 	cookie.Path = "/"
 	cookie.HttpOnly = true
-	cookie.SameSite = http.SameSiteLaxMode
+	cookie.SameSite = http.SameSiteNoneMode
 	cookie.Secure = !isDev
 	cookie.Expires = time.Now().Add(COOKIE_EXPIRE)
 
