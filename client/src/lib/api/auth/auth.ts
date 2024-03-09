@@ -16,7 +16,8 @@ export const login = async (req: LoginRequest) => {
 
 export const logout = async () => {
     const res = await fetch(apiRoute + apiRouters.auth.logout, {
-        method: 'POST',
+        mode: 'cors',
+        method: 'GET',
         credentials: 'include',
     });
 
@@ -25,6 +26,7 @@ export const logout = async () => {
 
 export const checkAuth = async () => {
     const res = await fetch(apiRoute + apiRouters.auth.check, {
+        mode: 'cors',
         method: 'GET',
         credentials: 'include',
     });

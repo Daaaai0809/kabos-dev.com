@@ -20,7 +20,7 @@ func NewAuthHandler(group *echo.Group, adminGroup *echo.Group, authInteractor us
 	}
 
 	group.POST("/login", handler.Login)
-	adminGroup.POST("/logout", handler.Logout)
+	adminGroup.GET("/logout", handler.Logout)
 	adminGroup.GET("/check", handler.Check)
 }
 

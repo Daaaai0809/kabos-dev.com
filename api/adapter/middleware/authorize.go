@@ -1,4 +1,4 @@
-package auth
+package middleware
 
 import (
 	"net/http"
@@ -12,17 +12,17 @@ const (
 	UNAUTHORIZED_MESSAGE = "Unauthorized"
 )
 
-type AuthGateway struct {
+type AuthMiddleware struct {
 	authInteractor usecase.IAuthInteractor
 }
 
-func NewAuthGateway(authInteractor usecase.IAuthInteractor) *AuthGateway {
-	return &AuthGateway{
+func NewAuthMiddleware(authInteractor usecase.IAuthInteractor) *AuthMiddleware {
+	return &AuthMiddleware{
 		authInteractor: authInteractor,
 	}
 }
 
-func (g *AuthGateway) Authorize(next echo.HandlerFunc) echo.HandlerFunc {
+func (m *AuthMiddleware) Authorize(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		cookie, err := c.Request().Cookie(constant.COOKIE_NAME)
 		if err != nil {
@@ -31,7 +31,7 @@ func (g *AuthGateway) Authorize(next echo.HandlerFunc) echo.HandlerFunc {
 
 		token := cookie.Value
 
-		if err := g.authInteractor.CheckAccessToken(c.Request().Context(), token); err != nil {
+		if err := m.authInteractor.CheckAccessToken(c.Request().Context(), token); err != nil {
 			return c.JSON(http.StatusUnauthorized, UNAUTHORIZED_MESSAGE)
 		}
 

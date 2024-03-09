@@ -6,10 +6,9 @@ import (
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/mysqldialect"
 
-	"github.com/Daaaai0809/kabos-dev.com/adapter/auth"
+	"github.com/Daaaai0809/kabos-dev.com/adapter/middleware"
 	"github.com/Daaaai0809/kabos-dev.com/adapter/handler"
 	"github.com/Daaaai0809/kabos-dev.com/adapter/presenter"
-	"github.com/Daaaai0809/kabos-dev.com/config"
 	"github.com/Daaaai0809/kabos-dev.com/infra/mysql"
 	"github.com/Daaaai0809/kabos-dev.com/models"
 	"github.com/Daaaai0809/kabos-dev.com/usecase"
@@ -30,7 +29,8 @@ func main() {
 	defer bunDB.Close()
 
 	authInteractor := usecase.NewAuthInteractor()
-	authGateway := auth.NewAuthGateway(authInteractor)
+	authMiddleware := middleware.NewAuthMiddleware(authInteractor)
+	corsMiddleware := middleware.NewCorsMiddleware()
 	blogRepository := mysql.NewBlogRepository(bunDB)
 	tagRepository := mysql.NewTagRepository(bunDB)
 	productRepository := mysql.NewProductRepository(bunDB)
@@ -41,6 +41,8 @@ func main() {
 	blogInteractor := usecase.NewBlogInteractor(blogRepository, blogTagsRepository, blogPresenter)
 	tagInteractor := usecase.NewTagInteractor(tagRepository, blogTagsRepository, tagPresenter)
 	productInteractor := usecase.NewProductInteractor(productRepository, productPresenter)
+
+	e.Use(corsMiddleware.CorsSetting)
 
 	apiGroup := e.Group("/api")
 	// CORS setting
@@ -57,8 +59,8 @@ func main() {
 		}
 	})
 	adminGroup := apiGroup.Group("/admin")
-	adminGroup.Use(authGateway.Authorize)
-	apiGroup.GET("/health", authGateway.Authorize(func(c echo.Context) error {
+	adminGroup.Use(authMiddleware.Authorize)
+	apiGroup.GET("/health", authMiddleware.Authorize(func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	}))
 	authGroup := apiGroup.Group("/auth")
