@@ -11,11 +11,13 @@ export type BlogResponse = {
 export type BlogCreateRequest = {
     title: string;
     url: string;
+    posted_at?: string;
     // tag_ids: number[];
 };
 
 export type BlogUpdateRequest = {
-    title: string;
-    url: string;
+    title?: string;
+    url?: string;
+    posted_at?: string;
     // tag_ids: number[];
 };

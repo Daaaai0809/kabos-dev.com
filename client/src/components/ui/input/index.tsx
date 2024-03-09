@@ -4,12 +4,13 @@ import { InputProps } from "./type";
 export const Input = ({
     type = 'text',
     placeholder = '',
-    label = '',
     ...props
 }: InputProps) => {
     return (
-        <>
-            <label htmlFor="search" className=''>{label}</label>
+        <div className={inputStyles.inputDiv}>
+            {props.label && (
+                <label htmlFor="search" className={inputStyles.label}>{props.label}</label>
+            )}
             <input
                 id="search"
                 className={inputStyles.input + ' ' + props.className}
@@ -18,6 +19,6 @@ export const Input = ({
                 onChange={props.onChange}
                 placeholder={placeholder}
             />
-        </>
+        </div>
     );
 }

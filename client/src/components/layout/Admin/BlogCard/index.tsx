@@ -11,7 +11,7 @@ export const BlogCard = (props: BlogCardProps) => {
     const { id, title, url } = props;
 
     return (
-        <Link href="#" className={blogCardStyles.link}>
+        <Link href={`/admin/blog/${id}`} className={blogCardStyles.link}>
             <div className={blogCardStyles.mainDiv}>
                 <p className={blogCardStyles.pId}>{id}</p>
                 <div className={blogCardStyles.div}>

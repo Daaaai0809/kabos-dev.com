@@ -1,6 +1,6 @@
-import { Input } from '@/components/ui/input';
 import { useCreateBlog } from './useCreateBlog';
 import { BlogForm } from '@/components/layout/Admin/BlogForm';
+import { blogCreateStyles } from './index.css';
 
 export const BlogCreate = () => {
     const {
@@ -8,6 +8,8 @@ export const BlogCreate = () => {
         setTitle,
         url,
         setUrl,
+        postedAt,
+        setPostedAt,
         createBlog,
         isLoading,
     } = useCreateBlog();
@@ -24,11 +26,15 @@ export const BlogCreate = () => {
         setUrl(url);
     };
 
+    const onChangePostedAt = (postedAt: string) => {
+        setPostedAt(postedAt);
+    };
+
     return (
-        <div>
-            <h2>Create Blog</h2>
-            <div>
-                <BlogForm title={title} url={url} onChangeTitle={onChangeTitle} onChangeUrl={onChangeUrl} onSubmit={createBlog} />
+        <div className={blogCreateStyles.mainDiv}>
+            <h2 className={blogCreateStyles.h2}>Create Blog</h2>
+            <div className={blogCreateStyles.formDiv}>
+                <BlogForm title={title} url={url} postedAt={postedAt} onChangeTitle={onChangeTitle} onChangeUrl={onChangeUrl} onChangePostedAt={onChangePostedAt} onSubmit={createBlog} />
             </div>
         </div>
     );
