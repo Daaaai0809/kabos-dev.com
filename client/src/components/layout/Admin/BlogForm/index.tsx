@@ -13,7 +13,6 @@ type BlogFormProps = {
     onChangePostedAt: (postedAt: string) => void;
     onSubmit: () => void;
     type?: BlogFormType;
-    handleUpdate?: () => void;
     handleDelete?: () => void;
 };
 
