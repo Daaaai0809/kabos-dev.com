@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"net/http"
+	"strings"
 
-	constant "github.com/Daaaai0809/kabos-dev.com/constants"
 	"github.com/Daaaai0809/kabos-dev.com/usecase"
 	"github.com/labstack/echo/v4"
 )
@@ -24,12 +24,12 @@ func NewAuthMiddleware(authInteractor usecase.IAuthInteractor) *AuthMiddleware {
 
 func (m *AuthMiddleware) Authorize(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		cookie, err := c.Request().Cookie(constant.COOKIE_NAME)
-		if err != nil {
+		authHeader := c.Request().Header.Get("Authorization")
+		if authHeader == "" {
 			return c.JSON(http.StatusUnauthorized, UNAUTHORIZED_MESSAGE)
 		}
 
-		token := cookie.Value
+		token := strings.TrimPrefix(authHeader, "Bearer ")
 
 		if err := m.authInteractor.CheckAccessToken(c.Request().Context(), token); err != nil {
 			return c.JSON(http.StatusUnauthorized, UNAUTHORIZED_MESSAGE)

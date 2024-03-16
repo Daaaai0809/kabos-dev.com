@@ -3,11 +3,11 @@ package usecase
 import (
 	"context"
 	"errors"
-	"net/http"
 	"strconv"
 	"time"
 
 	"github.com/Daaaai0809/kabos-dev.com/config"
+	"github.com/Daaaai0809/kabos-dev.com/usecase/presenter"
 	jwt "github.com/dgrijalva/jwt-go"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -21,16 +21,17 @@ const (
 type IAuthInteractor interface {
 	CheckAccessToken(ctx context.Context, token string) error
 	CheckPassword(ctx context.Context, password string) error
-	GenrateAccessToken(ctx context.Context) (string, error)
-	SetTokenToCookie(ctx context.Context, token string, isDev bool) *http.Cookie
-	DeleteTokenFromCookie(ctx context.Context, isDev bool) *http.Cookie
+	GenrateAccessToken() (*presenter.LoginResponse, error)
 }
 
 type AuthInteractor struct {
+	authPresenter presenter.IAuthPresenter
 }
 
-func NewAuthInteractor() IAuthInteractor {
-	return &AuthInteractor{}
+func NewAuthInteractor(authPresenter presenter.IAuthPresenter) IAuthInteractor {
+	return &AuthInteractor{
+		authPresenter: authPresenter,
+	}
 }
 
 func (i *AuthInteractor) CheckAccessToken(ctx context.Context, token string) error {
@@ -76,7 +77,7 @@ func (i *AuthInteractor) CheckPassword(ctx context.Context, password string) err
 	return nil
 }
 
-func (i *AuthInteractor) GenrateAccessToken(ctx context.Context) (string, error) {
+func (i *AuthInteractor) GenrateAccessToken() (*presenter.LoginResponse, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 
 	claims := token.Claims.(jwt.MapClaims)
@@ -86,34 +87,8 @@ func (i *AuthInteractor) GenrateAccessToken(ctx context.Context) (string, error)
 
 	tokenString, err := token.SignedString([]byte(config.JWT_SECRET))
 	if err != nil {
-		return "", err
+		return &presenter.LoginResponse{}, err
 	}
 
-	return tokenString, nil
-}
-
-func (i *AuthInteractor) SetTokenToCookie(c context.Context, token string, isDev bool) *http.Cookie {
-	cookie := new(http.Cookie)
-	cookie.Name = "access_token"
-	cookie.Value = token
-	cookie.Path = "/"
-	cookie.HttpOnly = true
-	cookie.SameSite = http.SameSiteNoneMode
-	cookie.Secure = !isDev
-	cookie.Expires = time.Now().Add(COOKIE_EXPIRE)
-
-	return cookie
-}
-
-func (i *AuthInteractor) DeleteTokenFromCookie(c context.Context, isDev bool) *http.Cookie {
-	cookie := new(http.Cookie)
-	cookie.Name = "access_token"
-	cookie.Value = ""
-	cookie.Path = "/"
-	cookie.HttpOnly = true
-	cookie.SameSite = http.SameSiteNoneMode
-	cookie.Secure = !isDev
-	cookie.Expires = time.Now().Add(-1 * time.Hour)
-
-	return cookie
+	return i.authPresenter.GenerateLoginResponse(tokenString), nil
 }

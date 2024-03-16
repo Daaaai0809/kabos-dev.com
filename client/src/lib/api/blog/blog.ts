@@ -35,8 +35,8 @@ export const createBlog = async (req: BlogCreateRequest) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${window.localStorage.getItem('access_token')}`,
         },
-        credentials: 'include',
         body: JSON.stringify({
             title: req.title,
             url: req.url,
@@ -55,8 +55,8 @@ export const updateBlog = async (id: number, req: BlogUpdateRequest) => {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${window.localStorage.getItem('access_token')}`,
         },
-        credentials: 'include',
         body: JSON.stringify({
             title: req.title,
             url: req.url,
@@ -71,7 +71,10 @@ export const updateBlog = async (id: number, req: BlogUpdateRequest) => {
 export const deleteBlog = async (id: number) => {
     const res = await fetch(apiRoute + apiRouters.blogs.admin.delete + `${id}`, {
         method: 'DELETE',
-        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${window.localStorage.getItem('access_token')}`,
+        },
     });
 
     return res;
