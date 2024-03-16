@@ -4,7 +4,6 @@ import { LoginRequest } from "./type";
 export const login = async (req: LoginRequest) => {
     const res = await fetch(apiRoute + apiRouters.auth.login, {
         method: 'POST',
-        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -14,21 +13,23 @@ export const login = async (req: LoginRequest) => {
     return res;
 };
 
-export const logout = async () => {
-    const res = await fetch(apiRoute + apiRouters.auth.logout, {
-        mode: 'cors',
-        method: 'GET',
-        credentials: 'include',
-    });
+// export const logout = async () => {
+//     const res = await fetch(apiRoute + apiRouters.auth.logout, {
+//         mode: 'cors',
+//         method: 'GET',
+//     });
 
-    return res;
-};
+//     return res;
+// };
 
 export const checkAuth = async () => {
     const res = await fetch(apiRoute + apiRouters.auth.check, {
         mode: 'cors',
         method: 'GET',
-        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${window.localStorage.getItem('access_token')}`,
+        },
     });
 
     return res;

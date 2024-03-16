@@ -30,7 +30,8 @@ func main() {
 
 	defer bunDB.Close()
 
-	authInteractor := usecase.NewAuthInteractor()
+	authPresetner := presenter.NewAuthPresenter()
+	authInteractor := usecase.NewAuthInteractor(authPresetner)
 	authMiddleware := auth.NewAuthMiddleware(authInteractor)
 	blogRepository := mysql.NewBlogRepository(bunDB)
 	tagRepository := mysql.NewTagRepository(bunDB)

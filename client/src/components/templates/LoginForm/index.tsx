@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { loginFormStyle } from './index.css';
 import { login } from '@/lib/api/auth/auth';
 import { useRouter } from 'next/router';
+import { LoginResponse } from '@/lib/api/auth/type';
 
 export const LoginForm = () => {
     const router = useRouter();
@@ -14,6 +15,9 @@ export const LoginForm = () => {
             try {
                 const res = await login({ password });
                 if (res.status === 200) {
+                    const response = await res.json() as LoginResponse;
+
+                    window.localStorage.setItem('access_token', response.access_token);
                     router.push('/admin');
                 }
             } catch (error) {
