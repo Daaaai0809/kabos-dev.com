@@ -8,7 +8,6 @@ import Link from 'next/link';
 export const Hamburger = () => {
     const [isOpened, setIsOpened] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
-    const buttonRef = useRef<HTMLButtonElement>(null);
 
     const onClick = () => {
         setIsOpened(!isOpened);
@@ -29,7 +28,7 @@ export const Hamburger = () => {
 
     return (
         <div className={hamburgerStyle.link} ref={menuRef}>
-            <Button onClick={onClick} className={hamburgerStyle.hamburgerButton} ref={buttonRef}>
+            <Button onClick={onClick} className={hamburgerStyle.hamburgerButton}>
                 <Icon icon={isOpened ? ICONS.cross : ICONS.hamburger}/>
             </Button>
             {isOpened && (
