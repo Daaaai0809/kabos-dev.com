@@ -8,6 +8,7 @@ import Link from 'next/link';
 export const Hamburger = () => {
     const [isOpened, setIsOpened] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     const onClick = () => {
         setIsOpened(!isOpened);
@@ -27,12 +28,12 @@ export const Hamburger = () => {
     }, []);
 
     return (
-        <div className={hamburgerStyle.link}>
-            <Button onClick={onClick} className={hamburgerStyle.hamburgerButton}>
+        <div className={hamburgerStyle.link} ref={menuRef}>
+            <Button onClick={onClick} className={hamburgerStyle.hamburgerButton} ref={buttonRef}>
                 <Icon icon={isOpened ? ICONS.cross : ICONS.hamburger}/>
             </Button>
             {isOpened && (
-                <div className={hamburgerStyle.hamburger} ref={menuRef}>
+                <div className={hamburgerStyle.hamburger}>
                     <div className={hamburgerStyle.hamburgerOuter}>
                         <div className={hamburgerStyle.hamburgerInner}>
                             <Link href="/" className={hamburgerStyle.hamburgerAnchor.list}>About</Link>

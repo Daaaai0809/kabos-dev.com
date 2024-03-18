@@ -6,4 +6,5 @@ export type ButtonProps = {
     className?: string;
     style?: React.CSSProperties;
     testId?: string;
+    ref: React.RefObject<HTMLButtonElement>;
 }
