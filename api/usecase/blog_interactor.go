@@ -23,16 +23,16 @@ type IBlogInteractor interface {
 }
 
 type BlogInteractor struct {
-	blogRepository repository.IBlogRepository
+	blogRepository     repository.IBlogRepository
 	blogTagsRepository repository.IBlogTagsRepository
-	blogPresenter presenter.IBlogPresenter
+	blogPresenter      presenter.IBlogPresenter
 }
 
 func NewBlogInteractor(blogRepository repository.IBlogRepository, blogTagsRepository repository.IBlogTagsRepository, blogPresenter presenter.IBlogPresenter) IBlogInteractor {
 	return &BlogInteractor{
-		blogRepository: blogRepository,
+		blogRepository:     blogRepository,
 		blogTagsRepository: blogTagsRepository,
-		blogPresenter: blogPresenter,
+		blogPresenter:      blogPresenter,
 	}
 }
 
@@ -205,7 +205,7 @@ func (i *BlogInteractor) FillInUpdateBlog(ctx context.Context, originBlog *entit
 }
 
 func (i *BlogInteractor) GenerateBlogEntity(ctx context.Context, id int, title string, thumbnail string, url string, postedAt string, tagIDs []int) (*entity.Blog, error) {
-	formatedPostedAt, err := config.FormatDateTimeFromString(postedAt);
+	formatedPostedAt, err := config.FormatDateTimeFromString(postedAt)
 	if err != nil {
 		return &entity.Blog{}, err
 	}

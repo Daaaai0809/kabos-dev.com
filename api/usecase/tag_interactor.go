@@ -13,8 +13,8 @@ type ITagInteractor interface {
 	GetAll(ctx context.Context) (*presenter.GetAllTagResponse, error)
 	GetByID(ctx context.Context, id int) (*presenter.GetTagByIDResponse, error)
 	GetByName(ctx context.Context, name string) (*presenter.GetTagByNameResponse, error)
-	Create(ctx context.Context, tag *entity.Tag) (error)
-	Update(ctx context.Context, tag *entity.Tag) (error)
+	Create(ctx context.Context, tag *entity.Tag) error
+	Update(ctx context.Context, tag *entity.Tag) error
 	Delete(ctx context.Context, id int) error
 	GetOriginTag(ctx context.Context, id int) (*entity.Tag, error)
 	FillInUpdateTag(ctx context.Context, originTag *entity.Tag, updateTag *entity.Tag) *entity.Tag
@@ -22,16 +22,16 @@ type ITagInteractor interface {
 }
 
 type TagInteractor struct {
-	tagRepository repository.ITagRepository
+	tagRepository      repository.ITagRepository
 	blogTagsRepository repository.IBlogTagsRepository
-	tagPresenter presenter.ITagPresenter
+	tagPresenter       presenter.ITagPresenter
 }
 
 func NewTagInteractor(tagRepository repository.ITagRepository, blogTagsRepository repository.IBlogTagsRepository, tagPresenter presenter.ITagPresenter) ITagInteractor {
 	return &TagInteractor{
-		tagRepository: tagRepository,
+		tagRepository:      tagRepository,
 		blogTagsRepository: blogTagsRepository,
-		tagPresenter: tagPresenter,
+		tagPresenter:       tagPresenter,
 	}
 }
 
@@ -137,7 +137,7 @@ func (i *TagInteractor) FillInUpdateTag(ctx context.Context, originTag *entity.T
 
 func (i *TagInteractor) GenerateTagEntity(ctx context.Context, id int, name string) *entity.Tag {
 	return &entity.Tag{
-		ID: id,
+		ID:   id,
 		Name: name,
 	}
 }

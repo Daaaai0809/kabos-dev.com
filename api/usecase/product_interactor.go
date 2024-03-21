@@ -24,13 +24,13 @@ type IProductInteractor interface {
 
 type ProductInteractor struct {
 	productRepository repository.IProductRepository
-	productPresenter presenter.IProductPresenter
+	productPresenter  presenter.IProductPresenter
 }
 
 func NewProductInteractor(productRepository repository.IProductRepository, productPresenter presenter.IProductPresenter) IProductInteractor {
 	return &ProductInteractor{
 		productRepository: productRepository,
-		productPresenter: productPresenter,
+		productPresenter:  productPresenter,
 	}
 }
 
@@ -146,12 +146,12 @@ func (i *ProductInteractor) GetOriginProduct(ctx context.Context, id int) (*enti
 
 func (i *ProductInteractor) GenerateProductEntity(ctx context.Context, id int, name, thumbnail, content, url string, releasedAt time.Time) *entity.Product {
 	return &entity.Product{
-		ID:          id,
-		Name:        name,
-		Thumbnail:   thumbnail,
-		Content:     content,
-		URL:         url,
-		ReleasedAt:  releasedAt,
+		ID:         id,
+		Name:       name,
+		Thumbnail:  thumbnail,
+		Content:    content,
+		URL:        url,
+		ReleasedAt: releasedAt,
 	}
 }
 
