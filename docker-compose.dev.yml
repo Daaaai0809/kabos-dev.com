@@ -62,14 +62,5 @@ services:
       database:
         condition: service_healthy
 
-  client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-    volumes:
-      - ./client:/app
-    depends_on:
-      - server  
-
 volumes:
   data:
