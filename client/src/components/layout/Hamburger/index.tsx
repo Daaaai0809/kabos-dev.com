@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { hamburgerStyle } from './hamburger.css';
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
@@ -7,13 +7,27 @@ import Link from 'next/link';
 
 export const Hamburger = () => {
     const [isOpened, setIsOpened] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
 
     const onClick = () => {
         setIsOpened(!isOpened);
     };
 
+    const handleOutsideClick = (e: MouseEvent) => {
+        if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+            setIsOpened(false);
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleOutsideClick);
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, []);
+
     return (
-        <div className={hamburgerStyle.link}>
+        <div className={hamburgerStyle.link} ref={menuRef}>
             <Button onClick={onClick} className={hamburgerStyle.hamburgerButton}>
                 <Icon icon={isOpened ? ICONS.cross : ICONS.hamburger}/>
             </Button>
