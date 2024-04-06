@@ -19,7 +19,7 @@ type IProductInteractor interface {
 	Delete(ctx context.Context, id int) error
 	GetOriginProduct(ctx context.Context, id int) (*entity.Product, error)
 	FillInUpdateProduct(ctx context.Context, originProduct *entity.Product, updateProduct *entity.Product) *entity.Product
-	GenerateProductEntity(ctx context.Context, id int, name, thumbnail, content, url string, releasedAt time.Time) *entity.Product
+	GenerateProductEntity(ctx context.Context, id int, name, thumbnail, content, description, url string, releasedAt time.Time) *entity.Product
 }
 
 type ProductInteractor struct {
@@ -80,6 +80,7 @@ func (i *ProductInteractor) Create(ctx context.Context, product *entity.Product)
 		Name:        product.Name,
 		Thumbnail:   product.Thumbnail,
 		Content:     product.Content,
+		Description: product.Description,
 		URL:         product.URL,
 		ReleaseDate: product.ReleasedAt,
 	}
@@ -107,8 +108,11 @@ func (i *ProductInteractor) Update(ctx context.Context, product *entity.Product)
 		Name:        product.Name,
 		Thumbnail:   product.Thumbnail,
 		Content:     product.Content,
+		Description: product.Description,
 		URL:         product.URL,
 		ReleaseDate: product.ReleasedAt,
+		CreatedAt:   product.CreatedAt,
+		UpdatedAt:   product.UpdatedAt,
 	}
 
 	if err := i.productRepository.Update(ctx, productModel); err != nil {
@@ -144,12 +148,13 @@ func (i *ProductInteractor) GetOriginProduct(ctx context.Context, id int) (*enti
 	return entityProduct, nil
 }
 
-func (i *ProductInteractor) GenerateProductEntity(ctx context.Context, id int, name, thumbnail, content, url string, releasedAt time.Time) *entity.Product {
+func (i *ProductInteractor) GenerateProductEntity(ctx context.Context, id int, name, thumbnail, content, description, url string, releasedAt time.Time) *entity.Product {
 	return &entity.Product{
 		ID:          id,
 		Name:        name,
 		Thumbnail:   thumbnail,
 		Content:     content,
+		Description: description,
 		URL:         url,
 		ReleasedAt:  releasedAt,
 	}
@@ -172,12 +177,16 @@ func (i *ProductInteractor) FillInUpdateProduct(ctx context.Context, originProdu
 		updateProduct.URL = originProduct.URL
 	}
 
+	if updateProduct.Description == "" {
+		updateProduct.Description = originProduct.Description
+	}
+
 	if updateProduct.ReleasedAt.IsZero() {
 		updateProduct.ReleasedAt = originProduct.ReleasedAt
 	}
 
 	updateProduct.CreatedAt = originProduct.CreatedAt
-	updateProduct.UpdatedAt = originProduct.UpdatedAt
+	updateProduct.UpdatedAt = time.Now()
 
 	return updateProduct
 }
