@@ -1,16 +1,20 @@
 import { Input } from '@/components/ui/input';
+import { productFormStyles } from './index.css';
+import { Button } from '@/components/ui/button';
 
 type ProductFormType = 'create' | 'update';
 
 type ProductFormProps = {
     name: string;
     releasedAt: string;
-    discription: string;
+    description: string;
     content: string;
+    url?: string;
     onChangeName: (name: string) => void;
     onChangeReleasedAt: (releasedAt: string) => void;
-    onChangeDiscription: (discription: string) => void;
+    onChangeDescription: (description: string) => void;
     onChangeContent: (content: string) => void;
+    onChangeUrl?: (url: string) => void;
     onSubmit: () => void;
     type?: ProductFormType;
     handleDelete?: () => void;
@@ -19,36 +23,39 @@ type ProductFormProps = {
 export const ProductForm = ({
     name,
     releasedAt,
-    discription,
+    description,
     content,
+    url,
     onChangeName,
     onChangeReleasedAt,
-    onChangeDiscription,
+    onChangeDescription,
     onChangeContent,
+    onChangeUrl = () => {},
     onSubmit,
     type = 'create',
     handleDelete = () => {},
 }: ProductFormProps ) => {
     return (
         <>
-            <form onSubmit={(e) => e.preventDefault()}>
+            <form onSubmit={(e) => e.preventDefault()} className={productFormStyles.form}>
                 <Input label="Name" onChange={(e) => onChangeName(e.target.value)} value={name} />
-                <Input label="Released At" onChange={(e) => onChangeReleasedAt(e.target.value)} value={releasedAt} type='datetime-local' />
-                <Input label="Discription" onChange={(e) => onChangeDiscription(e.target.value)} value={discription} />
-                <Input label="Content" onChange={(e) => onChangeContent(e.target.value)} value={content} />
+                <Input label="Released At" onChange={(e) => onChangeReleasedAt(e.target.value)} value={releasedAt} type='date' />
+                <Input label="URL" onChange={(e) => onChangeUrl(e.target.value)} value={url} />
+                <Input label="Description" onChange={(e) => onChangeDescription(e.target.value)} value={description} />
+                <Input label="Content" onChangeTextarea={(e) => onChangeContent(e.target.value)} value={content} type='content' />
                 { type === 'create' && (
-                    <button onClick={onSubmit}>
+                    <Button onClick={onSubmit} className={productFormStyles.button}>
                         登録
-                    </button>
+                    </Button>
                 )}
                 { type === 'update' && (
-                    <div>
-                        <button onClick={() => handleDelete()}>
+                    <div className={productFormStyles.divButtons}>
+                        <Button onClick={() => handleDelete()} className={productFormStyles.deleteButton}>
                             削除
-                        </button>
-                        <button onClick={onSubmit}>
+                        </Button>
+                        <Button onClick={onSubmit} className={productFormStyles.button}>
                             更新
-                        </button>
+                        </Button>
                     </div>
                 )}
             </form>

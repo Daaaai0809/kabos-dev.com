@@ -16,7 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const { filename, filetype, base64 } = body;
+  const { filename, filetype, base64, path } = body;
   if (!filename || !filetype || !base64) {
     res.status(400).json({ message: 'filename, filetype, and base64 are required' });
     return;
@@ -32,7 +32,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     await s3.upload(params).promise();
-    res.status(200).json({ message: 'Upload successful' });
+    res.status(200).json({ message: 'Upload successful', path: `https://${bucketName}.s3.amazonaws.com/${path}/${filename}` });
   } catch (error) {
     res.status(500).json({ message: 'Upload failed' });
   }

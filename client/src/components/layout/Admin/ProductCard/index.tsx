@@ -4,12 +4,12 @@ import { productCardStyles } from './index.css';
 type ProductCardProps = {
     id: number;
     name: string;
-    url: string;
+    url?: string;
 };
 
 export const ProductCard = (props: ProductCardProps) => {
     return (
-        <Link href="#" className={productCardStyles.link}>
+        <Link href={`admin/product/${props.id}`} className={productCardStyles.link}>
             <div className={productCardStyles.mainDiv}>
                 <p className={productCardStyles.pId}>{props.id}</p>
                 <div className={productCardStyles.div}>

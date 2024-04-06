@@ -1,9 +1,9 @@
 export type Product = {
     id: number;
     name: string;
-    thumbnail?: string;
+    thumbnail: string;
     content: string;
     description: string;
-    url: string;
+    url?: string;
     released_at?: string;
 }
