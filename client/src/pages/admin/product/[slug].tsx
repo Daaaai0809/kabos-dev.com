@@ -1,6 +1,5 @@
 import { ProductDetailPage } from '@/components/pages/admin/products/detail';
 import { fetchProduct } from '@/lib/api/product/product';
-import { markdownToHtml } from '@/lib/markdown';
 import { Product } from '@/types/domain/product';
 
 export default function ProductDetail({ product }: { product: Product }) {
