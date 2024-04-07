@@ -2,6 +2,7 @@ package handler
 
 import (
 	"database/sql"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -81,10 +82,11 @@ func (h *ProductHandler) Create(c echo.Context) error {
 		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
 	}
 
-	product := h.productInteractor.GenerateProductEntity(c.Request().Context(), 0, req.Name, req.Thumbnail, req.Content, req.URL, formatedDate)
+	product := h.productInteractor.GenerateProductEntity(c.Request().Context(), 0, req.Name, req.Thumbnail, req.Content, req.Description, req.URL, formatedDate)
 
 	res, err := h.productInteractor.Create(c.Request().Context(), product)
 	if err != nil {
+		log.Println(err)
 		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
 	}
 
@@ -109,10 +111,11 @@ func (h *ProductHandler) Update(c echo.Context) error {
 		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
 	}
 
-	updateProduct := h.productInteractor.GenerateProductEntity(c.Request().Context(), intID, req.Name, req.Thumbnail, req.Content, req.URL, formatedDate)
+	updateProduct := h.productInteractor.GenerateProductEntity(c.Request().Context(), intID, req.Name, req.Thumbnail, req.Content, req.Description, req.URL, formatedDate)
 
 	originProduct, err := h.productInteractor.GetOriginProduct(c.Request().Context(), intID)
 	if err != nil {
+		log.Println(err)
 		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
 	}
 
@@ -120,6 +123,7 @@ func (h *ProductHandler) Update(c echo.Context) error {
 
 	res, err := h.productInteractor.Update(c.Request().Context(), product)
 	if err != nil {
+		log.Println(err)
 		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
 	}
 

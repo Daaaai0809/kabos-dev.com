@@ -1,6 +1,5 @@
 import { MDBlock } from '@/components/layout/Markdown';
 import { ProductDetailProps } from './type';
-import { Line } from '@/components/ui/line';
 import { productDetailStyle } from './index.css';
 import { NO_IMAGE_URL } from '@/constants/images';
 

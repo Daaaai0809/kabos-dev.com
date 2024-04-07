@@ -1,5 +1,4 @@
 import React from 'react';
-import { Hamburger } from '../Hamburger';
 import { adminIndexStyle } from './index.css';
 import { useCheckAuth } from '@/hooks/useCheckAuth';
 import { useRouter } from 'next/router';
@@ -24,7 +23,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                         <Link href="/admin/blog/create" className={adminIndexStyle.a}>Blog作成</Link>
                     </li>
                     <li className={adminIndexStyle.li}>
-                        <Link href="#" className={adminIndexStyle.a}>Product作成</Link>
+                        <Link href="/admin/product/create" className={adminIndexStyle.a}>Product作成</Link>
                     </li>
                 </ul>
             </div>
