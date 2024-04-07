@@ -12,7 +12,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
     return (
         <>
-            <Link href={url} className={productCardStyles.link} id='product-card'>
+            <Link href={url||''} className={productCardStyles.link} id='product-card'>
                 <img src={thumbnail||NO_IMAGE_URL} alt={name} className={productCardStyles.thumbnail} />
                 <div className={productCardStyles.innerDiv}>
                     <div className={productCardStyles.contextDiv}>
