@@ -76,7 +76,7 @@ func (i *BlogInteractor) GetByID(ctx context.Context, id int) (*presenter.GetBlo
 }
 
 func (i *BlogInteractor) Create(ctx context.Context, blog *entity.Blog) (*presenter.CreateBlogResponse, error) {
-	blogModel := models.NewCreateBlogModel(blog.Title, blog.Thumbnail, blog.URL, blog.PostedAt)
+	blogModel := models.NewCreateBlogModel(blog.Title, blog.URL, blog.PostedAt)
 
 	id, err := i.blogRepository.Create(ctx, blogModel, blog.TagIDs)
 	if err != nil {
@@ -95,7 +95,6 @@ func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) (*presen
 	blogModel := models.NewBlogModel(
 		blog.ID,
 		blog.Title,
-		blog.Thumbnail,
 		blog.URL,
 		blog.PostedAt,
 		blog.CreatedAt,
@@ -138,10 +137,6 @@ func (i *BlogInteractor) FillInUpdateBlog(ctx context.Context, originBlog *entit
 		updateBlog.Title = originBlog.Title
 	}
 
-	if updateBlog.Thumbnail == "" {
-		updateBlog.Thumbnail = originBlog.Thumbnail
-	}
-
 	if updateBlog.URL == "" {
 		updateBlog.URL = originBlog.URL
 	}
@@ -165,7 +160,6 @@ func (i *BlogInteractor) GenerateBlogEntity(ctx context.Context, id int, title s
 	blog := &entity.Blog{
 		ID:        id,
 		Title:     title,
-		Thumbnail: thumbnail,
 		URL:       url,
 		PostedAt:  formatedPostedAt,
 		TagIDs:    tagIDs,
