@@ -33,6 +33,7 @@ func (p *BlogPresenter) GenerateGetAllResponse(blogs []*entity.Blog) *presenter.
 			Title:     blog.Title,
 			URL:       blog.URL,
 			Tags:      tags,
+			Content:   blog.Content,
 			PostedAt:  blog.PostedAt.String(),
 			CreatedAt: blog.CreatedAt.String(),
 		})
@@ -63,6 +64,7 @@ func (p *BlogPresenter) GenerateGetSearchedBlogResponse(blogs []*entity.Blog) *p
 			Title:     blog.Title,
 			URL:       blog.URL,
 			Tags:      tags,
+			Content:   blog.Content,
 			PostedAt:  blog.PostedAt.String(),
 			CreatedAt: blog.CreatedAt.String(),
 		})
@@ -89,6 +91,7 @@ func (p *BlogPresenter) GenerateGetByIDResponse(blog *entity.Blog) *presenter.Ge
 		Title:     blog.Title,
 		URL:       blog.URL,
 		Tags:      tags,
+		Content:   blog.Content,
 		PostedAt:  blog.PostedAt.String(),
 		CreatedAt: blog.CreatedAt.String(),
 	}
@@ -114,6 +117,7 @@ func (p *BlogPresenter) GenerateCreateResponse(blog *entity.Blog) *presenter.Cre
 		Title:     blog.Title,
 		URL:       blog.URL,
 		Tags:      tags,
+		Content:   blog.Content,
 		PostedAt:  blog.PostedAt.String(),
 		CreatedAt: blog.CreatedAt.String(),
 	}
@@ -139,6 +143,7 @@ func (p *BlogPresenter) GenerateUpdateResponse(blog *entity.Blog) *presenter.Upd
 		Title:     blog.Title,
 		URL:       blog.URL,
 		Tags:      tags,
+		Content:   blog.Content,
 		PostedAt:  blog.PostedAt.String(),
 		CreatedAt: blog.CreatedAt.String(),
 	}
