@@ -158,11 +158,11 @@ func (i *BlogInteractor) GenerateBlogEntity(ctx context.Context, id int, title s
 	}
 
 	blog := &entity.Blog{
-		ID:        id,
-		Title:     title,
-		URL:       url,
-		PostedAt:  formatedPostedAt,
-		TagIDs:    tagIDs,
+		ID:       id,
+		Title:    title,
+		URL:      url,
+		PostedAt: formatedPostedAt,
+		TagIDs:   tagIDs,
 	}
 
 	return blog, nil

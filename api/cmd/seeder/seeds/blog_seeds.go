@@ -11,14 +11,14 @@ import (
 
 var blogSeeds = []*models.Blog{
 	{
-		Title:     "[Laravel] Observerで発生したイベントに応じた処理を実装する",
-		URL:       "https://zenn.dev/kabos0809/articles/5f05a473183701",
-		PostedAt:  time.Date(2023, 7, 30, 0, 0, 0, 0, time.UTC),
+		Title:    "[Laravel] Observerで発生したイベントに応じた処理を実装する",
+		URL:      "https://zenn.dev/kabos0809/articles/5f05a473183701",
+		PostedAt: time.Date(2023, 7, 30, 0, 0, 0, 0, time.UTC),
 	},
 	{
-		Title:     "[gRPC] メソッドレベルで異なる権限を実装してみる",
-		URL:       "https://zenn.dev/kabos0809/articles/5e626851e39c80",
-		PostedAt:  time.Date(2023, 8, 17, 0, 0, 0, 0, time.UTC),
+		Title:    "[gRPC] メソッドレベルで異なる権限を実装してみる",
+		URL:      "https://zenn.dev/kabos0809/articles/5e626851e39c80",
+		PostedAt: time.Date(2023, 8, 17, 0, 0, 0, 0, time.UTC),
 	},
 }
 

@@ -39,8 +39,8 @@ func NewBlogModel(id int, title, url string, postedAt, createdAt, updatedAt time
 
 func NewCreateBlogModel(title, url string, postedAt time.Time) *Blog {
 	return &Blog{
-		Title:     title,
-		URL:       url,
-		PostedAt:  postedAt,
+		Title:    title,
+		URL:      url,
+		PostedAt: postedAt,
 	}
 }
