@@ -34,8 +34,8 @@ Contactページなどまだ完成にまでは至っていないため随時ペ�
 
 var productSeeds = []*models.Product{
 	{
-		Name: "kabos-dev.com",
-		Content: content,
+		Name:        "kabos-dev.com",
+		Content:     content,
 		Description: "自己紹介やブログ・制作物の紹介を兼ねたWebサイトです。",
 		Thumbnail:   "https://kabos-dev-bucket.s3.ap-northeast-1.amazonaws.com/thumbnail/products/product-1.webp",
 		URL:         "https://kabos-dev.com",

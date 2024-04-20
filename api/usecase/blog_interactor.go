@@ -24,15 +24,13 @@ type IBlogInteractor interface {
 
 type BlogInteractor struct {
 	blogRepository repository.IBlogRepository
-	blogTagsRepository repository.IBlogTagsRepository
-	blogPresenter presenter.IBlogPresenter
+	blogPresenter  presenter.IBlogPresenter
 }
 
-func NewBlogInteractor(blogRepository repository.IBlogRepository, blogTagsRepository repository.IBlogTagsRepository, blogPresenter presenter.IBlogPresenter) IBlogInteractor {
+func NewBlogInteractor(blogRepository repository.IBlogRepository, blogPresenter presenter.IBlogPresenter) IBlogInteractor {
 	return &BlogInteractor{
 		blogRepository: blogRepository,
-		blogTagsRepository: blogTagsRepository,
-		blogPresenter: blogPresenter,
+		blogPresenter:  blogPresenter,
 	}
 }
 
@@ -80,7 +78,7 @@ func (i *BlogInteractor) GetByID(ctx context.Context, id int) (*presenter.GetBlo
 func (i *BlogInteractor) Create(ctx context.Context, blog *entity.Blog) (*presenter.CreateBlogResponse, error) {
 	blogModel := models.NewCreateBlogModel(blog.Title, blog.Thumbnail, blog.URL, blog.PostedAt)
 
-	id, err := i.blogRepository.Create(ctx, blogModel)
+	id, err := i.blogRepository.Create(ctx, blogModel, blog.TagIDs)
 	if err != nil {
 		return &presenter.CreateBlogResponse{}, err
 	}
@@ -90,26 +88,7 @@ func (i *BlogInteractor) Create(ctx context.Context, blog *entity.Blog) (*presen
 		return &presenter.CreateBlogResponse{}, err
 	}
 
-	entityBlog := createdBlog.ToBlogEntity()
-
-	if len(blog.TagIDs) == 0 {
-		return i.blogPresenter.GenerateCreateResponse(entityBlog), nil
-	}
-
-	blogTagsModels := []*models.BlogTags{}
-	for _, tagID := range blog.TagIDs {
-		blogTagsModel := &models.BlogTags{
-			BlogID: blogModel.ID,
-			TagID:  tagID,
-		}
-		blogTagsModels = append(blogTagsModels, blogTagsModel)
-	}
-
-	if err := i.blogTagsRepository.Create(ctx, blogTagsModels); err != nil {
-		return &presenter.CreateBlogResponse{}, err
-	}
-
-	return i.blogPresenter.GenerateCreateResponse(entityBlog), nil
+	return i.blogPresenter.GenerateCreateResponse(createdBlog.ToBlogEntity()), nil
 }
 
 func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) (*presenter.UpdateBlogResponse, error) {
@@ -123,7 +102,7 @@ func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) (*presen
 		blog.UpdatedAt,
 	)
 
-	if err := i.blogRepository.Update(ctx, blogModel); err != nil {
+	if err := i.blogRepository.Update(ctx, blogModel, blog.TagIDs); err != nil {
 		return &presenter.UpdateBlogResponse{}, err
 	}
 
@@ -132,38 +111,11 @@ func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) (*presen
 		return &presenter.UpdateBlogResponse{}, err
 	}
 
-	entityBlog := updatedBlog.ToBlogEntity()
-
-	if len(blog.TagIDs) == 0 {
-		return i.blogPresenter.GenerateUpdateResponse(entityBlog), nil
-	}
-
-	blogTagsModels := []*models.BlogTags{}
-	for _, tagID := range blog.TagIDs {
-		blogTagsModel := &models.BlogTags{
-			BlogID: blogModel.ID,
-			TagID:  tagID,
-		}
-		blogTagsModels = append(blogTagsModels, blogTagsModel)
-	}
-
-	if err := i.blogTagsRepository.DeleteByBlogID(ctx, blogModel.ID); err != nil {
-		return &presenter.UpdateBlogResponse{}, err
-	}
-
-	if err := i.blogTagsRepository.Create(ctx, blogTagsModels); err != nil {
-		return &presenter.UpdateBlogResponse{}, err
-	}
-
-	return i.blogPresenter.GenerateUpdateResponse(entityBlog), nil
+	return i.blogPresenter.GenerateUpdateResponse(updatedBlog.ToBlogEntity()), nil
 }
 
 func (i *BlogInteractor) Delete(ctx context.Context, id int) error {
 	if err := i.blogRepository.Delete(ctx, id); err != nil {
-		return err
-	}
-
-	if err := i.blogTagsRepository.DeleteByBlogID(ctx, id); err != nil {
 		return err
 	}
 
@@ -205,7 +157,7 @@ func (i *BlogInteractor) FillInUpdateBlog(ctx context.Context, originBlog *entit
 }
 
 func (i *BlogInteractor) GenerateBlogEntity(ctx context.Context, id int, title string, thumbnail string, url string, postedAt string, tagIDs []int) (*entity.Blog, error) {
-	formatedPostedAt, err := config.FormatDateTimeFromString(postedAt);
+	formatedPostedAt, err := config.FormatDateTimeFromString(postedAt)
 	if err != nil {
 		return &entity.Blog{}, err
 	}

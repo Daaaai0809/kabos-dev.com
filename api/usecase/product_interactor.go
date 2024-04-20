@@ -24,13 +24,13 @@ type IProductInteractor interface {
 
 type ProductInteractor struct {
 	productRepository repository.IProductRepository
-	productPresenter presenter.IProductPresenter
+	productPresenter  presenter.IProductPresenter
 }
 
 func NewProductInteractor(productRepository repository.IProductRepository, productPresenter presenter.IProductPresenter) IProductInteractor {
 	return &ProductInteractor{
 		productRepository: productRepository,
-		productPresenter: productPresenter,
+		productPresenter:  productPresenter,
 	}
 }
 

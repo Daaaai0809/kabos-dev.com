@@ -64,4 +64,3 @@ func (p *TagPresenter) GenerateUpdateResponse(tag *entity.Tag) *presenter.Update
 
 	return &tagResponse
 }
-

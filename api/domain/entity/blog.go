@@ -8,8 +8,8 @@ type Blog struct {
 	ID        int       `json:"id"`
 	Title     string    `json:"title"`
 	Thumbnail string    `json:"thumbnail"`
-	URL	   	  string    `json:"url"`
-	TagIDs	  []int     `json:"tag_ids"`
+	URL       string    `json:"url"`
+	TagIDs    []int     `json:"tag_ids"`
 	Tags      []*Tag    `json:"tags"`
 	PostedAt  time.Time `json:"posted_at"`
 	CreatedAt time.Time `json:"created_at"`
