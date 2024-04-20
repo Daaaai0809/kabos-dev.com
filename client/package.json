@@ -38,6 +38,7 @@
     "eslint-config-next": "14.2.2",
     "eslint-plugin-storybook": "^0.8.0",
     "storybook": "^8.0.8",
+    "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5"
   }
 }
