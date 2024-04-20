@@ -31,9 +31,9 @@ func (p *BlogPresenter) GenerateGetAllResponse(blogs []*entity.Blog) *presenter.
 		blogsResponse.Blogs = append(blogsResponse.Blogs, presenter.BlogResponse{
 			ID:        blog.ID,
 			Title:     blog.Title,
-			Thumbnail: blog.Thumbnail,
 			URL:       blog.URL,
 			Tags:      tags,
+			Content:   blog.Content,
 			PostedAt:  blog.PostedAt.String(),
 			CreatedAt: blog.CreatedAt.String(),
 		})
@@ -62,9 +62,9 @@ func (p *BlogPresenter) GenerateGetSearchedBlogResponse(blogs []*entity.Blog) *p
 		blogsResponse.Blogs = append(blogsResponse.Blogs, presenter.BlogResponse{
 			ID:        blog.ID,
 			Title:     blog.Title,
-			Thumbnail: blog.Thumbnail,
 			URL:       blog.URL,
 			Tags:      tags,
+			Content:   blog.Content,
 			PostedAt:  blog.PostedAt.String(),
 			CreatedAt: blog.CreatedAt.String(),
 		})
@@ -89,9 +89,9 @@ func (p *BlogPresenter) GenerateGetByIDResponse(blog *entity.Blog) *presenter.Ge
 	blogResponse.Blog = presenter.BlogResponse{
 		ID:        blog.ID,
 		Title:     blog.Title,
-		Thumbnail: blog.Thumbnail,
 		URL:       blog.URL,
 		Tags:      tags,
+		Content:   blog.Content,
 		PostedAt:  blog.PostedAt.String(),
 		CreatedAt: blog.CreatedAt.String(),
 	}
@@ -115,9 +115,9 @@ func (p *BlogPresenter) GenerateCreateResponse(blog *entity.Blog) *presenter.Cre
 	blogResponse.Blog = presenter.BlogResponse{
 		ID:        blog.ID,
 		Title:     blog.Title,
-		Thumbnail: blog.Thumbnail,
 		URL:       blog.URL,
 		Tags:      tags,
+		Content:   blog.Content,
 		PostedAt:  blog.PostedAt.String(),
 		CreatedAt: blog.CreatedAt.String(),
 	}
@@ -141,9 +141,9 @@ func (p *BlogPresenter) GenerateUpdateResponse(blog *entity.Blog) *presenter.Upd
 	blogResponse.Blog = presenter.BlogResponse{
 		ID:        blog.ID,
 		Title:     blog.Title,
-		Thumbnail: blog.Thumbnail,
 		URL:       blog.URL,
 		Tags:      tags,
+		Content:   blog.Content,
 		PostedAt:  blog.PostedAt.String(),
 		CreatedAt: blog.CreatedAt.String(),
 	}

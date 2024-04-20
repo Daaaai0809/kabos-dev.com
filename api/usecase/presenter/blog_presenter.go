@@ -7,9 +7,9 @@ import (
 type BlogResponse struct {
 	ID        int           `json:"id"`
 	Title     string        `json:"title"`
-	Thumbnail string        `json:"thumbnail"`
 	URL       string        `json:"url"`
 	Tags      []TagResponse `json:"tags"`
+	Content   string        `json:"content"`
 	PostedAt  string        `json:"posted_at"`
 	CreatedAt string        `json:"created_at"`
 }
