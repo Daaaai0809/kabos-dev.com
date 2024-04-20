@@ -6,11 +6,11 @@ import (
 
 type Product struct {
 	ID          int       `json:"id"`
-	Name		string    `json:"name"`
+	Name        string    `json:"name"`
 	Thumbnail   string    `json:"thumbnail"`
-	Content	 	string    `json:"content"`
+	Content     string    `json:"content"`
 	Description string    `json:"description"`
-	URL			string    `json:"url"`
+	URL         string    `json:"url"`
 	ReleasedAt  time.Time `json:"released_at"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`

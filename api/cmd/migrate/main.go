@@ -31,7 +31,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	
+
 	var host string = config.MYSQL_HOST
 
 	if config.IsDev {

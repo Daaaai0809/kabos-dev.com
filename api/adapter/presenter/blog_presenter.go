@@ -15,10 +15,10 @@ func (p *BlogPresenter) GenerateGetAllResponse(blogs []*entity.Blog) *presenter.
 	blogsResponse := &presenter.GetAllBlogResponse{
 		Blogs: make([]presenter.BlogResponse, 0),
 	}
-	
+
 	for _, blog := range blogs {
 		tags := make([]presenter.TagResponse, 0)
-		
+
 		if len(blog.Tags) > 0 {
 			for _, tag := range blog.Tags {
 				tags = append(tags, presenter.TagResponse{
@@ -41,10 +41,10 @@ func (p *BlogPresenter) GenerateGetAllResponse(blogs []*entity.Blog) *presenter.
 
 	return blogsResponse
 }
-	
+
 func (p *BlogPresenter) GenerateGetSearchedBlogResponse(blogs []*entity.Blog) *presenter.GetSearchedBlogResponse {
 	tags := make([]presenter.TagResponse, 0)
-	
+
 	blogsResponse := &presenter.GetSearchedBlogResponse{
 		Blogs: make([]presenter.BlogResponse, 0),
 	}
@@ -75,7 +75,7 @@ func (p *BlogPresenter) GenerateGetSearchedBlogResponse(blogs []*entity.Blog) *p
 
 func (p *BlogPresenter) GenerateGetByIDResponse(blog *entity.Blog) *presenter.GetBlogByIDResponse {
 	tags := make([]presenter.TagResponse, 0)
-	
+
 	if len(blog.Tags) > 0 {
 		for _, tag := range blog.Tags {
 			tags = append(tags, presenter.TagResponse{
