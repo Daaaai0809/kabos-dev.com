@@ -11,7 +11,9 @@
     "check:lint": "biome lint src/*",
     "fix": "pnpm run fix:style && pnpm run fix:lint",
     "fix:style": "biome format --write src/*",
-    "fix:lint": "biome lint --apply src/*"
+    "fix:lint": "biome lint --apply src/*",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "next": "14.2.2",
@@ -20,11 +22,22 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.0",
+    "@chromatic-com/storybook": "^1.3.3",
+    "@storybook/addon-essentials": "^8.0.8",
+    "@storybook/addon-interactions": "^8.0.8",
+    "@storybook/addon-links": "^8.0.8",
+    "@storybook/addon-onboarding": "^8.0.8",
+    "@storybook/blocks": "^8.0.8",
+    "@storybook/nextjs": "^8.0.8",
+    "@storybook/react": "^8.0.8",
+    "@storybook/test": "^8.0.8",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.2",
+    "eslint-plugin-storybook": "^0.8.0",
+    "storybook": "^8.0.8",
     "typescript": "^5"
   }
 }
