@@ -7,4 +7,4 @@ const nextConfig = {
   reactStrictMode: true,
 };
 
-withVanillaExtract(nextConfig);
+export default withVanillaExtract(nextConfig);

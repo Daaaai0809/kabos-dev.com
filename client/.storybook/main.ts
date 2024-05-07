@@ -1,4 +1,6 @@
 import type { StorybookConfig } from "@storybook/nextjs";
+import { VanillaExtractPlugin } from "@vanilla-extract/webpack-plugin";
+import { merge } from "webpack-merge";
 import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin";
 
 const config: StorybookConfig = {
@@ -19,14 +21,12 @@ const config: StorybookConfig = {
   },
   staticDirs: ["../public"],
   webpackFinal(baseConfig) {
-    baseConfig.resolve!.alias = {
-      ...baseConfig.resolve!.alias,
-    };
-    baseConfig.resolve!.plugins = [
-      ...(baseConfig.resolve!.plugins || []),
-      new TsconfigPathsPlugin(),
-    ];
-    return baseConfig;
+    return merge(baseConfig, {
+      resolve: {
+        plugins: [new TsconfigPathsPlugin()],
+      },
+      plugins: [new VanillaExtractPlugin()],
+    });
   },
 };
 export default config;
