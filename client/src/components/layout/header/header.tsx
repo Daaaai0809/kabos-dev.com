@@ -3,7 +3,7 @@ import { memo } from "react";
 import { headerStyles } from "./header.css";
 import { MeIcon } from "@/components/element/Icons/me-icon";
 
-export const Header = memo(() => {
+export const Header = memo(function memorableHeader() {
   // TODO: widthが768px以下の場合はハンバーガーメニューで返す
   return (
     <div className={headerStyles.outerDiv}>
