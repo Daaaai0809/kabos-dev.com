@@ -1,15 +1,17 @@
 import Link from "next/link";
+import { memo } from "react";
 import { headerStyles } from "./header.css";
 import { MeIcon } from "@/components/element/Icons/me-icon";
 
-export const Header: React.FC = () => {
+export const Header = memo(() => {
+  // TODO: widthが768px以下の場合はハンバーガーメニューで返す
   return (
     <div className={headerStyles.outerDiv}>
-      <Link href="#">
+      <Link href="/" className={headerStyles.imgLink}>
         <MeIcon />
       </Link>
       <div className={headerStyles.innerDiv}>
-        <Link href="#" className={headerStyles.link}>
+        <Link href="/#about-me" className={headerStyles.link}>
           About
         </Link>
         <Link href="#" className={headerStyles.link}>
@@ -24,4 +26,4 @@ export const Header: React.FC = () => {
       </div>
     </div>
   );
-};
+});
