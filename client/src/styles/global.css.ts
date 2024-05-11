@@ -8,9 +8,19 @@ globalStyle("body", {
   margin: 0,
   padding: 0,
   color: vars.semantic.text.primary,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
 
   minHeight: "100dvh",
   height: "100%",
+
+  "@media": {
+    "screen and (max-width: 768px)": {
+      padding: "0 1rem",
+    },
+  },
 });
 
 globalStyle("html", {
@@ -20,4 +30,6 @@ globalStyle("html", {
 
 globalStyle("*", {
   margin: 0,
+  fontSmooth: "always",
+  WebkitFontSmoothing: "antialiased",
 });
