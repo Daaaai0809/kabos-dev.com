@@ -61,6 +61,7 @@ export const skillListStyles = {
     borderRadius: "1rem",
     cursor: "pointer",
     border: 0,
+    overflow: "hidden",
   }),
   cardHeadDiv: style({
     display: "flex",
@@ -87,6 +88,8 @@ export const skillListStyles = {
     textAlign: "start",
     overflow: "hidden",
     textOverflow: "ellipsis",
+    height: "80px",
+    width: "136px",
   }),
   showMoreDiv: style({
     position: "relative",

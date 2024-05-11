@@ -9,7 +9,6 @@ export const careerListStyles = {
     flexDirection: "column",
     width: "100%",
     maxWidth: "688px",
-    marginBottom: "2rem",
   }),
   h2: style({
     fontSize: vars.font.size["2xl"],

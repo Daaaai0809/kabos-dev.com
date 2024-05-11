@@ -2,7 +2,7 @@ import { CAREERS, type Career } from "@/constants/careers";
 import { careerListStyles } from "./career-list.css";
 import { QUALIFICATION_ICON } from "@/constants/icon-paths";
 
-export const CareerList: React.FC = () => {
+export const CareerList = () => {
   const getIconPath = (career: Career) => {
     if (career.isQualification) {
       return QUALIFICATION_ICON;

@@ -1,9 +1,9 @@
 import { aboutMeStyles } from "./about-me.css";
 import * as AboutMeMD from "@/markdown/about-me.mdx";
 
-export const AboutMe: React.FC = () => {
+export const AboutMe = () => {
   return (
-    <div className={aboutMeStyles.outerDiv}>
+    <div className={aboutMeStyles.outerDiv} id="about-me">
       <h2 className={aboutMeStyles.h2}>About Me</h2>
       <div className={aboutMeStyles.innerDiv}>
         <AboutMeMD.default

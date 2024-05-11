@@ -3,7 +3,7 @@ import { skillListStyles } from "./skill-list.css";
 import { useRef, useState } from "react";
 import { SkillModal } from "../skill-modal";
 
-export const SkillList: React.FC = () => {
+export const SkillList = () => {
   const outerRef = useRef<HTMLDivElement>(null);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -19,9 +19,9 @@ export const SkillList: React.FC = () => {
     : "/icons/show-more.svg";
 
   const onClickArrow = () => {
-    const outerTop = outerRef.current?.offsetTop;
-    if (outerTop && !isExpanded) {
-      window.scrollTo({ top: outerTop, behavior: "smooth" });
+    const outerTop = outerRef.current?.offsetTop || 0;
+    if (outerTop) {
+      window.scrollTo({ top: outerTop - 100, behavior: "smooth" });
     }
 
     setIsExpanded(!isExpanded);
@@ -30,6 +30,14 @@ export const SkillList: React.FC = () => {
   const onOpenModal = (skill: Skill) => {
     setIsOpen(true);
     setSelectedSkill(skill);
+  };
+
+  const cutDescription = (description: string) => {
+    if (description.length > 35) {
+      return `${description.slice(0, 35)}...`;
+    }
+
+    return description;
   };
 
   return (
@@ -52,7 +60,9 @@ export const SkillList: React.FC = () => {
                 />
                 <p className={skillListStyles.name}>{skill.name}</p>
               </div>
-              <p className={skillListStyles.description}>{skill.description}</p>
+              <p className={skillListStyles.description}>
+                {cutDescription(skill.description || "")}
+              </p>
             </button>
           ))}
         </div>

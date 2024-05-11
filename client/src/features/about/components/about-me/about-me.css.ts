@@ -26,8 +26,9 @@ export const aboutMeStyles = {
     gap: "1rem",
   }),
   ul: style({
-    padding: "0 1.25rem",
+    padding: 0,
     margin: 0,
+    listStyle: "inside",
     width: "100%",
     maxWidth: "656px",
   }),
