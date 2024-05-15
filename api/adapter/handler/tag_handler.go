@@ -19,10 +19,10 @@ func NewTagHandler(group *echo.Group, adminGroup *echo.Group, tagInteractor usec
 		tagInteractor: tagInteractor,
 	}
 
-	group.GET("/", handler.GetAll)
+	group.GET("", handler.GetAll)
 	group.GET("/search", handler.GetSearchedTag)
 	adminGroup.GET("/:id", handler.GetByID)
-	adminGroup.POST("/", handler.Create)
+	adminGroup.POST("", handler.Create)
 	adminGroup.PUT("/:id", handler.Update)
 	adminGroup.DELETE("/:id", handler.Delete)
 }
