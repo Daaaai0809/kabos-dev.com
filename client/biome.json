@@ -13,6 +13,7 @@
 		"enabled": true,
 		"indentStyle": "space",
 		"lineWidth": 80,
-		"lineEnding": "lf"
+		"lineEnding": "lf",
+		"ignore": ["tsconfig.json", "package.json", "next.config.mjs", "pnpm-lock.json"]
 	}
 }

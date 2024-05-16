@@ -70,6 +70,14 @@ createGlobalTheme(":root", semanticVars, {
     weaker: colorVars.gray[7],
     error: colorVars.red[9],
   },
+  card: {
+    primary: colorVars.gray[1],
+    primaryHover: colorVars.gray[3],
+  },
+  tag: {
+    primary: colorVars.navy[2],
+    secondary: colorVars.navy[3],
+  },
 });
 
 const fontVars = createGlobalTheme(":root", {

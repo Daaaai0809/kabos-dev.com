@@ -10,17 +10,19 @@ type Blog struct {
 	URL       string    `json:"url"`
 	TagIDs    []int     `json:"tag_ids"`
 	Tags      []*Tag    `json:"tags"`
+	Emoji     string    `json:"emoji"`
 	Content   string    `json:"content"`
 	PostedAt  time.Time `json:"posted_at"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-func NewBlogEntity(id int, title, url string, tags []*Tag, postedAt, createdAt, updatedAt time.Time) *Blog {
+func NewBlogEntity(id int, title, url, emoji string, tags []*Tag, postedAt, createdAt, updatedAt time.Time) *Blog {
 	return &Blog{
 		ID:        id,
 		Title:     title,
 		URL:       url,
+		Emoji:     emoji,
 		Tags:      tags,
 		PostedAt:  postedAt,
 		CreatedAt: createdAt,

@@ -20,10 +20,10 @@ func NewBlogHandler(group *echo.Group, adminGroup *echo.Group, blogInteractor us
 		blogInteractor: blogInteractor,
 	}
 
-	group.GET("/", handler.GetAll)
+	group.GET("", handler.GetAll)
 	group.GET("/search", handler.GetSearchedBlog)
 	group.GET("/:id", handler.GetByID)
-	adminGroup.POST("/", handler.Create)
+	adminGroup.POST("", handler.Create)
 	adminGroup.PUT("/:id", handler.Update)
 	adminGroup.DELETE("/:id", handler.Delete)
 }

@@ -29,6 +29,9 @@ func ConnectDB(host interface{}) (*sql.DB, error) {
 		DBName:               config.MYSQL_DATABASE,
 		AllowNativePasswords: true,
 		ParseTime:            true,
+		Params: map[string]string{
+			"charset": "utf8mb4",
+		},
 	}
 
 	db, err := sql.Open(DRIVER, c.FormatDSN())

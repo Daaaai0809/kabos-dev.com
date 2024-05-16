@@ -96,6 +96,7 @@ func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) (*presen
 		blog.ID,
 		blog.Title,
 		blog.URL,
+		blog.Emoji,
 		blog.PostedAt,
 		blog.CreatedAt,
 		blog.UpdatedAt,
