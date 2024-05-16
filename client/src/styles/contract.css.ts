@@ -68,4 +68,12 @@ export const semanticVars = createThemeContract({
     weaker: null,
     error: null,
   },
+  card: {
+    primary: null,
+    primaryHover: null,
+  },
+  tag: {
+    primary: null,
+    secondary: null,
+  },
 });
