@@ -9,6 +9,7 @@ type BlogResponse struct {
 	Title     string        `json:"title"`
 	URL       string        `json:"url"`
 	Tags      []TagResponse `json:"tags"`
+	Emoji     string        `json:"emoji"`
 	Content   string        `json:"content"`
 	PostedAt  string        `json:"posted_at"`
 	CreatedAt string        `json:"created_at"`
