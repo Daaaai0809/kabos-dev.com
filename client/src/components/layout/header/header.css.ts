@@ -31,7 +31,6 @@ export const headerStyles = {
         padding: "0 2rem 0 0",
       },
     },
-    padding: "0 1rem 0 0",
   }),
   link: style({
     textDecoration: "none",

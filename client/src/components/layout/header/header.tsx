@@ -12,16 +12,16 @@ export const Header = memo(function memorableHeader() {
       </Link>
       <div className={headerStyles.innerDiv}>
         <Link href="/#about-me" className={headerStyles.link}>
-          About
+          <p>About</p>
+        </Link>
+        <Link href="/blogs" className={headerStyles.link}>
+          <p>Blogs</p>
         </Link>
         <Link href="#" className={headerStyles.link}>
-          Blogs
+          <p>Works</p>
         </Link>
         <Link href="#" className={headerStyles.link}>
-          Works
-        </Link>
-        <Link href="#" className={headerStyles.link}>
-          Contact
+          <p>Contact</p>
         </Link>
       </div>
     </div>
