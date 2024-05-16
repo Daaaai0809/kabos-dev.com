@@ -11,6 +11,9 @@ const withVanillaExtract = createVanillaExtractPlugin();
 const nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['tsx', 'ts', 'js', 'jsx', 'mdx'],
+  experimental: {
+    webpackBuildWorker: true,
+  }
 };
 
 export default withMDX(withVanillaExtract(nextConfig));
