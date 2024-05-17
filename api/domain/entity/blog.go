@@ -17,12 +17,13 @@ type Blog struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-func NewBlogEntity(id int, title, url, emoji string, tags []*Tag, postedAt, createdAt, updatedAt time.Time) *Blog {
+func NewBlogEntity(id int, title, url, emoji, content string, tags []*Tag, postedAt, createdAt, updatedAt time.Time) *Blog {
 	return &Blog{
 		ID:        id,
 		Title:     title,
 		URL:       url,
 		Emoji:     emoji,
+		Content:   content,
 		Tags:      tags,
 		PostedAt:  postedAt,
 		CreatedAt: createdAt,

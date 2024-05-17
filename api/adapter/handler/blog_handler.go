@@ -70,7 +70,7 @@ func (h *BlogHandler) Create(c echo.Context) error {
 		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
 	}
 
-	blog, err := h.blogInteractor.GenerateBlogEntity(c.Request().Context(), 0, createBlogRequest.Title, createBlogRequest.Thumbnail, createBlogRequest.URL, createBlogRequest.PostedAt, createBlogRequest.TagIDs)
+	blog, err := h.blogInteractor.GenerateBlogEntity(c.Request().Context(), 0, createBlogRequest.Title, createBlogRequest.Emoji, createBlogRequest.URL, createBlogRequest.Content, createBlogRequest.PostedAt, createBlogRequest.TagIDs)
 	if err != nil {
 		log.Println(err)
 		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
@@ -98,7 +98,7 @@ func (h *BlogHandler) Update(c echo.Context) error {
 		return c.String(http.StatusBadRequest, constant.BAD_REQUEST_MESSAGE)
 	}
 
-	updateBlog, err := h.blogInteractor.GenerateBlogEntity(c.Request().Context(), intID, updateBlogRequest.Title, updateBlogRequest.Thumbnail, updateBlogRequest.URL, updateBlogRequest.PostedAt, updateBlogRequest.TagIDs)
+	updateBlog, err := h.blogInteractor.GenerateBlogEntity(c.Request().Context(), intID, updateBlogRequest.Title, updateBlogRequest.Emoji, updateBlogRequest.URL, updateBlogRequest.Content, updateBlogRequest.PostedAt, updateBlogRequest.TagIDs)
 	if err != nil {
 		log.Println(err)
 		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)

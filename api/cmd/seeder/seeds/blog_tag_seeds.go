@@ -19,11 +19,11 @@ var blogTagSeeds = []*models.BlogTags{
 	},
 	{
 		BlogID: 2,
-		TagID: 3,
+		TagID:  3,
 	},
 	{
 		BlogID: 2,
-		TagID: 4,
+		TagID:  4,
 	},
 }
 
