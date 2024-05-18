@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { BlogCardStyles } from "./blog-card.css";
-import { TagElement } from "@/components/element/ui/tag-element";
 import type { Blog } from "@/repositories/blogs";
 import { NO_EMOJI } from "@/constants/blog";
 import { ZennLink } from "@/components/element/Icons/zenn-link";
 import { LinkOutIcon } from "@/components/element/Icons/link-out";
+import { TagList } from "@/components/layout/tag-list";
 
 interface BlogCardParams {
   blog: Blog;
@@ -24,6 +24,8 @@ export const BlogCard = ({ blog }: BlogCardParams) => {
       : BlogCardStyles.innerLinkDiv;
 
   const getOuterPageIcon = (path: string) => {
+    if (path === "") return <span> </span>;
+
     if (path.includes("zenn.dev")) {
       return (
         <>
@@ -47,17 +49,11 @@ export const BlogCard = ({ blog }: BlogCardParams) => {
         <div className={getInnerLinkDivStyle(blog)}>
           <div className={BlogCardStyles.metaDiv}>
             <p className={BlogCardStyles.title}>{blog.title}</p>
-            <div className={BlogCardStyles.tagListDiv}>
-              {blog.tags.map((tag) => (
-                <TagElement key={tag.id} tag={tag} />
-              ))}
-            </div>
+            <TagList tags={blog.tags} className={BlogCardStyles.tagList} />
           </div>
-          {hasUrl(blog) && (
-            <div className={BlogCardStyles.otherPageDiv}>
-              {getOuterPageIcon(blog.url)}
-            </div>
-          )}
+          <div className={BlogCardStyles.otherPageDiv}>
+            {getOuterPageIcon(blog.url)}
+          </div>
         </div>
       </Link>
     </>

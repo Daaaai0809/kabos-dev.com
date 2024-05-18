@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"time"
 
 	"github.com/Daaaai0809/kabos-dev.com/config"
 	"github.com/Daaaai0809/kabos-dev.com/domain/entity"
@@ -19,7 +20,7 @@ type IBlogInteractor interface {
 	Delete(ctx context.Context, id int) error
 	GetOriginBlog(ctx context.Context, id int) (*entity.Blog, error)
 	FillInUpdateBlog(ctx context.Context, originBlog *entity.Blog, updateBlog *entity.Blog) *entity.Blog
-	GenerateBlogEntity(ctx context.Context, id int, title string, thumbnail string, url string, postedAt string, tagIDs []int) (*entity.Blog, error)
+	GenerateBlogEntity(ctx context.Context, id int, title, emoji, url, content, postedAt string, tagIDs []int) (*entity.Blog, error)
 }
 
 type BlogInteractor struct {
@@ -76,7 +77,7 @@ func (i *BlogInteractor) GetByID(ctx context.Context, id int) (*presenter.GetBlo
 }
 
 func (i *BlogInteractor) Create(ctx context.Context, blog *entity.Blog) (*presenter.CreateBlogResponse, error) {
-	blogModel := models.NewCreateBlogModel(blog.Title, blog.URL, blog.PostedAt)
+	blogModel := models.NewCreateBlogModel(blog.Title, blog.URL, blog.Emoji, blog.Content, blog.PostedAt)
 
 	id, err := i.blogRepository.Create(ctx, blogModel, blog.TagIDs)
 	if err != nil {
@@ -97,6 +98,7 @@ func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) (*presen
 		blog.Title,
 		blog.URL,
 		blog.Emoji,
+		blog.Content,
 		blog.PostedAt,
 		blog.CreatedAt,
 		blog.UpdatedAt,
@@ -142,6 +144,14 @@ func (i *BlogInteractor) FillInUpdateBlog(ctx context.Context, originBlog *entit
 		updateBlog.URL = originBlog.URL
 	}
 
+	if updateBlog.Emoji == "" {
+		updateBlog.Emoji = originBlog.Emoji
+	}
+
+	if updateBlog.Content == "" {
+		updateBlog.Content = originBlog.Content
+	}
+
 	if len(updateBlog.TagIDs) == 0 {
 		updateBlog.TagIDs = originBlog.TagIDs
 	}
@@ -152,16 +162,24 @@ func (i *BlogInteractor) FillInUpdateBlog(ctx context.Context, originBlog *entit
 	return updateBlog
 }
 
-func (i *BlogInteractor) GenerateBlogEntity(ctx context.Context, id int, title string, thumbnail string, url string, postedAt string, tagIDs []int) (*entity.Blog, error) {
-	formatedPostedAt, err := config.FormatDateTimeFromString(postedAt)
-	if err != nil {
-		return &entity.Blog{}, err
+func (i *BlogInteractor) GenerateBlogEntity(ctx context.Context, id int, title, emoji, url, content, postedAt string, tagIDs []int) (*entity.Blog, error) {
+	var formatedPostedAt time.Time
+	if postedAt != "" {
+		var err error
+		formatedPostedAt, err = config.FormatDateFromString(postedAt)
+		if err != nil {
+			return &entity.Blog{}, err
+		}
+	} else {
+		formatedPostedAt = time.Now()
 	}
 
 	blog := &entity.Blog{
 		ID:       id,
 		Title:    title,
 		URL:      url,
+		Content:  content,
+		Emoji:    emoji,
 		PostedAt: formatedPostedAt,
 		TagIDs:   tagIDs,
 	}
