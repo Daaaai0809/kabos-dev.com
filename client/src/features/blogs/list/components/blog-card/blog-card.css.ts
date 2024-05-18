@@ -36,8 +36,6 @@ export const BlogCardStyles = {
     width: "100%",
     maxWidth: "560px",
     minHeight: "62px",
-    gap: "1.5rem",
-    paddingRight: "5.5rem",
   }),
   innerLinkDivHasUrl: style({
     boxSizing: "border-box",
@@ -54,7 +52,7 @@ export const BlogCardStyles = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "start",
     width: "100%",
     maxWidth: "448px",
     minHeight: "62px",
@@ -67,14 +65,13 @@ export const BlogCardStyles = {
     overflow: "hidden",
     textOverflow: "inherit",
   }),
-  tagListDiv: style({
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    width: "100%",
+  tagList: style({
     maxWidth: "448px",
-    height: "24px",
-    gap: "0.5rem",
+    "@media": {
+      "screen and (max-width: 448px)": {
+        maxWidth: "11.5rem",
+      },
+    },
   }),
   otherPageDiv: style({
     display: "flex",
