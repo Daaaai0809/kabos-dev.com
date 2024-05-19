@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useGetBlogs } from "./hooks/use-get-blogs";
 import { BlogListTemplate } from "./template";
 import type { Blog } from "@/repositories/blogs";
