@@ -21,6 +21,7 @@ globalStyle(`${mdBlockStyles.outerDiv} > h1`, {
   fontSize: vars.font.size["3xl"],
   color: vars.semantic.text.secondary,
   borderBottom: "0.3px solid rgba(160, 163, 199, 0.5)",
+  margin: "1rem 0",
 });
 
 globalStyle(`${mdBlockStyles.outerDiv} > h2`, {
@@ -30,6 +31,7 @@ globalStyle(`${mdBlockStyles.outerDiv} > h2`, {
   fontSize: vars.font.size["2xl"],
   color: vars.semantic.text.primary,
   borderBottom: "0.3px solid rgba(160, 163, 199, 0.5)",
+  margin: "0.5rem 0",
 });
 
 globalStyle(`${mdBlockStyles.outerDiv} > h3`, {
@@ -38,6 +40,7 @@ globalStyle(`${mdBlockStyles.outerDiv} > h3`, {
   paddingLeft: "0.125rem",
   fontSize: vars.font.size.xl,
   color: vars.semantic.text.primary,
+  margin: "0.25rem 0",
 });
 
 globalStyle(`${mdBlockStyles.outerDiv} > h4`, {
@@ -68,6 +71,7 @@ globalStyle(`${mdBlockStyles.outerDiv} > p`, {
   width: "100%",
   fontSize: vars.font.size.base,
   color: vars.semantic.text.primary,
+  lineHeight: "1.75",
 });
 
 globalStyle(`${mdBlockStyles.outerDiv} > p > a`, {
