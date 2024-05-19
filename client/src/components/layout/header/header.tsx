@@ -17,8 +17,8 @@ export const Header = memo(function memorableHeader() {
         <Link href="/blogs" className={headerStyles.link}>
           <p>Blogs</p>
         </Link>
-        <Link href="#" className={headerStyles.link}>
-          <p>Works</p>
+        <Link href="/products" className={headerStyles.link}>
+          <p>Products</p>
         </Link>
         <Link href="#" className={headerStyles.link}>
           <p>Contact</p>
