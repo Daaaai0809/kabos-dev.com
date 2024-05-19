@@ -20,23 +20,16 @@ type PutR2Params = {
   contentType: string;
 };
 
+type FetchImageResponse = {
+  base64: string;
+};
+
 export interface IR2Repository {
-  getR2: (key: string) => Promise<GetObjectCommandOutput>;
-  putR2: (params: PutR2Params) => Promise<void>;
+  putR2: (params: PutR2Params) => Promise<string>;
 }
 
 export const R2RepositoryImpl: IR2Repository = {
-  getR2: async (key: string): Promise<GetObjectCommandOutput> => {
-    const res = await client.send(
-      new GetObjectCommand({
-        Bucket: process.env.NEXT_PUBLIC_R2_BUCKET_NAME as string,
-        Key: key,
-      }),
-    );
-
-    return res;
-  },
-  putR2: async (params: PutR2Params): Promise<void> => {
+  putR2: async (params: PutR2Params): Promise<string> => {
     await client
       .send(
         new PutObjectCommand({
@@ -51,5 +44,7 @@ export const R2RepositoryImpl: IR2Repository = {
         console.error(error);
         throw new Error(error);
       });
+
+    return `${process.env.NEXT_PUBLIC_R2_SUB_DOMAIN}/${params.key}`;
   },
 };

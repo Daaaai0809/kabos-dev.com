@@ -9,7 +9,7 @@ type PutR2Request = {
 };
 
 type PutR2Response = {
-  key: string;
+  url: string;
 };
 
 export default async function handler(
@@ -38,11 +38,11 @@ export default async function handler(
     height: body.height,
   });
 
-  await R2RepositoryImpl.putR2({
+  const result = await R2RepositoryImpl.putR2({
     key,
     data: data,
     contentType: type.mimeType,
   });
 
-  res.send({ key });
+  res.send({ url: result });
 }
