@@ -20,7 +20,7 @@ export const Header = memo(function memorableHeader() {
         <Link href="/products" className={headerStyles.link}>
           <p>Products</p>
         </Link>
-        <Link href="#" className={headerStyles.link}>
+        <Link href="mailto:dai.tsuruga0809@gmail.com" className={headerStyles.link}>
           <p>Contact</p>
         </Link>
       </div>
