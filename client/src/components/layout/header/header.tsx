@@ -2,6 +2,7 @@ import Link from "next/link";
 import { memo } from "react";
 import { headerStyles } from "./header.css";
 import { MeIcon } from "@/components/element/Icons/me-icon";
+import { LinkOutIcon } from "@/components/element/Icons/link-out";
 
 export const Header = memo(function memorableHeader() {
   // TODO: widthが768px以下の場合はハンバーガーメニューで返す
@@ -20,8 +21,20 @@ export const Header = memo(function memorableHeader() {
         <Link href="/products" className={headerStyles.link}>
           <p>Products</p>
         </Link>
-        <Link href="#" className={headerStyles.link}>
-          <p>Contact</p>
+        <Link
+          href="mailto:dai.tsuruga0809@gmail.com"
+          className={headerStyles.link}
+        >
+          <p
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.25rem",
+            }}
+          >
+            Contact
+            <LinkOutIcon />
+          </p>
         </Link>
       </div>
     </div>

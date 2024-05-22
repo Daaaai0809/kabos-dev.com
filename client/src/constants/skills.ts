@@ -79,14 +79,24 @@ export const SKILLS: Skills = [
   {
     name: "CSS",
     icon: "/icons/skills/CSS.svg",
+    description:
+      "これができなきゃサイトのデザインはできない！簡単そうに見えていつも一番格闘してる相手な気がします。永遠のライバル。 #もうちょっと優しくしてほしい",
   },
   {
     name: "HTML",
     icon: "/icons/skills/HTML.svg",
+    description:
+      "Web開発の基本だよね。すべてを理解してるかといわれたらそうではないけどまあ普通には書けます。",
   },
   {
     name: "Linux",
     icon: "/icons/skills/Linux.svg",
     description: "普段の開発環境です。ubuntuを使ってます。",
+  },
+  {
+    name: "Nginx",
+    icon: "/icons/skills/Nginx.svg",
+    description:
+      "ISUCONとか普段の開発とかで使います。正直インフラ面激弱だからもっと勉強しないとだめだなーって思ってます。誰かインフラ教えて ^ ^",
   },
 ];
