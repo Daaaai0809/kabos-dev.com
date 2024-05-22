@@ -1,0 +1,85 @@
+import { vars } from "@/styles/theme.css";
+import { style } from "@vanilla-extract/css";
+
+export const BlogCardStyles = {
+  link: style({
+    boxSizing: "border-box",
+    display: "flex",
+    justifyContent: "start",
+    alignItems: "center",
+    width: "100%",
+    maxWidth: "688px",
+    minHeight: "96px",
+    padding: "1rem 2rem",
+    borderRadius: "1rem",
+    color: vars.semantic.text.primary,
+    textDecoration: "none",
+    backgroundColor: vars.semantic.card.primary,
+    transition: "background-color 0.3s",
+    ":hover": {
+      backgroundColor: vars.semantic.card.primaryHover,
+    },
+    gap: "2rem",
+  }),
+  emoji: style({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: vars.font.size["3xl"],
+    width: "32px",
+    height: "32px",
+  }),
+  innerLinkDiv: style({
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    maxWidth: "560px",
+    minHeight: "62px",
+  }),
+  innerLinkDivHasUrl: style({
+    boxSizing: "border-box",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    maxWidth: "560px",
+    minHeight: "62px",
+    gap: "1.5rem",
+  }),
+  metaDiv: style({
+    boxSizing: "border-box",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "start",
+    width: "100%",
+    maxWidth: "448px",
+    minHeight: "62px",
+  }),
+  title: style({
+    width: "100%",
+    maxWidth: "448px",
+    fontSize: vars.font.size.lg,
+    fontWeight: "bold",
+    overflow: "hidden",
+    textOverflow: "inherit",
+  }),
+  tagList: style({
+    maxWidth: "448px",
+    "@media": {
+      "screen and (max-width: 448px)": {
+        maxWidth: "11.5rem",
+      },
+    },
+  }),
+  otherPageDiv: style({
+    display: "flex",
+    justifyContent: "right",
+    alignItems: "center",
+    width: "100%",
+    maxWidth: "5.5rem",
+    height: "1rem",
+    gap: "0.5rem",
+  }),
+};

@@ -1,23 +1,31 @@
-import Layout from '@/components/layout/Layout';
-import AdminLayout from '@/components/layout/AdminLayout';
-import type { AppProps } from 'next/app';
-import { useRouter } from 'next/router';
+import "@/styles/global.css";
+import type { AppProps } from "next/app";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { useMemo } from "react";
+import { Layout } from "@/components/layout/layout";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-  const isAdmin = router.pathname.startsWith('/admin');
-  
-  if (isAdmin) {
-    return (
-      <AdminLayout>
-        <Component {...pageProps} />
-      </AdminLayout>
-    );
-  }
+  const queryClient = useMemo(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+    [],
+  );
 
   return (
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+    <>
+      <QueryClientProvider client={queryClient}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </>
   );
 }

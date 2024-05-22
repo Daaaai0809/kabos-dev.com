@@ -34,10 +34,10 @@ Contactページなどまだ完成にまでは至っていないため随時ペ�
 
 var productSeeds = []*models.Product{
 	{
-		Name: "kabos-dev.com",
-		Content: content,
+		Name:        "kabos-dev.com",
+		Content:     content,
 		Description: "自己紹介やブログ・制作物の紹介を兼ねたWebサイトです。",
-		Thumbnail:   "https://kabos-dev-bucket.s3.ap-northeast-1.amazonaws.com/thumbnail/products/product-1.webp",
+		Thumbnail:   "https://pub-2b2b89079c6f49fa8f33ebec2d59de85.r2.dev/2b5f81c34d574686efa22e89132248d6fb0a8aed32f520bdd6635b8cc7b62f16_640x320.png",
 		URL:         "https://kabos-dev.com",
 		ReleaseDate: time.Date(2024, 2, 12, 0, 0, 0, 0, time.UTC),
 	},

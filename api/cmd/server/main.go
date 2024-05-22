@@ -36,19 +36,18 @@ func main() {
 	blogRepository := mysql.NewBlogRepository(bunDB)
 	tagRepository := mysql.NewTagRepository(bunDB)
 	productRepository := mysql.NewProductRepository(bunDB)
-	blogTagsRepository := mysql.NewBlogTagsRepository(bunDB)
 	blogPresenter := presenter.NewBlogPresenter()
 	tagPresenter := presenter.NewTagPresenter()
 	productPresenter := presenter.NewProductPresenter()
-	blogInteractor := usecase.NewBlogInteractor(blogRepository, blogTagsRepository, blogPresenter)
-	tagInteractor := usecase.NewTagInteractor(tagRepository, blogTagsRepository, tagPresenter)
+	blogInteractor := usecase.NewBlogInteractor(blogRepository, blogPresenter)
+	tagInteractor := usecase.NewTagInteractor(tagRepository, tagPresenter)
 	productInteractor := usecase.NewProductInteractor(productRepository, productPresenter)
 
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{config.ACCESS_CONTROL_ALLOW_ORIGIN},
-		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
+		AllowOrigins:     []string{config.ACCESS_CONTROL_ALLOW_ORIGIN},
+		AllowHeaders:     []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
 		AllowCredentials: true,
-		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodHead, http.MethodOptions},
+		AllowMethods:     []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodHead, http.MethodOptions},
 	}))
 
 	apiGroup := e.Group("/api")
