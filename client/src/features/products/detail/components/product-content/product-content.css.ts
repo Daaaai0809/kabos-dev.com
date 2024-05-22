@@ -28,7 +28,13 @@ export const productContentStyles = {
   name: style({
     fontSize: vars.font.size.xl,
     fontWeight: "bold",
+  }),
+  link: style({
     color: vars.semantic.text.secondary,
+    textDecoration: "none",
+    ":hover": {
+      textDecoration: "underline",
+    },
   }),
   description: style({
     fontSize: vars.font.size.sm,
@@ -49,5 +55,6 @@ export const productContentStyles = {
     height: "calc(100% / 2)",
     borderRadius: "1rem",
     objectFit: "cover",
+    border: "0.1px solid rgba(0, 0, 0, 0.05)",
   }),
 };

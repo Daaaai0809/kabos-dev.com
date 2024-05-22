@@ -27,6 +27,7 @@ export const productCardStyles = {
     width: "192px",
     height: "96px",
     borderRadius: "1rem 0 0 1rem",
+    border: "0.1px solid rgba(0, 0, 0, 0.1)",
     objectFit: "cover",
     "@media": {
       "screen and (max-width: 768px)": {

@@ -10,6 +10,7 @@ export const ProductDetailPage = (props: ProductDetailPageProps) => {
   return (
     <ProductDetailTemplate
       name={props.product.name}
+      url={props.product.url}
       thumbnail={props.product.thumbnail}
       description={props.product.description}
       parsedContent={parseHtmlToReactJSX(props.product.content)}
