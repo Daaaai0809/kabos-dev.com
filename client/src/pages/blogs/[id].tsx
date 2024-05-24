@@ -1,7 +1,7 @@
 import { BlogDetailPage } from "@/features/blogs/detail";
 import { markdownToHtml } from "@/libs/markdown/markdown";
 import { type Blog, BlogRepositoryImpl } from "@/repositories/blogs";
-import type { GetServerSideProps } from "next";
+import type { GetStaticProps } from "next";
 
 type BlogDetailProps = {
   id: number;
@@ -16,7 +16,20 @@ export default function BlogDetail({ id, blog }: BlogDetailProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<BlogDetailProps> = async (
+export const getStaticPaths = async () => {
+  const res = await BlogRepositoryImpl.getAllBlogs();
+
+  const paths = res.blogs.map((blog) => ({
+    params: { id: String(blog.id) },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps<BlogDetailProps> = async (
   context,
 ) => {
   const id = context.params?.id;

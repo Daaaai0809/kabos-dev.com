@@ -1,4 +1,4 @@
-import type { GetServerSideProps } from "next";
+import type { GetStaticProps } from "next";
 import { BlogListPage } from "@/features/blogs/list";
 import { type Blog, BlogRepositoryImpl } from "@/repositories/blogs";
 
@@ -14,7 +14,7 @@ export default function Blogs({ initialBlogs }: BlogsProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<BlogsProps> = async () => {
+export const getStaticProps: GetStaticProps<BlogsProps> = async () => {
   const res = await BlogRepositoryImpl.getAllBlogs();
 
   return {
