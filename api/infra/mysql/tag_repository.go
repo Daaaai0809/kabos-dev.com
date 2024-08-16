@@ -52,8 +52,17 @@ func (r *TagRepository) Create(ctx context.Context, tag *models.Tag) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	_, err := r.db.NewInsert().Model(tag).Exec(ctx)
+	tx, err := r.db.Begin()
 	if err != nil {
+		return err
+	}
+
+	if _, err := r.db.NewInsert().Model(tag).Exec(ctx); err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	if err := tx.Commit(); err != nil {
 		return err
 	}
 
@@ -64,8 +73,17 @@ func (r *TagRepository) Update(ctx context.Context, tag *models.Tag) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	_, err := r.db.NewUpdate().Model(tag).Where("id = ?", tag.ID).Exec(ctx)
+	tx, err := r.db.Begin()
 	if err != nil {
+		return err
+	}
+
+	if _, err := r.db.NewUpdate().Model(tag).Where("id = ?", tag.ID).Exec(ctx); err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	if err := tx.Commit(); err != nil {
 		return err
 	}
 
@@ -76,8 +94,22 @@ func (r *TagRepository) Delete(ctx context.Context, id int) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	_, err := r.db.NewDelete().Model(&models.Tag{}).Where("id = ?", id).Exec(ctx)
+	tx, err := r.db.Begin()
 	if err != nil {
+		return err
+	}
+
+	if _, err := r.db.NewDelete().Model(&models.Tag{}).Where("id = ?", id).Exec(ctx); err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	if _, err = r.db.NewDelete().Model(&models.BlogTags{}).Where("tag_id = ?", id).Exec(ctx); err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	if err := tx.Commit(); err != nil {
 		return err
 	}
 

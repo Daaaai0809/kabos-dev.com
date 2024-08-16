@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"time"
 
 	"github.com/Daaaai0809/kabos-dev.com/config"
 	"github.com/Daaaai0809/kabos-dev.com/domain/entity"
@@ -19,20 +20,18 @@ type IBlogInteractor interface {
 	Delete(ctx context.Context, id int) error
 	GetOriginBlog(ctx context.Context, id int) (*entity.Blog, error)
 	FillInUpdateBlog(ctx context.Context, originBlog *entity.Blog, updateBlog *entity.Blog) *entity.Blog
-	GenerateBlogEntity(ctx context.Context, id int, title string, thumbnail string, url string, postedAt string, tagIDs []int) (*entity.Blog, error)
+	GenerateBlogEntity(ctx context.Context, id int, title, emoji, url, content, postedAt string, tagIDs []int) (*entity.Blog, error)
 }
 
 type BlogInteractor struct {
 	blogRepository repository.IBlogRepository
-	blogTagsRepository repository.IBlogTagsRepository
-	blogPresenter presenter.IBlogPresenter
+	blogPresenter  presenter.IBlogPresenter
 }
 
-func NewBlogInteractor(blogRepository repository.IBlogRepository, blogTagsRepository repository.IBlogTagsRepository, blogPresenter presenter.IBlogPresenter) IBlogInteractor {
+func NewBlogInteractor(blogRepository repository.IBlogRepository, blogPresenter presenter.IBlogPresenter) IBlogInteractor {
 	return &BlogInteractor{
 		blogRepository: blogRepository,
-		blogTagsRepository: blogTagsRepository,
-		blogPresenter: blogPresenter,
+		blogPresenter:  blogPresenter,
 	}
 }
 
@@ -78,9 +77,9 @@ func (i *BlogInteractor) GetByID(ctx context.Context, id int) (*presenter.GetBlo
 }
 
 func (i *BlogInteractor) Create(ctx context.Context, blog *entity.Blog) (*presenter.CreateBlogResponse, error) {
-	blogModel := models.NewCreateBlogModel(blog.Title, blog.Thumbnail, blog.URL, blog.PostedAt)
+	blogModel := models.NewCreateBlogModel(blog.Title, blog.URL, blog.Emoji, blog.Content, blog.PostedAt)
 
-	id, err := i.blogRepository.Create(ctx, blogModel)
+	id, err := i.blogRepository.Create(ctx, blogModel, blog.TagIDs)
 	if err != nil {
 		return &presenter.CreateBlogResponse{}, err
 	}
@@ -90,40 +89,22 @@ func (i *BlogInteractor) Create(ctx context.Context, blog *entity.Blog) (*presen
 		return &presenter.CreateBlogResponse{}, err
 	}
 
-	entityBlog := createdBlog.ToBlogEntity()
-
-	if len(blog.TagIDs) == 0 {
-		return i.blogPresenter.GenerateCreateResponse(entityBlog), nil
-	}
-
-	blogTagsModels := []*models.BlogTags{}
-	for _, tagID := range blog.TagIDs {
-		blogTagsModel := &models.BlogTags{
-			BlogID: blogModel.ID,
-			TagID:  tagID,
-		}
-		blogTagsModels = append(blogTagsModels, blogTagsModel)
-	}
-
-	if err := i.blogTagsRepository.Create(ctx, blogTagsModels); err != nil {
-		return &presenter.CreateBlogResponse{}, err
-	}
-
-	return i.blogPresenter.GenerateCreateResponse(entityBlog), nil
+	return i.blogPresenter.GenerateCreateResponse(createdBlog.ToBlogEntity()), nil
 }
 
 func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) (*presenter.UpdateBlogResponse, error) {
 	blogModel := models.NewBlogModel(
 		blog.ID,
 		blog.Title,
-		blog.Thumbnail,
 		blog.URL,
+		blog.Emoji,
+		blog.Content,
 		blog.PostedAt,
 		blog.CreatedAt,
 		blog.UpdatedAt,
 	)
 
-	if err := i.blogRepository.Update(ctx, blogModel); err != nil {
+	if err := i.blogRepository.Update(ctx, blogModel, blog.TagIDs); err != nil {
 		return &presenter.UpdateBlogResponse{}, err
 	}
 
@@ -132,38 +113,11 @@ func (i *BlogInteractor) Update(ctx context.Context, blog *entity.Blog) (*presen
 		return &presenter.UpdateBlogResponse{}, err
 	}
 
-	entityBlog := updatedBlog.ToBlogEntity()
-
-	if len(blog.TagIDs) == 0 {
-		return i.blogPresenter.GenerateUpdateResponse(entityBlog), nil
-	}
-
-	blogTagsModels := []*models.BlogTags{}
-	for _, tagID := range blog.TagIDs {
-		blogTagsModel := &models.BlogTags{
-			BlogID: blogModel.ID,
-			TagID:  tagID,
-		}
-		blogTagsModels = append(blogTagsModels, blogTagsModel)
-	}
-
-	if err := i.blogTagsRepository.DeleteByBlogID(ctx, blogModel.ID); err != nil {
-		return &presenter.UpdateBlogResponse{}, err
-	}
-
-	if err := i.blogTagsRepository.Create(ctx, blogTagsModels); err != nil {
-		return &presenter.UpdateBlogResponse{}, err
-	}
-
-	return i.blogPresenter.GenerateUpdateResponse(entityBlog), nil
+	return i.blogPresenter.GenerateUpdateResponse(updatedBlog.ToBlogEntity()), nil
 }
 
 func (i *BlogInteractor) Delete(ctx context.Context, id int) error {
 	if err := i.blogRepository.Delete(ctx, id); err != nil {
-		return err
-	}
-
-	if err := i.blogTagsRepository.DeleteByBlogID(ctx, id); err != nil {
 		return err
 	}
 
@@ -186,12 +140,16 @@ func (i *BlogInteractor) FillInUpdateBlog(ctx context.Context, originBlog *entit
 		updateBlog.Title = originBlog.Title
 	}
 
-	if updateBlog.Thumbnail == "" {
-		updateBlog.Thumbnail = originBlog.Thumbnail
-	}
-
 	if updateBlog.URL == "" {
 		updateBlog.URL = originBlog.URL
+	}
+
+	if updateBlog.Emoji == "" {
+		updateBlog.Emoji = originBlog.Emoji
+	}
+
+	if updateBlog.Content == "" {
+		updateBlog.Content = originBlog.Content
 	}
 
 	if len(updateBlog.TagIDs) == 0 {
@@ -204,19 +162,26 @@ func (i *BlogInteractor) FillInUpdateBlog(ctx context.Context, originBlog *entit
 	return updateBlog
 }
 
-func (i *BlogInteractor) GenerateBlogEntity(ctx context.Context, id int, title string, thumbnail string, url string, postedAt string, tagIDs []int) (*entity.Blog, error) {
-	formatedPostedAt, err := config.FormatDateTimeFromString(postedAt);
-	if err != nil {
-		return &entity.Blog{}, err
+func (i *BlogInteractor) GenerateBlogEntity(ctx context.Context, id int, title, emoji, url, content, postedAt string, tagIDs []int) (*entity.Blog, error) {
+	var formatedPostedAt time.Time
+	if postedAt != "" {
+		var err error
+		formatedPostedAt, err = config.FormatDateFromString(postedAt)
+		if err != nil {
+			return &entity.Blog{}, err
+		}
+	} else {
+		formatedPostedAt = time.Now()
 	}
 
 	blog := &entity.Blog{
-		ID:        id,
-		Title:     title,
-		Thumbnail: thumbnail,
-		URL:       url,
-		PostedAt:  formatedPostedAt,
-		TagIDs:    tagIDs,
+		ID:       id,
+		Title:    title,
+		URL:      url,
+		Content:  content,
+		Emoji:    emoji,
+		PostedAt: formatedPostedAt,
+		TagIDs:   tagIDs,
 	}
 
 	return blog, nil

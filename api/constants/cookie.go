@@ -1,3 +1,3 @@
 package constant
 
-const COOKIE_NAME          = "access_token"
+const COOKIE_NAME = "access_token"
