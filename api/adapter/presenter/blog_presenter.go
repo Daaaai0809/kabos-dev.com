@@ -15,10 +15,10 @@ func (p *BlogPresenter) GenerateGetAllResponse(blogs []*entity.Blog) *presenter.
 	blogsResponse := &presenter.GetAllBlogResponse{
 		Blogs: make([]presenter.BlogResponse, 0),
 	}
-	
+
 	for _, blog := range blogs {
 		tags := make([]presenter.TagResponse, 0)
-		
+
 		if len(blog.Tags) > 0 {
 			for _, tag := range blog.Tags {
 				tags = append(tags, presenter.TagResponse{
@@ -31,9 +31,10 @@ func (p *BlogPresenter) GenerateGetAllResponse(blogs []*entity.Blog) *presenter.
 		blogsResponse.Blogs = append(blogsResponse.Blogs, presenter.BlogResponse{
 			ID:        blog.ID,
 			Title:     blog.Title,
-			Thumbnail: blog.Thumbnail,
 			URL:       blog.URL,
 			Tags:      tags,
+			Emoji:     blog.Emoji,
+			Content:   blog.Content,
 			PostedAt:  blog.PostedAt.String(),
 			CreatedAt: blog.CreatedAt.String(),
 		})
@@ -41,10 +42,10 @@ func (p *BlogPresenter) GenerateGetAllResponse(blogs []*entity.Blog) *presenter.
 
 	return blogsResponse
 }
-	
+
 func (p *BlogPresenter) GenerateGetSearchedBlogResponse(blogs []*entity.Blog) *presenter.GetSearchedBlogResponse {
 	tags := make([]presenter.TagResponse, 0)
-	
+
 	blogsResponse := &presenter.GetSearchedBlogResponse{
 		Blogs: make([]presenter.BlogResponse, 0),
 	}
@@ -62,9 +63,10 @@ func (p *BlogPresenter) GenerateGetSearchedBlogResponse(blogs []*entity.Blog) *p
 		blogsResponse.Blogs = append(blogsResponse.Blogs, presenter.BlogResponse{
 			ID:        blog.ID,
 			Title:     blog.Title,
-			Thumbnail: blog.Thumbnail,
 			URL:       blog.URL,
 			Tags:      tags,
+			Emoji:     blog.Emoji,
+			Content:   blog.Content,
 			PostedAt:  blog.PostedAt.String(),
 			CreatedAt: blog.CreatedAt.String(),
 		})
@@ -75,7 +77,7 @@ func (p *BlogPresenter) GenerateGetSearchedBlogResponse(blogs []*entity.Blog) *p
 
 func (p *BlogPresenter) GenerateGetByIDResponse(blog *entity.Blog) *presenter.GetBlogByIDResponse {
 	tags := make([]presenter.TagResponse, 0)
-	
+
 	if len(blog.Tags) > 0 {
 		for _, tag := range blog.Tags {
 			tags = append(tags, presenter.TagResponse{
@@ -89,9 +91,10 @@ func (p *BlogPresenter) GenerateGetByIDResponse(blog *entity.Blog) *presenter.Ge
 	blogResponse.Blog = presenter.BlogResponse{
 		ID:        blog.ID,
 		Title:     blog.Title,
-		Thumbnail: blog.Thumbnail,
 		URL:       blog.URL,
 		Tags:      tags,
+		Emoji:     blog.Emoji,
+		Content:   blog.Content,
 		PostedAt:  blog.PostedAt.String(),
 		CreatedAt: blog.CreatedAt.String(),
 	}
@@ -115,9 +118,10 @@ func (p *BlogPresenter) GenerateCreateResponse(blog *entity.Blog) *presenter.Cre
 	blogResponse.Blog = presenter.BlogResponse{
 		ID:        blog.ID,
 		Title:     blog.Title,
-		Thumbnail: blog.Thumbnail,
 		URL:       blog.URL,
 		Tags:      tags,
+		Emoji:     blog.Emoji,
+		Content:   blog.Content,
 		PostedAt:  blog.PostedAt.String(),
 		CreatedAt: blog.CreatedAt.String(),
 	}
@@ -141,9 +145,10 @@ func (p *BlogPresenter) GenerateUpdateResponse(blog *entity.Blog) *presenter.Upd
 	blogResponse.Blog = presenter.BlogResponse{
 		ID:        blog.ID,
 		Title:     blog.Title,
-		Thumbnail: blog.Thumbnail,
 		URL:       blog.URL,
 		Tags:      tags,
+		Emoji:     blog.Emoji,
+		Content:   blog.Content,
 		PostedAt:  blog.PostedAt.String(),
 		CreatedAt: blog.CreatedAt.String(),
 	}

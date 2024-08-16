@@ -1,9 +1,25 @@
-import { BlogIndex } from '@/components/pages/blogs/Index';
+import type { GetServerSideProps } from "next";
+import { BlogListPage } from "@/features/blogs/list";
+import { type Blog, BlogRepositoryImpl } from "@/repositories/blogs";
 
-export default function Blogs() {
-    return (
-        <>
-            <BlogIndex />
-        </>
-    );
+type BlogsProps = {
+  initialBlogs: Blog[];
+};
+
+export default function Blogs({ initialBlogs }: BlogsProps) {
+  return (
+    <>
+      <BlogListPage initialBlogs={initialBlogs} />
+    </>
+  );
 }
+
+export const getServerSideProps: GetServerSideProps<BlogsProps> = async () => {
+  const res = await BlogRepositoryImpl.getAllBlogs();
+
+  return {
+    props: {
+      initialBlogs: res.blogs || [],
+    },
+  };
+};

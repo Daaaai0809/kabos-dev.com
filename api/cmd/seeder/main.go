@@ -46,11 +46,19 @@ func main() {
 func seed(ctx context.Context, db *bun.DB) error {
 	// add seeders here
 	if err := seeds.BlogSeeds(ctx, db); err != nil {
-		return err
+		log.Printf("failed to seed blog: %v", err)
 	}
 
 	if err := seeds.ProductSeeds(ctx, db); err != nil {
-		return err
+		log.Printf("failed to seed product: %v", err)
+	}
+
+	if err := seeds.TagSeeds(ctx, db); err != nil {
+		log.Printf("failed to seed tag: %v", err)
+	}
+
+	if err := seeds.BlogTagSeeds(ctx, db); err != nil {
+		log.Printf("failed to seed blog_tag: %v", err)
 	}
 
 	return nil

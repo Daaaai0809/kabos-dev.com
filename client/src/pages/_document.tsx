@@ -1,14 +1,9 @@
-import { Html, Head, Main, NextScript } from 'next/document';
+import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
   return (
-    <Html lang="ja" >
-      <Head>
-        <title>{"Kabos's Portfolio"}</title>
-        {/* faviconの設定 */}
-        <meta name="description" content="Kabos's Portfolio" />
-        <link rel="icon" href="/favicon.svg" />
-      </Head>
+    <Html lang="ja">
+      <Head title="Kabos's Portfolio" />
       <body>
         <Main />
         <NextScript />

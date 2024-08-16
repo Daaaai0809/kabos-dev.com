@@ -6,5 +6,5 @@ type UpdateProductRequest struct {
 	Content     string `json:"content"`
 	Description string `json:"description"`
 	URL         string `json:"url"`
-	ReleasedAt 	string `json:"released_at"`
+	ReleasedAt  string `json:"released_at"`
 }

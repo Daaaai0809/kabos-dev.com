@@ -23,10 +23,10 @@ func NewProductHandler(group *echo.Group, adminGroup *echo.Group, productInterac
 		productInteractor: productInteractor,
 	}
 
-	group.GET("/", handler.GetAll)
+	group.GET("", handler.GetAll)
 	group.GET("/search", handler.GetSearchedProduct)
 	group.GET("/:id", handler.GetByID)
-	adminGroup.POST("/", handler.Create)
+	adminGroup.POST("", handler.Create)
 	adminGroup.PUT("/:id", handler.Update)
 	adminGroup.DELETE("/:id", handler.Delete)
 }
