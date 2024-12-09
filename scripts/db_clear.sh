@@ -21,7 +21,7 @@ esac
 
 echo "Dockerを停止します..."
 
-docker compose -f docker-compose.dev.yml down
+docker compose down -v
 
 echo "Dockerを停止しました！"
 
@@ -33,6 +33,6 @@ echo "DBデータを削除しました！"
 
 echo "Dockerを立ち上げます..."
 
-docker compose -f docker-compose.dev.yml up -d --build
+docker compose up -d --build
 
 echo "Dockerを立ち上げました！"
