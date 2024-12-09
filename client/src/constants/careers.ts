@@ -28,6 +28,13 @@ const careers: Careers = [
     isQualification: true,
     description: "2023年4月に行われた応用情報技術者試験を受験し合格しました。",
   },
+  {
+    name: "LINEヤフー株式会社",
+    startedAt: "2024/08",
+    icon: "/icons/careers/work.svg",
+    description:
+      "バックエンドエンジニアとしてサマーインターンに参加しています。",
+  },
 ];
 
 export const CAREERS = careers.reverse();
