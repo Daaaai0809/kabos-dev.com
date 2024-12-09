@@ -7,9 +7,15 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "check:format": "biome format src/*",
+    "check:lint": "biome lint src/*",
+    "fix": "pnpm run fix:style && pnpm run fix:lint",
+    "fix:style": "biome format --write src/*",
+    "fix:lint": "biome lint --apply src/*",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@biomejs/biome": "^1.9.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.2"
