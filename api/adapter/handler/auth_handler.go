@@ -31,7 +31,7 @@ func (h *AuthHandler) Login(c echo.Context) error {
 	}
 
 	if err := h.authInteractor.CheckPassword(c.Request().Context(), LoginRequest.Password); err != nil {
-		return c.String(http.StatusInternalServerError, constant.INTERNAL_SERVER_ERROR_MESSAGE)
+		return c.String(http.StatusUnauthorized, constant.INTERNAL_SERVER_ERROR_MESSAGE)
 	}
 
 	res, err := h.authInteractor.GenrateAccessToken()
