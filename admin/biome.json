@@ -1,0 +1,22 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.7.0/schema.json",
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"style": {
+				"noNonNullAssertion": "off"
+			}
+		}
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "space",
+		"lineWidth": 80,
+		"lineEnding": "lf",
+		"ignore": ["tsconfig.json", "package.json", "next.config.mjs", "pnpm-lock.json"]
+	}
+}

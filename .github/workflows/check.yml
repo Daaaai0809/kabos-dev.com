@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  quality:
+  client-code-check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,6 +33,37 @@ jobs:
         working-directory: ./client
         run: pnpm install --frozen-lockfile
 
-      - name: check
+      - name: check client
         working-directory: ./client
+        run: pnpm check
+  admin-code-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: '9.0.1'
+          run_install: true
+
+      - name: cache lockfile
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            .pnpm
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+      
+      - name: Install dependencies
+        working-directory: ./admin
+        run: pnpm install --frozen-lockfile
+      
+      - name: check admin
+        working-directory: ./admin
         run: pnpm check
