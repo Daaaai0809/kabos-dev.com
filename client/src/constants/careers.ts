@@ -33,7 +33,7 @@ const careers: Careers = [
     startedAt: "2024/08",
     icon: "/icons/careers/work.svg",
     description:
-      "バックエンドエンジニアとしてサマーインターンに参加しています。",
+      "2024年8月中旬よりLINEヤフー株式会社にてサマーインターンシップに参加しました。 \nインターンではヤフーアプリにおける広告配信基盤のKubernetesアーキテクチャの改修タスクを主に担当し、Daemon SetやHome Pathを利用した静的ファイルの配置や取得用Cronスクリプトの改修によって、静的ファイルの占有領域を1/10以下にすることに成功しました。\nまた、既存のShell ScriptプログラムのGolangへの移行タスクも担当しました。",
   },
 ];
 
