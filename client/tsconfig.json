@@ -17,7 +17,7 @@
         "./src/*"
       ]
     },
-    "target": "ES2017",
+    "target": "ESNext",
     "forceConsistentCasingInFileNames": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
