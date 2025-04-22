@@ -34,7 +34,7 @@ export const RelativeDate = ({
 
       return diffYears;
     case "entered":
-      if (nowInTimeZone.getMonth() < 4) {
+      if (nowInTimeZone.getMonth() + 1 < 4) {
         return diffYears;
       }
 
