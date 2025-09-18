@@ -40,7 +40,7 @@ const careers: Careers = [
   {
     name: "合同会社Unics",
     startedAt: "2025/06",
-    icon: "icons/careers/work.svg",
+    icon: "/icons/careers/work.svg",
   },
   {
     name: "LINEヤフー株式会社",
